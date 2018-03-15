@@ -84,24 +84,30 @@ public class DiaryTree {
 			
 		}
 	}
-	public void editDiaryNode(Diary loggedIn, int choice, String fieldInfo) 
+	public void editDiaryNode(Diary loggedIn, int fieldChoice, int appointmentEdit, String fieldInfo) 
 	{
-	
-		if (choice == 1)
+		Appointment appointmentToEdit = loggedIn.getAppointment();
+		
+		for (int i = 0; i < appointmentEdit-1; i++)
 		{
-			loggedIn.getAppointment().setAppointmentType(fieldInfo);
+			appointmentToEdit = appointmentToEdit.getNextAppointment();
 		}
-		else if (choice == 2)
+		
+		if (fieldChoice == 1)
 		{
-			loggedIn.getAppointment().setDescription(fieldInfo);
+			appointmentToEdit.setAppointmentType(fieldInfo);
 		}
-		else if (choice == 3)
+		else if (fieldChoice == 2)
 		{
-			loggedIn.getAppointment().setStartTime(fieldInfo);
+			appointmentToEdit.setDescription(fieldInfo);
 		}
-		else if (choice == 4)
+		else if (fieldChoice == 3)
 		{
-			loggedIn.getAppointment().setEndTime(fieldInfo);
+			appointmentToEdit.setStartTime(fieldInfo);
+		}
+		else if (fieldChoice == 4)
+		{
+			appointmentToEdit.setEndTime(fieldInfo);
 		}
 	}
 	public void addAppointment(String appointmentType, String description, String startTime, String endTime, Diary loggedIn)
@@ -123,6 +129,20 @@ public class DiaryTree {
 			//loggedIn = current;
 		}
 	}
+	public void deleteAppointment(int appointmentDelete, Diary loggedIn)
+	{
+		Appointment appointmentToDelete = loggedIn.getAppointment();
+		Appointment previous = appointmentToDelete;
+		
+		for (int i = 0; i < appointmentDelete-1; i++)
+		{
+			previous = appointmentToDelete;
+			appointmentToDelete = appointmentToDelete.getNextAppointment();
+		}
+		
+		//appointmentToDelete = appointmentToDelete.getNextAppointment();
+		previous.setNextAppointment(appointmentToDelete.getNextAppointment());
+	}
 	public Diary checkLogin(String password, int ID)
 	{
 		Diary current = root;
@@ -136,9 +156,17 @@ public class DiaryTree {
 				found = true;
 			}
 			*/
-			if (ID == current.getEmployee().getID() ^ password == current.getEmployee().getPassword())
+			if (ID == current.getEmployee().getID())
 			{
-				found = true;
+				if (password == current.getEmployee().getPassword())
+				{
+					found = true;
+				}
+				else
+				{
+					System.out.println("Incorrect password");
+					return null;
+				}
 			}
 			else if (ID < current.getEmployee().getID())
 			{

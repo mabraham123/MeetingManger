@@ -49,16 +49,19 @@ public class Menu {
 	}
 	public void login()
 	{
-		int ID = getInt("Enter your ID");
-		String password = getString("Input your password");
-		loggedIn = diaryTree.checkLogin(password, ID);
+		do {
+			int ID = getInt("Enter your ID");
+			String password = getString("Input your password");
+			loggedIn = diaryTree.checkLogin(password, ID);
 		
-		String forename = loggedIn.getEmployee().getEmployeeForename();
-		String surname = loggedIn.getEmployee().getEmployeeSurname();
-		char firstLetter = forename.charAt(0);
+			String forename = loggedIn.getEmployee().getEmployeeForename();
+			String surname = loggedIn.getEmployee().getEmployeeSurname();
+			char firstLetter = forename.charAt(0);
 		
-		setUsername(firstLetter + surname);
-		System.out.println("Welcome " + getUsername());
+			setUsername(firstLetter + surname);
+			System.out.println("Welcome " + getUsername());
+		}
+		while (loggedIn != null);
 	}
 	/**
 	 * Runs the menu
@@ -79,12 +82,12 @@ public class Menu {
        
        do
        {
-           System.out.println("Binary Trees Test Menu");
+           System.out.println("Meeting Manager Test Menu");
            System.out.println("A - add appointment to diary");
            System.out.println("E - edit appointment in diary");
+           System.out.println("D - delete appointment from diary");
            System.out.println("P - print appointments of employee");
            System.out.println("F - find meeting times");
-           System.out.println("D - delete appointment from diary");
            System.out.println("S - Save binary tree");
            System.out.println("L - Load binary tree");
            System.out.println("Q - quit");        
@@ -105,13 +108,13 @@ public class Menu {
                case "p":
             	   viewDiary();
                	break;
-               case "F":
-               case "f":
-            	   //find meeting times
-               	break;
                case "D":
                case "d":
-            	   //delete appointment
+            	   deleteAppointment();
+               	break;
+               case "F":
+               case "f":
+            	 //find meeting times
                	break;
                case "S":
                case "s":
@@ -149,15 +152,48 @@ public class Menu {
 	}
 	public void editAppointment()
 	{
-		int choice;
+		int fieldChoice;
+		int appointmentEdit;
+		int counter = 1;
+		Appointment current = loggedIn.getAppointment();
+		
+		while (current != null)
+		{
+			System.out.println("Appointment " + counter);
+			System.out.println(current.getAppointmentType() + "\n" + current.getDescription() + "\n" + current.getStartTime() + "\n" + current.getEndTime());
+			current = current.getNextAppointment();
+			counter += 1;
+		}
 		do
 		{
-			choice = getInt("Enter the number of the field you would like to edit: \n1. Appointment Type \n2. Description \n3. Start time \n4. End time");
+			fieldChoice = getInt("Enter the number of the field you would like to edit: \n1. Appointment Type \n2. Description \n3. Start time \n4. End time");
+			appointmentEdit = getInt("Enter the number of the appointment to edit");
 		}
-		while (choice < 1 || choice > 4);
+		while (fieldChoice < 1 || fieldChoice > 4 || appointmentEdit < 0 || appointmentEdit > counter);
 		
 		String fieldInfo = getString("Input the new value of the field");
-		diaryTree.editDiaryNode(loggedIn, choice, fieldInfo);
+		diaryTree.editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo);
+	}
+	public void deleteAppointment()
+	{
+		int counter = 1;
+		int appointmentDelete;
+		Appointment current = loggedIn.getAppointment();
+		
+		while (current != null)
+		{
+			System.out.println("Appointment " + counter);
+			System.out.println(current.getAppointmentType() + "\n" + current.getDescription() + "\n" + current.getStartTime() + "\n" + current.getEndTime());
+			current = current.getNextAppointment();
+			counter += 1;
+		}
+		do
+		{
+			appointmentDelete = getInt("Enter the number of the appointment to delete");
+		}
+		while (appointmentDelete < 0 || appointmentDelete > counter);
+		
+		diaryTree.deleteAppointment(appointmentDelete, loggedIn);
 	}
 	/**
      * Uses Scanner to get a new String from the user
