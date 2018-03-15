@@ -53,15 +53,18 @@ public class Menu {
 			int ID = getInt("Enter your ID");
 			String password = getString("Input your password");
 			loggedIn = diaryTree.checkLogin(password, ID);
-		
-			String forename = loggedIn.getEmployee().getEmployeeForename();
-			String surname = loggedIn.getEmployee().getEmployeeSurname();
-			char firstLetter = forename.charAt(0);
-		
-			setUsername(firstLetter + surname);
-			System.out.println("Welcome " + getUsername());
+			
+			if (loggedIn != null)
+			{
+				String forename = loggedIn.getEmployee().getEmployeeForename();
+				String surname = loggedIn.getEmployee().getEmployeeSurname();
+				char firstLetter = forename.charAt(0);
+
+				setUsername(firstLetter + surname);
+				System.out.println("Welcome " + getUsername());
+			}
 		}
-		while (loggedIn != null);
+		while (loggedIn == null);
 	}
 	/**
 	 * Runs the menu
@@ -102,7 +105,14 @@ public class Menu {
                	break;
                case "E":
                case "e":
-            	   editAppointment();
+            	   if (loggedIn.getAppointment() != null)
+            	   {
+            		   editAppointment();
+            	   }
+            	   else 
+            	   {
+            		   System.out.println("You must add appointments first!");
+            	   }
             	break;
                case "P":
                case "p":
@@ -110,7 +120,14 @@ public class Menu {
                	break;
                case "D":
                case "d":
-            	   deleteAppointment();
+            	   if (loggedIn.getAppointment() != null)
+            	   {
+            		   deleteAppointment();
+            	   }
+            	   else 
+            	   {
+            		   System.out.println("You must add appointments first!");
+            	   }
                	break;
                case "F":
                case "f":

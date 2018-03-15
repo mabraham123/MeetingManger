@@ -141,7 +141,21 @@ public class DiaryTree {
 		}
 		
 		//appointmentToDelete = appointmentToDelete.getNextAppointment();
-		previous.setNextAppointment(appointmentToDelete.getNextAppointment());
+		if (appointmentDelete > 1)
+		{
+			previous.setNextAppointment(appointmentToDelete.getNextAppointment());
+		}
+		else
+		{
+			if (appointmentToDelete.getNextAppointment() == null)
+			{
+				loggedIn.setAppointment(null);
+			}
+			else
+			{
+				loggedIn.setAppointment(appointmentToDelete.getNextAppointment());
+			}
+		}
 	}
 	public Diary checkLogin(String password, int ID)
 	{
@@ -158,7 +172,7 @@ public class DiaryTree {
 			*/
 			if (ID == current.getEmployee().getID())
 			{
-				if (password == current.getEmployee().getPassword())
+				if (password.equals(current.getEmployee().getPassword()))
 				{
 					found = true;
 				}
