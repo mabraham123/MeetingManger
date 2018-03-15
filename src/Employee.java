@@ -7,27 +7,31 @@
  *
  */
 public class Employee {
-	private String employeeName;
+	private String employeeForename;
+	private String employeeSurname;
 	private String jobPosition;
+	private String password;
 	private int ID;
 	
-	public Employee(String name, String position, int i)
+	public Employee(String forename, String surname, String pass, String position, int i)
 	{
-		employeeName = name;
+		employeeForename = forename;
+		employeeSurname = surname;
 		jobPosition = position;
+		setPassword(pass);
 		ID = i;
 	}
 	/**
 	 * @return the employeeName
 	 */
-	public String getEmployeeName() {
-		return employeeName;
+	public String getEmployeeForename() {
+		return employeeForename;
 	}
 	/**
-	 * @param employeeName the employeeName to set
+	 * @param employeeForename the employeeForename to set
 	 */
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
+	public void setEmployeeForename(String employeeForename) {
+		this.employeeForename = employeeForename;
 	}
 	/**
 	 * @return the jobPosition
@@ -52,5 +56,29 @@ public class Employee {
 	 */
 	public void setID(int iD) {
 		ID = iD;
+	}
+	/**
+	 * @return the employeeSurname
+	 */
+	public String getEmployeeSurname() {
+		return employeeSurname;
+	}
+	/**
+	 * @param employeeSurname the employeeSurname to set
+	 */
+	public void setEmployeeSurname(String employeeSurname) {
+		this.employeeSurname = employeeSurname;
+	}
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
