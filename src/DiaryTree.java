@@ -54,34 +54,41 @@ public class DiaryTree {
 			}
 		}
 	}
-	public void searchDiaryNode(int search)
+	
+	/**
+	 * Will search for a node in the binary tree.
+	 * @param employeeUsername This is the username used by the employee to log in.
+	 */
+	public Diary searchDiaryNode(String employeeUsername)
 	{
+		//current pointer is set to point tot he root.
 		Diary current = root;
-		Appointment currentAppointment = current.getAppointment();
-		boolean found = false;
 		
-		while (current != null && found == false)
+		//TODO:Implement getUsername method.
+		//If the username of the current node is equal to the username entered by the user.
+		if(current.getUsername().equals(employeeUsername)) 
 		{
-			if (current.getEmployee().getID() == search)
-			{
-				found = true;
-				System.out.println(current.getEmployee().getEmployeeName() + ":" + "\n" + current.getAppointment().getAppointmentType() + "\n" + current.getAppointment().getDescription() + "\n" + current.getAppointment().getStartTime() + "\n" + current.getAppointment().getEndTime());
-				while (current.getAppointment().getNextAppointment() != null)
-				{
-					currentAppointment = current.getAppointment().getNextAppointment();
-					System.out.println("\n" + currentAppointment.getAppointmentType() + "\n" + currentAppointment.getDescription() + "\n" + currentAppointment.getStartTime() + "\n" + currentAppointment.getEndTime());
-				}
-			}
-			else if (search < current.getEmployee().getID())
-			{
-				current = current.getLeft();
-			}
-			else if (search > current.getEmployee().getID())
-			{
-				current = current.getRight();
-			}
-			
+			//The current node is returned.
+			return current;
+		}
+		else 
+		{
+			determineLeftOrRight(employeeUsername);
 		}
 	}
-
+	
+	/**
+	 * Will determine if the node is on the left or right of the current branch in the tree.
+	 */
+	public void determineLeftOrRight(String username) 
+	{
+		String firstLetter = Character.toString(username.charAt(0));
+		
+		//If the first letter in the username is a letter that comes before p the current node points left.
+		if(firstLetter.equals("a") || firstLetter.equals("b") || firstLetter.equals("c") || firstLetter.equals("d") || firstLetter.equals("e") || firstLetter.equals("f") || firstLetter.equals("g") || firstLetter.equals("h") || firstLetter.equals("i") || firstLetter.equals("j") || firstLetter.equals("k") || firstLetter.equals("l") || firstLetter.equals("m") || firstLetter.equals("n") || firstLetter.equals("o") || firstLetter.equals("p")) 
+		{
+			//TODO: make getLeft method.
+			current = current.getLeft();
+		}
+	}
 }
