@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat;
+
 /**
  * 
  */
@@ -9,6 +11,10 @@
 public class DiaryTree {
 	private Diary root;
 
+	/**
+	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
+	 * @param diaryToAdd The diary node to be added to the tree
+	 */
 	public void addDiaryNode(Diary diaryToAdd) 
 	{
 		Diary current = root;
@@ -53,17 +59,22 @@ public class DiaryTree {
 			}
 		}
 	}
+	/**
+	 * Searches for a particular person in the tree and prints their appointment info
+	 * @param search The ID to search for
+	 */
 	public void searchDiaryNode(int search)
 	{
 		Diary current = root;
 		boolean found = false;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
 		
 		while (current != null && found == false)
 		{
 			if (current.getEmployee().getID() == search)
 			{
 				found = true;
-				System.out.println(current.getEmployee().getEmployeeForename() + " " + current.getEmployee().getEmployeeSurname()+ ":" + "\n" + current.getAppointment().getAppointmentType() + "\n" + current.getAppointment().getDescription() + "\n" + current.getAppointment().getStartTime() + "\n" + current.getAppointment().getEndTime());
+				System.out.println(current.getEmployee().getEmployeeForename() + " " + current.getEmployee().getEmployeeSurname()+ ":" + "\n" + current.getAppointment().getAppointmentType() + "\n" + current.getAppointment().getDescription() + "\n" + current.getAppointment().getStartTime() + "\n" + current.getAppointment().getEndTime() + "\n" + sdf.format(current.getAppointment().getAppointmentDate().getTime()));
 				Appointment currentAppointment = current.getAppointment();
 				currentAppointment = currentAppointment.getNextAppointment();
 				while (currentAppointment != null)
@@ -84,7 +95,17 @@ public class DiaryTree {
 			
 		}
 	}
-	public void editDiaryNode(Diary loggedIn, int fieldChoice, int appointmentEdit, String fieldInfo) 
+	/**
+	 * Edits a field of the chosen appointment in the diary of the logged on user 
+	 * @param loggedIn The user who is current logged in and the diary to be edited
+	 * @param fieldChoice The info to be changed
+	 * @param appointmentEdit Which appointment to edit
+	 * @param fieldInfo The new info to replace old
+	 * @param day 
+	 * @param month 
+	 * @param year 
+	 */
+	public void editDiaryNode(Diary loggedIn, int fieldChoice, int appointmentEdit, String fieldInfo, int year, int month, int day) 
 	{
 		Appointment appointmentToEdit = loggedIn.getAppointment();
 		
@@ -109,11 +130,26 @@ public class DiaryTree {
 		{
 			appointmentToEdit.setEndTime(fieldInfo);
 		}
+		else if (fieldChoice == 5)
+		{
+			appointmentToEdit.setAppointmentDate(year, month, day);
+		}
 	}
-	public void addAppointment(String appointmentType, String description, String startTime, String endTime, Diary loggedIn)
+	/**
+	 * 
+	 * @param appointmentType Type of appointment
+	 * @param description Description of appointment
+	 * @param startTime Start time of appointment
+	 * @param endTime End time of appointment
+	 * @param year Year of appointment
+	 * @param month Month of appointment
+	 * @param day Day of appointment
+	 * @param loggedIn The diary to be added to
+	 */
+	public void addAppointment(String appointmentType, String description, String startTime, String endTime, int year, int month, int day, Diary loggedIn)
 	{
 		Appointment current = loggedIn.getAppointment();
-		Appointment appointmentToAdd = new Appointment(appointmentType, description, startTime, endTime, null);
+		Appointment appointmentToAdd = new Appointment(appointmentType, description, startTime, endTime, null, year, month, day);
 		
 		if (loggedIn.getAppointment() == null)
 		{
@@ -129,6 +165,11 @@ public class DiaryTree {
 			//loggedIn = current;
 		}
 	}
+	/**
+	 * Deletes an appointment from the diary
+	 * @param appointmentDelete The appointment to be deleted
+	 * @param loggedIn The logged on user's diary entry to be deleted
+	 */
 	public void deleteAppointment(int appointmentDelete, Diary loggedIn)
 	{
 		Appointment appointmentToDelete = loggedIn.getAppointment();
@@ -143,6 +184,12 @@ public class DiaryTree {
 		//appointmentToDelete = appointmentToDelete.getNextAppointment();
 		previous.setNextAppointment(appointmentToDelete.getNextAppointment());
 	}
+	/**
+	 * Checks that the login details match the ones stored
+	 * @param password The password of the user
+	 * @param ID The ID of the user
+	 * @return current The diary of the logged on user
+	 */
 	public Diary checkLogin(String password, int ID)
 	{
 		Diary current = root;
@@ -179,10 +226,19 @@ public class DiaryTree {
 		}
 		return current;
 	}
+	/**
+	 * Gets the root of the tree
+	 * @return root The root of the tree
+	 */
 	public Diary getRoot()
 	{
 		return root;
 	}
+	/**
+	 * Sets the root of the tree
+	 * @param root The root of the tree
+	 * @return root The root of the tree
+	 */
 	public Diary setRoot(Diary root)
 	{
 		return this.root = root;

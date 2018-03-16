@@ -28,21 +28,34 @@ public class Menu {
 	public void init()
 	{
 		diaryTree = new DiaryTree();
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+		
+		int year = 2018;
+		int month = 04;
+		int day = 28;
 		
 		Employee employee1 = new Employee("Daniel", "Scheitler", "pass1", "CEO", 100);
-		Appointment appointment1 = new Appointment("Client meeting", "Test description", "0900", "1000", null);
+		Appointment appointment1 = new Appointment("Client meeting", "Test description", "0900", "1000", null, year, month, day);
 		Diary DanielScheitlerDiary = new Diary(employee1, appointment1);
 		
 		diaryTree.addDiaryNode(DanielScheitlerDiary);
 		
+		year = 2018;
+		month = 11;
+		day = 14;
+		
 		Employee employee2 = new Employee("Ben", "Franklin", "pass2", "CTO", 120);
-		Appointment appointment2 = new Appointment("Tech meeting", "Test description", "1200", "1300", null);
+		Appointment appointment2 = new Appointment("Tech meeting", "Test description", "1200", "1300", null, year, month, day);
 		Diary BenFranklinDiary = new Diary(employee2, appointment2);
 		
 		diaryTree.addDiaryNode(BenFranklinDiary);
 		
+		year = 2018;
+		month = 8;
+		day = 14;
+		
 		Employee employee3 = new Employee("George", "Washington", "pass3", "CIO", 110);
-		Appointment appointment3 = new Appointment("Information meeting", "Test description", "1600", "1800", null);
+		Appointment appointment3 = new Appointment("Information meeting", "Test description", "1600", "1800", null, year, month, day);
 		Diary GeorgeWashingtonDiary = new Diary(employee3, appointment3);
 		
 		diaryTree.addDiaryNode(GeorgeWashingtonDiary);
@@ -150,14 +163,15 @@ public class Menu {
    }
 	public void addAppointment() 
 	{	
-		//Appointment current = null;
-		
 		String appointmentType = getString("Enter the appointment type");
 		String description = getString("Enter the description");
 		String startTime = getString("Enter the start time in the form e.g. 0900");
 		String endTime = getString("Enter the end time in the form e.g. 1200");
+		int year = getInt("Enter the year in the form e.g. 2018");
+		int month = getInt("Enter the month in the form e.g. 03");
+		int day = getInt("Enter the day in the form e.g. 26");
 		
-		diaryTree.addAppointment(appointmentType, description, startTime, endTime, loggedIn);
+		diaryTree.addAppointment(appointmentType, description, startTime, endTime, year, month, day, loggedIn);
 	}
 	public void viewDiary()
 	{
@@ -180,13 +194,25 @@ public class Menu {
 		}
 		do
 		{
-			fieldChoice = getInt("Enter the number of the field you would like to edit: \n1. Appointment Type \n2. Description \n3. Start time \n4. End time");
+			fieldChoice = getInt("Enter the number of the field you would like to edit: \n1. Appointment Type \n2. Description \n3. Start time \n4. End time \n5. Date");
 			appointmentEdit = getInt("Enter the number of the appointment to edit");
 		}
-		while (fieldChoice < 1 || fieldChoice > 4 || appointmentEdit < 0 || appointmentEdit > counter);
+		while (fieldChoice < 1 || fieldChoice > 5 || appointmentEdit < 0 || appointmentEdit > counter);
 		
-		String fieldInfo = getString("Input the new value of the field");
-		diaryTree.editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo);
+		String fieldInfo = null;
+		int year = 0, month = 0, day = 0;
+		
+		if (fieldChoice < 5)
+		{
+			fieldInfo = getString("Input the new value of the field");
+		}
+		else
+		{
+			year = getInt("Enter the year in the form e.g. 2018");
+			month = getInt("Enter the month in the form e.g. 03");
+			day = getInt("Enter the day in the form e.g. 26");
+		}
+		diaryTree.editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo, year, month, day);
 	}
 	public void deleteAppointment()
 	{
