@@ -61,7 +61,7 @@ public class Menu {
 			setUsername(firstLetter + surname);
 			System.out.println("Welcome " + getUsername());
 		}
-		while (loggedIn != null);
+		while (loggedIn == null);
 	}
 	/**
 	 * Runs the menu
@@ -102,7 +102,14 @@ public class Menu {
                	break;
                case "E":
                case "e":
-            	   editAppointment();
+            	   if (loggedIn.getAppointment() != null)
+            	   {
+            		   editAppointment();
+            	   }
+            	   else
+            	   {
+            		   System.out.println("You must first add an appointment!");
+            	   }
             	break;
                case "P":
                case "p":
@@ -110,11 +117,18 @@ public class Menu {
                	break;
                case "D":
                case "d":
-            	   deleteAppointment();
+            	   if (loggedIn.getAppointment() != null)
+            	   {
+            		   deleteAppointment();
+            	   }
+            	   else
+            	   {
+            		   System.out.println("You must first add an appointment!");
+            	   }
                	break;
                case "F":
                case "f":
-            	 //find meeting times
+            	   //find meeting times
                	break;
                case "S":
                case "s":

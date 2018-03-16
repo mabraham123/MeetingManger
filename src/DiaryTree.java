@@ -158,7 +158,7 @@ public class DiaryTree {
 			*/
 			if (ID == current.getEmployee().getID())
 			{
-				if (password == current.getEmployee().getPassword())
+				if (password.equals(current.getEmployee().getPassword()))
 				{
 					found = true;
 				}
