@@ -66,15 +66,15 @@ public class Menu {
 			int ID = getInt("Enter your ID");
 			String password = getString("Input your password");
 			loggedIn = diaryTree.checkLogin(password, ID);
-		
+		}
+		while (loggedIn == null);
+			
 			String forename = loggedIn.getEmployee().getEmployeeForename();
 			String surname = loggedIn.getEmployee().getEmployeeSurname();
 			char firstLetter = forename.charAt(0);
 		
 			setUsername(firstLetter + surname);
 			System.out.println("Welcome " + getUsername());
-		}
-		while (loggedIn == null);
 	}
 	/**
 	 * Runs the menu
@@ -172,6 +172,7 @@ public class Menu {
 		int day = getInt("Enter the day in the form e.g. 26");
 		
 		diaryTree.addAppointment(appointmentType, description, startTime, endTime, year, month, day, loggedIn);
+		diaryTree.sortAppointments(loggedIn);
 	}
 	public void viewDiary()
 	{

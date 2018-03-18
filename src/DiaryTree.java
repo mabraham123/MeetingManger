@@ -1,4 +1,5 @@
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 /**
  * 
@@ -74,14 +75,10 @@ public class DiaryTree {
 			if (current.getEmployee().getID() == search)
 			{
 				found = true;
-				System.out.println(current.getEmployee().getEmployeeForename() + " " + current.getEmployee().getEmployeeSurname()+ ":" + "\n" + current.getAppointment().getAppointmentType() + "\n" + current.getAppointment().getDescription() + "\n" + current.getAppointment().getStartTime() + "\n" + current.getAppointment().getEndTime() + "\n" + sdf.format(current.getAppointment().getAppointmentDate().getTime()));
-				Appointment currentAppointment = current.getAppointment();
-				currentAppointment = currentAppointment.getNextAppointment();
-				while (currentAppointment != null)
+				System.out.println(current.getEmployee().getEmployeeForename() + " " + current.getEmployee().getEmployeeSurname()+ ":");
+				for (int i = 0; i < current.getSortedAppointments().length; i++)
 				{
-					//currentAppointment = current.getAppointment().getNextAppointment();
-					System.out.println("\n" + currentAppointment.getAppointmentType() + "\n" + currentAppointment.getDescription() + "\n" + currentAppointment.getStartTime() + "\n" + currentAppointment.getEndTime());
-					currentAppointment = currentAppointment.getNextAppointment();
+					System.out.println("\n" + current.getSortedAppointments()[i].getAppointmentType() + "\n" + current.getSortedAppointments()[i].getDescription() + "\n" + current.getSortedAppointments()[i].getStartTime() + "\n" + current.getSortedAppointments()[i].getEndTime() + "\n" + sdf.format(current.getSortedAppointments()[i].getAppointmentDate().getTime()));
 				}
 			}
 			else if (search < current.getEmployee().getID())
@@ -136,7 +133,7 @@ public class DiaryTree {
 		}
 	}
 	/**
-	 * 
+	 * Adds an appointment to the diary of the logged in user
 	 * @param appointmentType Type of appointment
 	 * @param description Description of appointment
 	 * @param startTime Start time of appointment
@@ -226,6 +223,41 @@ public class DiaryTree {
 		}
 		return current;
 	}
+	public void sortAppointments(Diary loggedIn)
+	{
+		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
+		Appointment current = loggedIn.getAppointment();
+		Appointment temp = null;
+		
+		while (current != null)
+		{
+			arrayList.add(current);
+			current = current.getNextAppointment();
+		}
+		Appointment[] sortedArray = new Appointment[arrayList.size()];
+		
+		current = loggedIn.getAppointment();
+		for (int p = 0; p < sortedArray.length; p++)
+		{
+			sortedArray[p] = current;
+			current = current.getNextAppointment();
+		}
+		
+		for (int i = 0; i < sortedArray.length - 1; i++)
+		{
+			for (int j = 0; j < (sortedArray.length - i - 1); j++)
+			{
+				if (sortedArray[j].getAppointmentDate().after(sortedArray[j+1].getAppointmentDate()))
+				{
+					temp = sortedArray[j];  
+					sortedArray[j] = sortedArray[j+1];  
+					sortedArray[j+1] = temp; 
+				}
+			}
+		}
+		loggedIn.setSortedAppointments(sortedArray);
+	}
+	
 	/**
 	 * Gets the root of the tree
 	 * @return root The root of the tree

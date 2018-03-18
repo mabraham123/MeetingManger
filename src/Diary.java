@@ -9,6 +9,7 @@
 public class Diary {
 	private Employee employee;
 	private Appointment appointment;
+	private Appointment[] sortedAppointments;
 	private Diary left;
 	private Diary right;
 	
@@ -70,6 +71,20 @@ public class Diary {
 	 */
 	public Diary setRight(Diary right) {
 		return this.right = right;
+	}
+
+	/**
+	 * @return the sortedAppointments
+	 */
+	public Appointment[] getSortedAppointments() {
+		return sortedAppointments;
+	}
+
+	/**
+	 * @param sortedAppointments the sortedAppointments to set
+	 */
+	public void setSortedAppointments(Appointment[] sortedAppointments) {
+		this.sortedAppointments = sortedAppointments;
 	}
 
 }
