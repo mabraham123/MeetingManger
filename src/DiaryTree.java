@@ -1,8 +1,5 @@
 import java.text.SimpleDateFormat;
-
-/**
- * 
- */
+import java.math.BigInteger;
 
 /**
  * @author DAN
@@ -10,6 +7,7 @@ import java.text.SimpleDateFormat;
  */
 public class DiaryTree {
 	private Diary root;
+	private Diary current;
 
 	/**
 	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
@@ -17,72 +15,128 @@ public class DiaryTree {
 	 */
 	public void addDiaryNode(Diary diaryToAdd) 
 	{
-		Diary current = root;
-		Diary previous = null;
-
-		if (root == null)
+		//Will check to see if the tree is empty.
+		boolean	empty = isTreeEmpty();
+		
+		if (empty)
 		{
-			root = diaryToAdd;
+			//If the tree is empty the new node becomes the root.
+			setRoot(diaryToAdd);
 		}
 		else
 		{
-			while (current != null)
+			//The current node is set to point to the root reference.
+			current = root;
+			//This function will place the new node in a relevant position in the tree.
+			determineTreePosition(diaryToAdd);
+		}
+	}
+	
+	/**
+	 * This function will decide where in the tree a new node will be placed and place the node.
+	 * @param newNode This is node that is being placed in the tree.
+	 */
+	public void determineTreePosition(Diary newNode)
+	{		
+		//The key is retrieved from the employee class and then stored in a big integer.
+		String key = newNode.getEmployee().getKey();
+		BigInteger newKey = new BigInteger(key);
+		
+		//The loop repeats until the node is added to the tree.
+		boolean notAdded = true;
+		while(notAdded) 
+		{
+			//The key is retrieved from the employee class and then stored in a big integer.
+			key = current.getEmployee().getKey();
+			BigInteger currentKey = new BigInteger(key);
+			
+			//The values are compared here to find out which is greater or less than each other.
+			int greaterOrLess = currentKey.compareTo(newKey);
+			
+			//if the current node's key is greater than the new node's key then the node may be placed to the left.
+			if(greaterOrLess == 1)
 			{
-				previous = current;
-
-				if (diaryToAdd.getEmployee().getID() < current.getEmployee().getID())
+				//The new node will be placed in the left reference only if it is empty otherwise the current reference points to the left.
+				if(current.isLeftEmpty(current))
+				{
+					current.setLeft(newNode);
+					newNode.setPrevious(current);
+					notAdded = false;
+				}
+				else 
 				{
 					current = current.getLeft();
-				}
-				else if (diaryToAdd.getEmployee().getID() > current.getEmployee().getID())
-				{
-					current = current.getRight();
-				}
-				else if (diaryToAdd.getEmployee().getID() == current.getEmployee().getID())
-				{
-					System.out.println("The ID is already in the tree!");
-					break;
-				}
+				}	
 			}
-
-			if (diaryToAdd.getEmployee().getID() < previous.getEmployee().getID())
+			else if(greaterOrLess == 0)
 			{
-				diaryToAdd = previous.setLeft(diaryToAdd);
-			}
-			else if (diaryToAdd.getEmployee().getID() > previous.getEmployee().getID())
-			{
-				diaryToAdd = previous.setRight(diaryToAdd);
+				//This will prevent entries with the same ID from existing in the tree.
+				System.out.println("ID already in use! Please use a different ID.");
+				System.out.println("Returning to menu...");
+				notAdded = false;
 			}
 			else
 			{
-				//exits as already exists
+				//The only other option for the new node to be entered into will be the right and this will do the same task as when the node is being placed in the left branch.
+				if(current.isRightEmpty(current))
+				{
+					current.setRight(newNode);
+					newNode.setPrevious(current);
+					notAdded = false;
+				}
+				else 
+				{
+					current = current.getRight();
+				}
 			}
 		}
 	}
+	
+	/**
+	 * This method will check if the tree is empty.
+	 * @return empty It tests if the tree is empty.
+	 */
+	public boolean isTreeEmpty() 
+	{
+		boolean empty;
+		if (root == null) 
+		{
+			//Will set empty to true if the root is a null value.
+			empty = true;
+		}
+		else 
+		{
+			//Will set empty to false if the root is not null.
+			empty = false;
+		}
+		return empty;
+	}
+	
 	/**
 	 * Searches for a particular person in the tree and prints their appointment info
 	 * @param search The ID to search for
 	 */
-	public void searchDiaryNode(int search)
+	public Diary searchDiaryNode(String username)
 	{
-		Diary current = root;
-		boolean found = false;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+		//Pointer is set to the root.
+		current = root;
 		
+		//Boolean value to determine whether the node has been found.
+		boolean found = false;
+		
+		//A simple date format object is created here.
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy"); 
+		
+		//Code loops as long as the node is not empty and the node being searched for has not been found.
 		while (current != null && found == false)
 		{
-			if (current.getEmployee().getID() == search)
+			//The first letter of the username is obtained here.
+			char firstCharForUsername = 
+			
+			if (current.getEmployee().getUsername().equals(username))
 			{
+				//The found value has been set to true.
 				found = true;
-				System.out.println(current.getEmployee().getEmployeeForename() + " " + current.getEmployee().getEmployeeSurname()+ ":" + "\n" + current.getAppointment().getAppointmentType() + "\n" + current.getAppointment().getDescription() + "\n" + current.getAppointment().getStartTime() + "\n" + current.getAppointment().getEndTime() + "\n" + sdf.format(current.getAppointment().getAppointmentDate().getTime()));
-				Appointment currentAppointment = current.getAppointment();
-				currentAppointment = currentAppointment.getNextAppointment();
-				while (currentAppointment != null)
-				{
-					//currentAppointment = current.getAppointment().getNextAppointment();
-					System.out.println("\n" + currentAppointment.getAppointmentType() + "\n" + currentAppointment.getDescription() + "\n" + currentAppointment.getStartTime() + "\n" + currentAppointment.getEndTime());
-					currentAppointment = currentAppointment.getNextAppointment();
-				}
 			}
 			else if (search < current.getEmployee().getID())
 			{
@@ -94,6 +148,7 @@ public class DiaryTree {
 			}
 			
 		}
+		return current;
 	}
 	/**
 	 * Edits a field of the chosen appointment in the diary of the logged on user 
@@ -192,7 +247,7 @@ public class DiaryTree {
 	 */
 	public Diary checkLogin(String password, int ID)
 	{
-		Diary current = root;
+		current = root;
 		boolean found = false;
 		
 		while (current != null && found == false)
