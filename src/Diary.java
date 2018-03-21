@@ -131,5 +131,10 @@ public class Diary {
 		return empty;
 	}
 	
+	public String convertToKey(String username) 
+	{
+		return employee.textToKey(username);
+	}
+	
 }
 	

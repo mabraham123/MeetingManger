@@ -123,7 +123,7 @@ public class Employee {
 	 * Will convert the username to a key that acts like an ID.
 	 * @param username This is the user's username.
 	 */
-	public void textToKey(String username)
+	public String textToKey(String username)
 	{
 		String key = "";
 		for(int i = 0; i < username.length(); i++) 
@@ -212,5 +212,6 @@ public class Employee {
 			}
 		}
 		setKey(key);
+		return key;
 	}
 }
