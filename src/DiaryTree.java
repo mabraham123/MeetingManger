@@ -173,6 +173,9 @@ public class DiaryTree {
 		}
 	}
 	
+	/**
+	 * Will inform the user that the username cannot be found.
+	 */
 	public void noUserFoundMessage() 
 	{
 		System.out.println("Username does not exist");
