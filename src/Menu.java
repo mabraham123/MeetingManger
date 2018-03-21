@@ -1,11 +1,17 @@
 import java.util.Scanner;
 
 /**
- * @author Melvin Abraham
+ * 
+ */
+
+/**
+ * @author DAN
  *
  */
 public class Menu {
 	private DiaryTree diaryTree;
+	private Diary loggedIn;
+	private String username;
 	/**
 	 * @param args
 	 */
@@ -13,6 +19,7 @@ public class Menu {
 		Menu menu = new Menu();
 		
 		menu.init();
+		menu.login();
         menu.process();
 	}
 	/**
@@ -21,8 +28,54 @@ public class Menu {
 	public void init()
 	{
 		diaryTree = new DiaryTree();
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+		
+		int year = 2018;
+		int month = 04;
+		int day = 28;
+		
+		Employee employee1 = new Employee("Daniel", "Scheitler", "pass1", "CEO", 100);
+		Appointment appointment1 = new Appointment("Client meeting", "Test description", "0900", "1000", null, year, month, day);
+		Diary DanielScheitlerDiary = new Diary(employee1, appointment1);
+		
+		diaryTree.addDiaryNode(DanielScheitlerDiary);
+		
+		year = 2018;
+		month = 11;
+		day = 14;
+		
+		Employee employee2 = new Employee("Ben", "Franklin", "pass2", "CTO", 120);
+		Appointment appointment2 = new Appointment("Tech meeting", "Test description", "1200", "1300", null, year, month, day);
+		Diary BenFranklinDiary = new Diary(employee2, appointment2);
+		
+		diaryTree.addDiaryNode(BenFranklinDiary);
+		
+		year = 2018;
+		month = 8;
+		day = 14;
+		
+		Employee employee3 = new Employee("George", "Washington", "pass3", "CIO", 110);
+		Appointment appointment3 = new Appointment("Information meeting", "Test description", "1600", "1800", null, year, month, day);
+		Diary GeorgeWashingtonDiary = new Diary(employee3, appointment3);
+		
+		diaryTree.addDiaryNode(GeorgeWashingtonDiary);
 	}
-
+	public void login()
+	{
+		do {
+			int ID = getInt("Enter your ID");
+			String password = getString("Input your password");
+			loggedIn = diaryTree.checkLogin(password, ID);
+		}
+		while (loggedIn == null);
+			
+			String forename = loggedIn.getEmployee().getEmployeeForename();
+			String surname = loggedIn.getEmployee().getEmployeeSurname();
+			char firstLetter = forename.charAt(0);
+		
+			setUsername(firstLetter + surname);
+			System.out.println("Welcome " + getUsername());
+	}
 	/**
 	 * Runs the menu
 	 */
@@ -42,16 +95,14 @@ public class Menu {
        
        do
        {
-           System.out.println("Binary Trees Test Menu");
-           System.out.println("A - add appointment to diary (currently adds diaries)");
+           System.out.println("Meeting Manager Test Menu");
+           System.out.println("A - add appointment to diary");
            System.out.println("E - edit appointment in diary");
+           System.out.println("D - delete appointment from diary");
            System.out.println("P - print appointments of employee");
            System.out.println("F - find meeting times");
-           System.out.println("D - delete appointment from diary");
            System.out.println("S - Save binary tree");
            System.out.println("L - Load binary tree");
-           //System.out.println("I - Instructions on use");
-           //System.out.println("T - run automated tests");
            System.out.println("Q - quit");        
            
            choice=getString("Please make a choice, and press ENTER: ");
@@ -60,31 +111,46 @@ public class Menu {
            {
                case "A":
                case "a":
-            	   addDiary();
+            	   addAppointment();
                	break;
                case "E":
                case "e":
-            	   editDiary();
+            	   if (loggedIn.getAppointment() != null)
+            	   {
+            		   editAppointment();
+            	   }
+            	   else
+            	   {
+            		   System.out.println("You must first add an appointment!");
+            	   }
             	break;
                case "P":
                case "p":
-            	   searchDiary();
-               	break;
-               case "F":
-               case "f":
+            	   viewDiary();
                	break;
                case "D":
                case "d":
+            	   if (loggedIn.getAppointment() != null)
+            	   {
+            		   deleteAppointment();
+            	   }
+            	   else
+            	   {
+            		   System.out.println("You must first add an appointment!");
+            	   }
+               	break;
+               case "F":
+               case "f":
+            	   //find meeting times
                	break;
                case "S":
                case "s":
+            	   //save
                	break;
                case "L":
-               case "l":      
+               case "l":    
+            	   //load
                	break;
-               //case "T":
-               //case "t":
-               	//break;
                case "Q":
                case "q": 
                	System.out.println("Goodbye\n");
@@ -95,43 +161,80 @@ public class Menu {
            }
        }while (!exit);
    }
-	public void addDiary() 
-	{
-		Employee employee1 = new Employee("Daniel Scheitler", "CEO", 100);
-		Appointment appointment1 = new Appointment("Client meeting", "Test description", "0900", "1000", null);
-		Diary DanielScheitlerDiary = new Diary(employee1, appointment1);
+	public void addAppointment() 
+	{	
+		String appointmentType = getString("Enter the appointment type");
+		String description = getString("Enter the description");
+		int startTime = getString("Enter the start time in the form e.g. 0900");
+		int endTime = getString("Enter the end time in the form e.g. 1200");
+		int year = getInt("Enter the year in the form e.g. 2018");
+		int month = getInt("Enter the month in the form e.g. 03");
+		int day = getInt("Enter the day in the form e.g. 26");
 		
-		diaryTree.addDiaryNode(DanielScheitlerDiary);
-		
-		Employee employee2 = new Employee("Ben Franklin", "CTO", 120);
-		Appointment appointment2 = new Appointment("Tech meeting", "Test description", "1200", "1300", null);
-		Diary BenFranklinDiary = new Diary(employee2, appointment2);
-		
-		diaryTree.addDiaryNode(BenFranklinDiary);
-		
-		Employee employee3 = new Employee("George Washington", "CIO", 110);
-		Appointment appointment3 = new Appointment("Information meeting", "Test description", "1600", "1800", null);
-		Diary GeorgeWashingtonDiary = new Diary(employee3, appointment3);
-		
-		diaryTree.addDiaryNode(GeorgeWashingtonDiary);
+		diaryTree.addAppointment(appointmentType, description, startTime, endTime, year, month, day, loggedIn);
+		diaryTree.sortAppointments(loggedIn);
 	}
-	public void searchDiary()
+	public void viewDiary()
 	{
 		int search = getInt("Enter the ID of the employee to view their diary");
 		diaryTree.searchDiaryNode(search);
 	}
-	public void editDiary()
+	public void editAppointment()
 	{
-		int choice;
-		int search = getInt("Enter the ID of the employee to edit the diary");
-		diaryTree.searchDiaryNode(search);
+		int fieldChoice;
+		int appointmentEdit;
+		int counter = 1;
+		Appointment current = loggedIn.getAppointment();
+		
+		while (current != null)
+		{
+			System.out.println("Appointment " + counter);
+			System.out.println(current.getAppointmentType() + "\n" + current.getDescription() + "\n" + current.getStartTime() + "\n" + current.getEndTime());
+			current = current.getNextAppointment();
+			counter += 1;
+		}
 		do
 		{
-			choice = getInt("Enter the number of the field you would like to edit: \n 1. Appointment Type \n 2. Description \n 3. Start time \n 4. End time");
+			fieldChoice = getInt("Enter the number of the field you would like to edit: \n1. Appointment Type \n2. Description \n3. Start time \n4. End time \n5. Date");
+			appointmentEdit = getInt("Enter the number of the appointment to edit");
 		}
-		while (choice < 1 || choice > 4);
+		while (fieldChoice < 1 || fieldChoice > 5 || appointmentEdit < 0 || appointmentEdit > counter);
 		
-		//pass choice and search to an edit method
+		String fieldInfo = null;
+		int year = 0, month = 0, day = 0;
+		
+		if (fieldChoice < 5)
+		{
+			fieldInfo = getString("Input the new value of the field");
+		}
+		else
+		{
+			year = getInt("Enter the year in the form e.g. 2018");
+			month = getInt("Enter the month in the form e.g. 03");
+			day = getInt("Enter the day in the form e.g. 26");
+		}
+		diaryTree.editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo, year, month, day);
+	}
+	public void deleteAppointment()
+	{
+		int counter = 1;
+		int appointmentDelete;
+		Appointment current = loggedIn.getAppointment();
+		
+		while (current != null)
+		{
+			System.out.println("Appointment " + counter);
+			System.out.println(current.getAppointmentType() + "\n" + current.getDescription() + "\n" + current.getStartTime() + "\n" + current.getEndTime());
+			current = current.getNextAppointment();
+			counter += 1;
+		}
+		do
+		{
+			appointmentDelete = getInt("Enter the number of the appointment to delete");
+		}
+		while (appointmentDelete < 0 || appointmentDelete > counter);
+		
+		diaryTree.deleteAppointment(appointmentDelete, loggedIn);
 	}
 	/**
      * Uses Scanner to get a new String from the user
@@ -172,4 +275,16 @@ public class Menu {
 			int num = s.nextInt();
 			return num;
 		}
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }
