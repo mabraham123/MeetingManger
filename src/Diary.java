@@ -1,17 +1,19 @@
-/**
- * 
- */
-
+import java.util.Scanner;
 /**
  * @author DAN
  *
  */
-public class Diary {
+public class Diary 
+{
 	private Employee employee;
 	private Appointment appointment;
 	private Diary left;
 	private Diary right;
 	private Diary previous;
+	private DiaryTree tree = new DiaryTree();
+	
+	//A scanner object is created here to get user input.
+	Scanner input = new Scanner(System.in;
 	
 	/**
 	 * @return the previous
@@ -89,6 +91,31 @@ public class Diary {
 		return this.right = right;
 	}
 
+	/**
+	 * Will authenticate if the login is valid or not.
+	 * @return authenticated This value determines if the login is successful or not.
+	 */
+	public boolean authenticateLogin() 
+	{
+		//The authenticated value is false unless proven otherwise.
+		boolean authenicated = false;
+		//The username will be asked for from the user.
+		System.out.print("Username: ");
+		String username = input.nextLine();
+		//The username will be searched for in the binary tree.
+		Diary user = tree.searchTree(username);
+		System.out.println();
+		//The password will be asked for from the user.
+		System.out.print("Password: ");
+		String password = input.nextLine();
+		//If the input password is equal to the stored password then the credentials have been authorized.
+		if(password.equals(user.getEmployee().getPassword()))
+		{
+			authenticated = true;
+		}
+		return authenticated;
+	}
+	
 	/**
 	 * Will test if the node to the left is empty.
 	 * @param node This is the current node being tested for.
