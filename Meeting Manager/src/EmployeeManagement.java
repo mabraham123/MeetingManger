@@ -10,44 +10,58 @@ import java.util.*;
 public class EmployeeManagement {
 	
 	// Initialise variables
-	private int ID;
+	private String key;
 	private String userName;
-	private String employeeName;
+	private String employeeForename;
+	private String employeeSurname;
 	private String jobPosition;
+	private String password;
 	
 	
-	public EmployeeManagement (int i,String u, String e, String j) {
+	public EmployeeManagement (String i,String u, String fn, String sn, String j) {
 	/**
 	 *  The following methods initialise the Linked lists that stores employees
 	 */
-		ID = i;
+		key = i;
 		userName = u;
-		employeeName = e;
+		employeeForename = fn;
+		employeeSurname = sn;
 		jobPosition = j;
 	}
 	
-	// @returns the employee username
 	public String getUserName() {
+	/**
+	 *  @returns the employee username
+	 */
 		return userName;
 	}
 
 
 	public void setUserName(String userName) {
+	/**
+	 * @parm sets the employee username
+	 */
 		this.userName = userName;
 	}
 
 
 	public String getEmployeeName() {
-		return employeeName;
+	/**
+	 * @parm returns employee name
+	 */
+		return employeeForename;
 	}
 
 
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
+	public void setEmployeeName(String employeeForename) {
+		this.employeeForename = employeeForename;
 	}
 
 
 	public String getJobPosition() {
+		/**
+		 * @parm returns employee name
+		 */
 		return jobPosition;
 	}
 
@@ -62,14 +76,14 @@ public class EmployeeManagement {
 	 * This method stores employee that can be tested for the meeting management. You can either add the method below or 
 	 * or use this method.
 	 * 
-	 * @parm returns
+	 * @parm returns Hard coded data
 	 */
 	{
 LinkedList<EmployeeManagement> details = new LinkedList<EmployeeManagement>();
 		
-		details.add( new EmployeeManagement(101,"DScheitler","Daniel Scheitler","CEO"));
-		details.add( new EmployeeManagement(102,"GWashington","George Washington","employee"));
-		details.add( new EmployeeManagement(103,"ALincion","Abraham Linicon ","CEO"));
+		details.add( new EmployeeManagement("","DScheitler","Daniel", "Scheitler","CEO"));
+		details.add( new EmployeeManagement("","GWashington","George", "Washington","employee"));
+		details.add( new EmployeeManagement("","ALincion","Abraham", "Linicon ","CEO"));
 	}
 
 

@@ -69,7 +69,28 @@ public class Undo
     		return false;
     	}
     }
-
+    
+    public boolean isStackAdd() {
+    if (Object meeting)
+    {
+    	
+    }
+    else
+    {
+    	
+    }
+    }
+    
+    public boolean isStackEdit () {
+    if 
+    {
+    	
+    }
+    
+    else
+    {
+    	
+    }
  	public UndoNode pop()
     {
  		/**
@@ -88,6 +109,31 @@ public class Undo
 		else
 		//If stack not empty
 		{
+			if (isStackAdd() == true)
+			{
+				// Add Parameter for if this object comes from the add method
+				// Delete Meeting
+				nodeToPop = head;
+				// Remove the current node
+				head = head.getNext();
+				// Set the previous node to top of the list aka Head
+				return nodeToPop;
+				
+			}
+				
+			else if isStackEdit() == true)
+			{
+				// Add Parameter for if this object comes from the edit methodd.
+				// Restore parameter stored.
+				// Delete Meeting
+				nodeToPop = head;
+				// Remove the current node
+				head = head.getNext();
+				// Set the previous node to top of the list aka Head
+				return nodeToPop;
+			}
+			else 
+			// Delete Meeting
 			nodeToPop = head;
 			// Remove the current node
 			head = head.getNext();
