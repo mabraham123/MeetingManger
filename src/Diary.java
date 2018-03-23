@@ -1,24 +1,27 @@
 /**
- * 
- */
-
-/**
  * @author DAN
  *
  */
-public class Diary {
+public class Diary 
+{
 	private Employee employee;
 	private Appointment appointment;
 	private Appointment[] sortedAppointments;
 	private Diary left;
 	private Diary right;
 	private Diary previous;
-	
+
 	public Diary(Employee employeeInfo, Appointment appointmentInfo)
 	{
 		employee = employeeInfo;
 		appointment = appointmentInfo;
 	}
+	
+	public String convertToKey(String username) 
+	{
+		return employee.textToKey(username);
+	}
+	
 	/**
 	 * Will test if the node to the left is empty.
 	 * @param node This is the current node being tested for.
@@ -67,6 +70,7 @@ public class Diary {
 		return employee;
 	}
 
+	
 	/**
 	 * @param employee the employee to set
 	 */
@@ -141,6 +145,5 @@ public class Diary {
 	public void setPrevious(Diary previous) {
 		this.previous = previous;
 	}
-
 }
 	
