@@ -1,17 +1,19 @@
-/**
- * 
- */
-
+import java.util.Scanner;
 /**
  * @author DAN
  *
  */
-public class Diary {
+public class Diary 
+{
 	private Employee employee;
 	private Appointment appointment;
 	private Diary left;
 	private Diary right;
 	private Diary previous;
+	private DiaryTree tree = new DiaryTree();
+	
+	//A scanner object is created here to get user input.
+	Scanner input = new Scanner(System.in);
 	
 	/**
 	 * @return the previous
@@ -29,10 +31,12 @@ public class Diary {
 		this.previous = previous;
 	}
 
-	public Diary(Employee employeeInfo, Appointment appointmentInfo)
+	//Add this as a parameter later
+	//Appointment appointmentInfo
+	public Diary(String forename, String surname, String pass, String position, String username)
 	{
-		employee = employeeInfo;
-		appointment = appointmentInfo;
+		Employee employee = new Employee(forename, surname, pass, position, username);
+		//appointment = appointmentInfo;
 	}
 
 	/**
@@ -90,6 +94,31 @@ public class Diary {
 	}
 
 	/**
+	 * Will authenticate if the login is valid or not.
+	 * @return authenticated This value determines if the login is successful or not.
+	 */
+	public boolean authenticateLogin() 
+	{
+		//The authenticated value is false unless proven otherwise.
+		boolean authenticated = false;
+		//The username will be asked for from the user.
+		System.out.print("Username: ");
+		String username = input.nextLine();
+		//The username will be searched for in the binary tree.
+		Diary user = tree.searchTree(username);
+		System.out.println();
+		//The password will be asked for from the user.
+		System.out.print("Password: ");
+		String password = input.nextLine();
+		//If the input password is equal to the stored password then the credentials have been authorized.
+		if(password.equals(user.getEmployee().getPassword()))
+		{
+			authenticated = true;
+		}
+		return authenticated;
+	}
+	
+	/**
 	 * Will test if the node to the left is empty.
 	 * @param node This is the current node being tested for.
 	 * @return empty It is the value that determines if the reference to the left is empty or not.
@@ -129,6 +158,11 @@ public class Diary {
 			empty = false;
 		}
 		return empty;
+	}
+	
+	public String convertToKey(String username) 
+	{
+		return employee.textToKey(username);
 	}
 	
 }

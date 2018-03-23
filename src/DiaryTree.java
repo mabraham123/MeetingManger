@@ -113,43 +113,85 @@ public class DiaryTree {
 	}
 	
 	/**
-	 * Searches for a particular person in the tree and prints their appointment info
-	 * @param search The ID to search for
+	 * Will search the binary tree for a specific node and return it.
+	 * @param username This is the username being searched for within the tree.
+	 * @return current This will be the diary node with the same username as the initial parameter.
 	 */
-	public Diary searchDiaryNode(String username)
+	public Diary searchTree(String username) 
 	{
-		//Pointer is set to the root.
+		//The current node pointer is set to reference to the root.
 		current = root;
-		
-		//Boolean value to determine whether the node has been found.
+		//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
+		BigInteger userID = new BigInteger(current.convertToKey(username));
+		//The found field will check if the diary node has been found.
 		boolean found = false;
 		
-		//A simple date format object is created here.
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy"); 
-		
-		//Code loops as long as the node is not empty and the node being searched for has not been found.
-		while (current != null && found == false)
+		//The loop continues as long as exitloop is false.
+		boolean exitLoop = false;
+		while (!exitLoop) 
 		{
-			//The first letter of the username is obtained here.
-			char firstCharForUsername = 
-			
-			if (current.getEmployee().getUsername().equals(username))
-			{
-				//The found value has been set to true.
-				found = true;
+			//If the current node is not a null value
+			if(current != null) 
+			{	
+				//The key is retrieved from the current node's employee. 
+				String key = current.getEmployee().getKey();
+				//The key is stored as a biginteger.
+				BigInteger currentKey = new BigInteger(key);
+				//will test if the current key is greater or less than the userID.
+				int greaterOrLess = currentKey.compareTo(userID);
+				//If the userID is less than the current ID-the current reference will point to the node on the left.
+				if(greaterOrLess == 1) 
+				{
+					if(current.isLeftEmpty(current)) 
+					{
+						//Since there is no more nodes to the left therefore the user does not exist.
+						noUserFoundMessage();
+						exitLoop = true; 
+					}
+					else 
+					{
+						current = current.getLeft();
+					}
+				}
+				//If the UserID is more than the current key the current reference will point to the node on the right.
+				else if (greaterOrLess == -1) 
+				{
+					if(current.isRightEmpty(current))
+					{
+						//Since there is no more nodes to the right therefore the user does not exist.
+						noUserFoundMessage();
+						exitLoop = true;
+					}
+					else
+					{
+						current = current.getRight();
+					}
+				}
+				else
+				{
+					//The diary node has been found so found is set to true.
+					found = true;
+				}
 			}
-			else if (search < current.getEmployee().getID())
-			{
-				current = current.getLeft();
-			}
-			else if (search > current.getEmployee().getID())
-			{
-				current = current.getRight();
-			}
-			
 		}
+		
+		//If the diary node has not been found the current node will be set to null.
+		if(found == false) 
+		{
+			current = null;
+		}
+		
 		return current;
 	}
+	
+	/**
+	 * Will inform the user that the username cannot be found.
+	 */
+	public void noUserFoundMessage() 
+	{
+		System.out.println("Username does not exist");
+	}
+	
 	/**
 	 * Edits a field of the chosen appointment in the diary of the logged on user 
 	 * @param loggedIn The user who is current logged in and the diary to be edited

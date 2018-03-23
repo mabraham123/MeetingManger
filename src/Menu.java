@@ -15,13 +15,15 @@ public class Menu {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	/*
+	 * public static void main(String[] args) {
 		Menu menu = new Menu();
 		
 		menu.init();
 		menu.login();
         menu.process();
 	}
+	*/
 	/**
 	 * Instantiates any objects at the start
 	 */
@@ -161,6 +163,7 @@ public class Menu {
            }
        }while (!exit);
    }
+	
 	public void addAppointment() 
 	{	
 		String appointmentType = getString("Enter the appointment type");
@@ -173,11 +176,13 @@ public class Menu {
 		
 		diaryTree.addAppointment(appointmentType, description, startTime, endTime, year, month, day, loggedIn);
 	}
+	
 	public void viewDiary()
 	{
 		int search = getInt("Enter the ID of the employee to view their diary");
 		diaryTree.searchDiaryNode(search);
 	}
+	
 	public void editAppointment()
 	{
 		int fieldChoice;

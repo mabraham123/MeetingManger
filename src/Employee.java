@@ -14,13 +14,13 @@ public class Employee {
 	private String username;
 	private String Key;
 	
-	public Employee(String forename, String surname, String pass, String position, int i)
+	public Employee(String forename, String surname, String pass, String position, String username)
 	{
 		employeeForename = forename;
 		employeeSurname = surname;
 		jobPosition = position;
+		setUsername(username);
 		setPassword(pass);
-		ID = i;
 	}
 	
 	/**
@@ -64,18 +64,7 @@ public class Employee {
 	public void setJobPosition(String jobPosition) {
 		this.jobPosition = jobPosition;
 	}
-	/**
-	 * @return the iD
-	 */
-	public int getID() {
-		return ID;
-	}
-	/**
-	 * @param iD the iD to set
-	 */
-	public void setID(int iD) {
-		ID = iD;
-	}
+	
 	/**
 	 * @return the employeeSurname
 	 */
@@ -122,7 +111,7 @@ public class Employee {
 	 * Will convert the username to a key that acts like an ID.
 	 * @param username This is the user's username.
 	 */
-	public void textToKey(String username)
+	public String textToKey(String username)
 	{
 		String key = "";
 		for(int i = 0; i < username.length(); i++) 
@@ -211,5 +200,6 @@ public class Employee {
 			}
 		}
 		setKey(key);
+		return key;
 	}
 }
