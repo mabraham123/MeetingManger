@@ -5,7 +5,6 @@
  */
 public class Diary {
 	private Employee employee;
-	private int ID;
 	private Appointment appointment;
 	private Appointment[] sortedAppointments;
 	private Diary left;
@@ -146,20 +145,6 @@ public class Diary {
 	 */
 	public void setPrevious(Diary previous) {
 		this.previous = previous;
-	}
-
-	/**
-	 * @return the iD
-	 */
-	public int getID() {
-		return ID;
-	}
-
-	/**
-	 * @param iD the iD to set
-	 */
-	public void setID(int iD) {
-		ID = iD;
 	}
 	
 }

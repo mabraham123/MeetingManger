@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 /**
@@ -37,7 +38,7 @@ public class Menu {
 		int month = 04;
 		int day = 28;
 		
-		Employee employee1 = new Employee("Daniel", "Scheitler", "pass1", "CEO", 100);
+		Employee employee1 = new Employee("Daniel", "Scheitler", "Dan" , "pass1", "CEO", 100);
 		Appointment appointment1 = new Appointment("Client meeting", "Test description", 900, 1000, null, year, month, day);
 		Diary DanielScheitlerDiary = new Diary(employee1, appointment1);
 		
@@ -47,7 +48,7 @@ public class Menu {
 		month = 11;
 		day = 14;
 		
-		Employee employee2 = new Employee("Ben", "Franklin", "pass2", "CTO", 120);
+		Employee employee2 = new Employee("Ben", "Franklin", "franku", "pass2", "CTO", 120);
 		Appointment appointment2 = new Appointment("Tech meeting", "Test description", 1200, 1300, null, year, month, day);
 		Diary BenFranklinDiary = new Diary(employee2, appointment2);
 		
@@ -57,7 +58,7 @@ public class Menu {
 		month = 8;
 		day = 14;
 		
-		Employee employee3 = new Employee("George", "Washington", "pass3", "CIO", 110);
+		Employee employee3 = new Employee("George", "Washington", "Washlad", "pass3", "CIO", 110);
 		Appointment appointment3 = new Appointment("Information meeting", "Test description", 1600, 1800, null, year, month, day);
 		Diary GeorgeWashingtonDiary = new Diary(employee3, appointment3);
 		
@@ -99,8 +100,9 @@ public class Menu {
 		//If the input password is equal to the stored password then the credentials have been authorized.
 		if(password.equals(user.getEmployee().getPassword()))
 		{
+			System.out.println("Login successful");
 			authenticated = true;
-			user = loggedIn;
+			loggedIn = user;
 		}
 		return authenticated;
 	}
@@ -205,11 +207,20 @@ public class Menu {
 		getDiaryTree().addAppointment(appointmentType, description, startTime, endTime, year, month, day, loggedIn);
 		getDiaryTree().sortAppointments(loggedIn);
 	}
+	
 	public void viewDiary()
 	{
-		int search = getInt("Enter the ID of the employee to view their diary");
-		getDiaryTree().searchDiaryNode(search);
+		String username = getString("Enter the username of the employee to view their diary");
+		Diary employee = getDiaryTree().searchTree(username);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+		System.out.println(employee.getEmployee().getEmployeeForename() + "" + employee.getEmployee().getEmployeeSurname() + ":");
+		diaryTree.sortAppointments(employee);
+		for (int i = 0; i < employee.getSortedAppointments().length; i++)
+		{
+			System.out.println(employee.getSortedAppointments()[i].getAppointmentType() + "\n" + employee.getSortedAppointments()[i].getDescription() + "\n" + employee.getSortedAppointments()[i].getStartTime() + "\n" + employee.getSortedAppointments()[i].getEndTime() + "\n" + sdf.format(employee.getSortedAppointments()[i].getAppointmentDate().getTime()));
+		}
 	}
+	
 	public void editAppointment()
 	{
 		int fieldChoice;
@@ -321,13 +332,15 @@ public class Menu {
 	/**
 	 * @return the diaryTree
 	 */
-	public DiaryTree getDiaryTree() {
+	public DiaryTree getDiaryTree() 
+	{
 		return diaryTree;
 	}
 	/**
 	 * @param diaryTree the diaryTree to set
 	 */
-	public void setDiaryTree(DiaryTree diaryTree) {
+	public void setDiaryTree(DiaryTree diaryTree) 
+	{
 		this.diaryTree = diaryTree;
 	}
 }

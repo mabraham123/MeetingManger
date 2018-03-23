@@ -15,12 +15,15 @@ public class Employee {
 	private String key;
 	private int ID;
 	
-	public Employee(String forename, String surname, String pass, String position, int i)
+	public Employee(String forename, String surname, String username, String pass, String position, int i)
 	{
 		employeeForename = forename;
 		employeeSurname = surname;
 		jobPosition = position;
 		setPassword(pass);
+		this.username = username;
+		//The username is ensured to be a non-duplicate value.
+		key = textToKey(username);
 		ID = i;
 	}
 	/**
@@ -113,6 +116,84 @@ public class Employee {
 				break;
 			case "z":
 				key = key + "26";
+				break;
+			case "A":
+				key = key + "27";
+				break;
+			case "B":
+				key = key + "28";
+				break;
+			case "C":
+				key = key + "29";
+				break;
+			case "D":
+				key = key + "30";
+				break;
+			case "E":
+				key = key + "31";
+				break;
+			case "F":
+				key = key + "32";
+				break;
+			case "G":
+				key = key + "33";
+				break;
+			case "H":
+				key = key + "34";
+				break;
+			case "I":
+				key = key + "35";
+				break;
+			case "J":
+				key = key + "36";
+				break;
+			case "K":
+				key = key + "37";
+				break;
+			case "L":
+				key = key + "38";
+				break;
+			case "M":
+				key = key + "39";
+				break;
+			case "N":
+				key = key + "40";
+				break;
+			case "O":
+				key = key + "41";
+				break;
+			case "P":
+				key = key + "42";
+				break;
+			case "Q":
+				key = key + "43";
+				break;
+			case "R":
+				key = key + "44";
+				break;
+			case "S":
+				key = key + "45";
+				break;
+			case "T":
+				key = key + "46";
+				break;
+			case "U":
+				key = key + "47";
+				break;
+			case "V":
+				key = key + "48";
+				break;
+			case "W":
+				key = key + "49";
+				break;
+			case "X":
+				key = key + "50";
+				break;
+			case "Y":
+				key = key + "51";
+				break;
+			case "Z":
+				key = key + "52";
 				break;
 			}
 		}

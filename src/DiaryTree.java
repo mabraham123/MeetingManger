@@ -214,7 +214,7 @@ public class DiaryTree {
 		
 		//The loop continues as long as exitloop is false.
 		boolean exitLoop = false;
-		while (!exitLoop) 
+		while (exitLoop == false) 
 		{
 			//If the current node is not a null value
 			if(current != null) 
@@ -257,6 +257,7 @@ public class DiaryTree {
 				{
 					//The diary node has been found so found is set to true.
 					found = true;
+					exitLoop = true;
 				}
 			}
 		}
@@ -403,7 +404,14 @@ public class DiaryTree {
 		}
 		
 		//appointmentToDelete = appointmentToDelete.getNextAppointment();
-		previous.setNextAppointment(appointmentToDelete.getNextAppointment());
+		if (previous != appointmentToDelete.getNextAppointment())
+		{
+			previous.setNextAppointment(appointmentToDelete.getNextAppointment());
+		}
+		else
+		{
+			loggedIn.setAppointment(null);
+		}
 	}
 	/**
 	 * Checks that the login details match the ones stored
