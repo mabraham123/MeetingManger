@@ -108,6 +108,7 @@ public class Appointment {
 	public void setAppointmentDate(int year, int month, int day) {
 		this.appointmentDate = new GregorianCalendar(year, month, day);
 	}
+
 	/**
 	 * Will save appointment details to a text file.
 	 * @param appointment This is the appointment object to be saved.
@@ -126,10 +127,8 @@ public class Appointment {
 			writer.write(appointment.getAppointmentType() + ";");
 			writer.write(appointment.getDescription());
 			writer.newLine();
-			//TODO: Double check if start and end times are measured as floats.
 			writer.write(appointment.getStartTime() + ",");
 			writer.write(String.valueOf(appointment.getEndTime()));
-			//TODO: Implement proper method of saving date to file.
 			//writer.write(appointment.getAppointmentDate());
 			writer.newLine();
 			//The writer is closed to avoid memory leaks.

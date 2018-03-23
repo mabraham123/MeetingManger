@@ -3,14 +3,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * 
- */
-
-/**
  * @author DAN
  *
  */
-public class DiaryTree {
+public class DiaryTree 
+{
 	private Diary root;
 	private Diary current;
 	/**
@@ -198,6 +195,7 @@ public class DiaryTree {
 			
 		}
 	}
+	
 	/**
 	 * Will search the binary tree for a specific node and return it.
 	 * @param username This is the username being searched for within the tree.
@@ -267,9 +265,9 @@ public class DiaryTree {
 		{
 			current = null;
 		}
-		
 		return current;
 	}
+
 	/**
 	 * Will inform the user that the username cannot be found.
 	 */
@@ -277,46 +275,7 @@ public class DiaryTree {
 	{
 		System.out.println("Username does not exist");
 	}
-	/**
-	 * Searches for a particular person in the tree and prints their appointment info
-	 * @param search The ID to search for
-	 */
-	/**
-	public Diary searchDiaryNode(String username)
-	{
-		//Pointer is set to the root.
-		current = root;
-		
-		//Boolean value to determine whether the node has been found.
-		boolean found = false;
-		
-		//A simple date format object is created here.
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy"); 
-		
-		//Code loops as long as the node is not empty and the node being searched for has not been found.
-		while (current != null && found == false)
-		{
-			//The first letter of the username is obtained here.
-			char firstCharForUsername = 
-			
-			if (current.getEmployee().getUsername().equals(username))
-			{
-				//The found value has been set to true.
-				found = true;
-			}
-			else if (search < current.getEmployee().getID())
-			{
-				current = current.getLeft();
-			}
-			else if (search > current.getEmployee().getID())
-			{
-				current = current.getRight();
-			}
-			
-		}
-		return current;
-	}
-	*/
+	
 	/**
 	 * Edits a field of the chosen appointment in the diary of the logged on user 
 	 * @param loggedIn The user who is current logged in and the diary to be edited
@@ -387,6 +346,7 @@ public class DiaryTree {
 			//loggedIn = current;
 		}
 	}
+	
 	/**
 	 * Deletes an appointment from the diary
 	 * @param appointmentDelete The appointment to be deleted
@@ -413,48 +373,7 @@ public class DiaryTree {
 			loggedIn.setAppointment(null);
 		}
 	}
-	/**
-	 * Checks that the login details match the ones stored
-	 * @param password The password of the user
-	 * @param ID The ID of the user
-	 * @return current The diary of the logged on user
-	 */
-	public Diary checkLogin(String password, int ID)
-	{
-		Diary current = root;
-		boolean found = false;
-		
-		while (current != null && found == false)
-		{
-			/**
-			if (current.getEmployee().getID() == ID && current.getEmployee().getPassword() == password)
-			{
-				found = true;
-			}
-			*/
-			if (ID == current.getEmployee().getID())
-			{
-				if (password.equals(current.getEmployee().getPassword()))
-				{
-					found = true;
-				}
-				else
-				{
-					System.out.println("Incorrect password");
-					return null;
-				}
-			}
-			else if (ID < current.getEmployee().getID())
-			{
-				current = current.getLeft();
-			}
-			else if (ID > current.getEmployee().getID())
-			{
-				current = current.getRight();
-			}
-		}
-		return current;
-	}
+	
 	public void sortAppointments(Diary loggedIn)
 	{
 		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();

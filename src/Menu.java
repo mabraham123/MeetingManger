@@ -2,24 +2,23 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 /**
- * 
- */
-
-/**
  * @author DAN
  *
  */
-public class Menu {
+public class Menu 
+{
 	private DiaryTree diaryTree;
 	private Diary loggedIn;
 	private String username;
 	
 	//A scanner object is created here to get user input.
 	Scanner input = new Scanner(System.in);
+
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		Menu menu = new Menu();
 		
 		menu.init();
@@ -31,18 +30,18 @@ public class Menu {
 	 */
 	public void init()
 	{
-		setDiaryTree(new DiaryTree());
+		diaryTree = new DiaryTree();
 		//SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
 		
 		int year = 2018;
 		int month = 04;
 		int day = 28;
-		
+
 		Employee employee1 = new Employee("Daniel", "Scheitler", "Dan" , "pass1", "CEO", 100);
 		Appointment appointment1 = new Appointment("Client meeting", "Test description", 900, 1000, null, year, month, day);
 		Diary DanielScheitlerDiary = new Diary(employee1, appointment1);
-		
-		getDiaryTree().addDiaryNode(DanielScheitlerDiary);
+		diaryTree.addDiaryNode(DanielScheitlerDiary);
+
 		
 		year = 2018;
 		month = 11;
@@ -52,7 +51,8 @@ public class Menu {
 		Appointment appointment2 = new Appointment("Tech meeting", "Test description", 1200, 1300, null, year, month, day);
 		Diary BenFranklinDiary = new Diary(employee2, appointment2);
 		
-		getDiaryTree().addDiaryNode(BenFranklinDiary);
+		diaryTree.addDiaryNode(BenFranklinDiary);
+
 		
 		year = 2018;
 		month = 8;
@@ -62,24 +62,10 @@ public class Menu {
 		Appointment appointment3 = new Appointment("Information meeting", "Test description", 1600, 1800, null, year, month, day);
 		Diary GeorgeWashingtonDiary = new Diary(employee3, appointment3);
 		
-		getDiaryTree().addDiaryNode(GeorgeWashingtonDiary);
+		diaryTree.addDiaryNode(GeorgeWashingtonDiary);
+
 	}
-	public void login()
-	{
-		do {
-			int ID = getInt("Enter your ID");
-			String password = getString("Input your password");
-			loggedIn = getDiaryTree().checkLogin(password, ID);
-		}
-		while (loggedIn == null);
-			
-			String forename = loggedIn.getEmployee().getEmployeeForename();
-			String surname = loggedIn.getEmployee().getEmployeeSurname();
-			char firstLetter = forename.charAt(0);
 		
-			setUsername(firstLetter + surname);
-			System.out.println("Welcome " + getUsername());
-	}
 	/**
 	 * Will authenticate if the login is valid or not.
 	 * @return authenticated This value determines if the login is successful or not.
@@ -106,6 +92,7 @@ public class Menu {
 		}
 		return authenticated;
 	}
+	
 	/**
 	 * Runs the menu
 	 */
@@ -192,7 +179,7 @@ public class Menu {
        }while (!exit);
    }
 	public void addAppointment() 
-	{	
+	{
 		Scanner s = new Scanner(System.in);
 		String appointmentType = getString("Enter the appointment type");
 		String description = getString("Enter the description");
@@ -255,8 +242,9 @@ public class Menu {
 			month = getInt("Enter the month in the form e.g. 03");
 			day = getInt("Enter the day in the form e.g. 26");
 		}
-		getDiaryTree().editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo, year, month, day);
+		diaryTree.editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo, year, month, day);
 	}
+	
 	public void deleteAppointment()
 	{
 		int counter = 1;
@@ -276,7 +264,8 @@ public class Menu {
 		}
 		while (appointmentDelete < 0 || appointmentDelete > counter);
 		
-		getDiaryTree().deleteAppointment(appointmentDelete, loggedIn);
+
+		diaryTree.deleteAppointment(appointmentDelete, loggedIn);
 	}
 	/**
      * Uses Scanner to get a new String from the user
@@ -329,6 +318,7 @@ public class Menu {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	/**
 	 * @return the diaryTree
 	 */
