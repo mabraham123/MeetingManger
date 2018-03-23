@@ -1,10 +1,14 @@
-import java.util.GregorianCalendar;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+/**
+ * 
+ */
 
 /**
  * @author DAN
@@ -39,7 +43,6 @@ public class Appointment {
 	public void setAppointmentType(String appointmentType) {
 		this.appointmentType = appointmentType;
 	}
-	
 	/**
 	 * @return the startTime
 	 */
@@ -94,7 +97,21 @@ public class Appointment {
 	public void setNextAppointment(Appointment nextAppointment) {
 		this.nextAppointment = nextAppointment;
 	}
-	
+	/**
+	 * @return the appointmentDate
+	 */
+	public Calendar getAppointmentDate() {
+		return appointmentDate;
+	}
+	/**
+	 * Sets the appointment date 
+	 * @param year The year of appointment
+	 * @param month The month of appointment
+	 * @param day The day of appointment
+	 */
+	public void setAppointmentDate(int year, int month, int day) {
+		this.appointmentDate = new GregorianCalendar(year, month, day);
+	}
 	/**
 	 * Will save appointment details to a text file.
 	 * @param appointment This is the appointment object to be saved.
@@ -170,21 +187,5 @@ public class Appointment {
 		{
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * @return the appointmentDate
-	 */
-	public Calendar getAppointmentDate() {
-		return appointmentDate;
-	}
-	/**
-	 * Sets the appointment date 
-	 * @param year The year of appointment
-	 * @param month The month of appointment
-	 * @param day The day of appointment
-	 */
-	public void setAppointmentDate(int year, int month, int day) {
-		this.appointmentDate = new GregorianCalendar(year, month, day);
 	}
 }

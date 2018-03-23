@@ -1,5 +1,10 @@
-import java.text.SimpleDateFormat;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+/**
+ * 
+ */
 
 /**
  * @author DAN
@@ -8,7 +13,6 @@ import java.math.BigInteger;
 public class DiaryTree {
 	private Diary root;
 	private Diary current;
-
 	/**
 	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
 	 * @param diaryToAdd The diary node to be added to the tree
@@ -113,6 +117,88 @@ public class DiaryTree {
 	}
 	
 	/**
+	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
+	 * @param diaryToAdd The diary node to be added to the tree
+	 */
+	/**
+	public void addDiaryNode(Diary diaryToAdd) 
+	{
+		Diary current = root;
+		Diary previous = null;
+
+		if (root == null)
+		{
+			root = diaryToAdd;
+		}
+		else
+		{
+			while (current != null)
+			{
+				previous = current;
+
+				if (diaryToAdd.getEmployee().getID() < current.getEmployee().getID())
+				{
+					current = current.getLeft();
+				}
+				else if (diaryToAdd.getEmployee().getID() > current.getEmployee().getID())
+				{
+					current = current.getRight();
+				}
+				else if (diaryToAdd.getEmployee().getID() == current.getEmployee().getID())
+				{
+					System.out.println("The ID is already in the tree!");
+					break;
+				}
+			}
+
+			if (diaryToAdd.getEmployee().getID() < previous.getEmployee().getID())
+			{
+				diaryToAdd = previous.setLeft(diaryToAdd);
+			}
+			else if (diaryToAdd.getEmployee().getID() > previous.getEmployee().getID())
+			{
+				diaryToAdd = previous.setRight(diaryToAdd);
+			}
+			else
+			{
+				//exits as already exists
+			}
+		}
+	}
+	*/
+	/**
+	 * Searches for a particular person in the tree and prints their appointment info
+	 * @param search The ID to search for
+	 */
+	public void searchDiaryNode(int search)
+	{
+		Diary current = root;
+		boolean found = false;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+		
+		while (current != null && found == false)
+		{
+			if (current.getEmployee().getID() == search)
+			{
+				found = true;
+				System.out.println(current.getEmployee().getEmployeeForename() + " " + current.getEmployee().getEmployeeSurname()+ ":");
+				for (int i = 0; i < current.getSortedAppointments().length; i++)
+				{
+					System.out.println("\n" + current.getSortedAppointments()[i].getAppointmentType() + "\n" + current.getSortedAppointments()[i].getDescription() + "\n" + current.getSortedAppointments()[i].getStartTime() + "\n" + current.getSortedAppointments()[i].getEndTime() + "\n" + sdf.format(current.getSortedAppointments()[i].getAppointmentDate().getTime()));
+				}
+			}
+			else if (search < current.getEmployee().getID())
+			{
+				current = current.getLeft();
+			}
+			else if (search > current.getEmployee().getID())
+			{
+				current = current.getRight();
+			}
+			
+		}
+	}
+	/**
 	 * Will search the binary tree for a specific node and return it.
 	 * @param username This is the username being searched for within the tree.
 	 * @return current This will be the diary node with the same username as the initial parameter.
@@ -183,7 +269,6 @@ public class DiaryTree {
 		
 		return current;
 	}
-	
 	/**
 	 * Will inform the user that the username cannot be found.
 	 */
@@ -191,7 +276,46 @@ public class DiaryTree {
 	{
 		System.out.println("Username does not exist");
 	}
-	
+	/**
+	 * Searches for a particular person in the tree and prints their appointment info
+	 * @param search The ID to search for
+	 */
+	/**
+	public Diary searchDiaryNode(String username)
+	{
+		//Pointer is set to the root.
+		current = root;
+		
+		//Boolean value to determine whether the node has been found.
+		boolean found = false;
+		
+		//A simple date format object is created here.
+		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy"); 
+		
+		//Code loops as long as the node is not empty and the node being searched for has not been found.
+		while (current != null && found == false)
+		{
+			//The first letter of the username is obtained here.
+			char firstCharForUsername = 
+			
+			if (current.getEmployee().getUsername().equals(username))
+			{
+				//The found value has been set to true.
+				found = true;
+			}
+			else if (search < current.getEmployee().getID())
+			{
+				current = current.getLeft();
+			}
+			else if (search > current.getEmployee().getID())
+			{
+				current = current.getRight();
+			}
+			
+		}
+		return current;
+	}
+	*/
 	/**
 	 * Edits a field of the chosen appointment in the diary of the logged on user 
 	 * @param loggedIn The user who is current logged in and the diary to be edited
@@ -221,11 +345,11 @@ public class DiaryTree {
 		}
 		else if (fieldChoice == 3)
 		{
-			appointmentToEdit.setStartTime(fieldInfo);
+			appointmentToEdit.setStartTime(Float.parseFloat(fieldInfo));
 		}
 		else if (fieldChoice == 4)
 		{
-			appointmentToEdit.setEndTime(fieldInfo);
+			appointmentToEdit.setEndTime(Float.parseFloat(fieldInfo));
 		}
 		else if (fieldChoice == 5)
 		{
@@ -233,7 +357,7 @@ public class DiaryTree {
 		}
 	}
 	/**
-	 * 
+	 * Adds an appointment to the diary of the logged in user
 	 * @param appointmentType Type of appointment
 	 * @param description Description of appointment
 	 * @param startTime Start time of appointment
@@ -243,7 +367,7 @@ public class DiaryTree {
 	 * @param day Day of appointment
 	 * @param loggedIn The diary to be added to
 	 */
-	public void addAppointment(String appointmentType, String description, String startTime, String endTime, int year, int month, int day, Diary loggedIn)
+	public void addAppointment(String appointmentType, String description, float startTime, float endTime, int year, int month, int day, Diary loggedIn)
 	{
 		Appointment current = loggedIn.getAppointment();
 		Appointment appointmentToAdd = new Appointment(appointmentType, description, startTime, endTime, null, year, month, day);
@@ -289,7 +413,7 @@ public class DiaryTree {
 	 */
 	public Diary checkLogin(String password, int ID)
 	{
-		current = root;
+		Diary current = root;
 		boolean found = false;
 		
 		while (current != null && found == false)
@@ -323,6 +447,41 @@ public class DiaryTree {
 		}
 		return current;
 	}
+	public void sortAppointments(Diary loggedIn)
+	{
+		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
+		Appointment current = loggedIn.getAppointment();
+		Appointment temp = null;
+		
+		while (current != null)
+		{
+			arrayList.add(current);
+			current = current.getNextAppointment();
+		}
+		Appointment[] sortedArray = new Appointment[arrayList.size()];
+		
+		current = loggedIn.getAppointment();
+		for (int p = 0; p < sortedArray.length; p++)
+		{
+			sortedArray[p] = current;
+			current = current.getNextAppointment();
+		}
+		
+		for (int i = 0; i < sortedArray.length - 1; i++)
+		{
+			for (int j = 0; j < (sortedArray.length - i - 1); j++)
+			{
+				if (sortedArray[j].getAppointmentDate().after(sortedArray[j+1].getAppointmentDate()))
+				{
+					temp = sortedArray[j];  
+					sortedArray[j] = sortedArray[j+1];  
+					sortedArray[j+1] = temp; 
+				}
+			}
+		}
+		loggedIn.setSortedAppointments(sortedArray);
+	}
+	
 	/**
 	 * Gets the root of the tree
 	 * @return root The root of the tree
