@@ -117,12 +117,15 @@ public class DiaryTree {
 	 * @param username This is the username being searched for within the tree.
 	 * @return current This will be the diary node with the same username as the initial parameter.
 	 */
-	Diary searchTree(String username) 
+	public Diary searchTree(String username) 
 	{
 		//The current node pointer is set to reference to the root.
 		current = root;
 		//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
 		BigInteger userID = new BigInteger(current.convertToKey(username));
+		//The found field will check if the diary node has been found.
+		boolean found = false;
+		
 		//The loop continues as long as exitloop is false.
 		boolean exitLoop = false;
 		while (!exitLoop) 
@@ -166,11 +169,19 @@ public class DiaryTree {
 				}
 				else
 				{
-					//The userID and the current key are equal therefore the current node will be returned.
-					return current;
+					//The diary node has been found so found is set to true.
+					found = true;
 				}
 			}
 		}
+		
+		//If the diary node has not been found the current node will be set to null.
+		if(found == false) 
+		{
+			current = null;
+		}
+		
+		return current;
 	}
 	
 	/**

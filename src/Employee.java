@@ -12,16 +12,15 @@ public class Employee {
 	private String jobPosition;
 	private String password;
 	private String username;
-	private int ID;
 	private String Key;
 	
-	public Employee(String forename, String surname, String pass, String position, int i)
+	public Employee(String forename, String surname, String pass, String position, String username)
 	{
 		employeeForename = forename;
 		employeeSurname = surname;
 		jobPosition = position;
+		setUsername(username);
 		setPassword(pass);
-		ID = i;
 	}
 	
 	/**
@@ -65,18 +64,7 @@ public class Employee {
 	public void setJobPosition(String jobPosition) {
 		this.jobPosition = jobPosition;
 	}
-	/**
-	 * @return the iD
-	 */
-	public int getID() {
-		return ID;
-	}
-	/**
-	 * @param iD the iD to set
-	 */
-	public void setID(int iD) {
-		ID = iD;
-	}
+	
 	/**
 	 * @return the employeeSurname
 	 */

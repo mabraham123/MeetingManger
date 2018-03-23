@@ -13,7 +13,7 @@ public class Diary
 	private DiaryTree tree = new DiaryTree();
 	
 	//A scanner object is created here to get user input.
-	Scanner input = new Scanner(System.in;
+	Scanner input = new Scanner(System.in);
 	
 	/**
 	 * @return the previous
@@ -31,10 +31,12 @@ public class Diary
 		this.previous = previous;
 	}
 
-	public Diary(Employee employeeInfo, Appointment appointmentInfo)
+	//Add this as a parameter later
+	//Appointment appointmentInfo
+	public Diary(String forename, String surname, String pass, String position, String username)
 	{
-		employee = employeeInfo;
-		appointment = appointmentInfo;
+		Employee employee = new Employee(forename, surname, pass, position, username);
+		//appointment = appointmentInfo;
 	}
 
 	/**
@@ -98,7 +100,7 @@ public class Diary
 	public boolean authenticateLogin() 
 	{
 		//The authenticated value is false unless proven otherwise.
-		boolean authenicated = false;
+		boolean authenticated = false;
 		//The username will be asked for from the user.
 		System.out.print("Username: ");
 		String username = input.nextLine();
