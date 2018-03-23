@@ -12,7 +12,6 @@ public class Employee {
 	private String jobPosition;
 	private String password;
 	private String username;
-	private int ID;
 	private String Key;
 	
 	public Employee(String forename, String surname, String pass, String position, int i)
