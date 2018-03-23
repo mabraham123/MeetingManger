@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Calendar;
 
 /**
  * 
@@ -163,16 +164,55 @@ public class Menu {
    }
 	public void addAppointment() 
 	{	
-		String appointmentType = getString("Enter the appointment type");
-		String description = getString("Enter the description");
-		int startTime = getString("Enter the start time in the form e.g. 0900");
-		int endTime = getString("Enter the end time in the form e.g. 1200");
-		int year = getInt("Enter the year in the form e.g. 2018");
-		int month = getInt("Enter the month in the form e.g. 03");
-		int day = getInt("Enter the day in the form e.g. 26");
+//		String appointmentType = getString("Enter the appointment type");
+//		String description = getString("Enter the description");
+//		int startTime = getString("Enter the start time in the form e.g. 0900");
+//		int endTime = getString("Enter the end time in the form e.g. 1200");
+//		int year = getInt("Enter the year in the form e.g. 2018");
+//		int month = getInt("Enter the month in the form e.g. 03");
+//		int day = getInt("Enter the day in the form e.g. 26");
+//		
+//		diaryTree.addAppointment(appointmentType, description, startTime, endTime, year, month, day, loggedIn);
+//		diaryTree.sortAppointments(loggedIn);
 		
-		diaryTree.addAppointment(appointmentType, description, startTime, endTime, year, month, day, loggedIn);
-		diaryTree.sortAppointments(loggedIn);
+		
+		//Get the appointment type
+		Scanner appointmentTypeReader= new Scanner(System.in);
+		System.out.println("Appointment Type: ");
+		String appointmentType= appointmentTypeReader.nextLine();
+		
+		//Get the description
+		Scanner descriptionReader= new Scanner(System.in);
+		System.out.println("Appointment Type: ");
+		String description= descriptionReader.nextLine();
+		
+		//Get the duration
+		Scanner durationReader= new Scanner(System.in);
+		System.out.println("Appointment Type: ");
+		String duration= durationReader.nextLine();
+		
+		//Get the date
+		Scanner dateReader= new Scanner(System.in);
+		System.out.println("Appointment Type: ");
+		Calendar date= durationReader.next();
+		
+		//Get the members of the meeting
+			//Ask how many members for one meeting
+			Scanner numberOfMembersReader= new Scanner(System.in);
+			System.out.println("Appointment Type: ");
+			int numberOfMembers= numberOfMembersReader.nextInt();
+			
+			
+			//Find member
+			
+			//Add to linkedList
+		
+		//Find the meeting times
+		
+		//Select the time
+		
+		
+		
 	}
 	public void viewDiary()
 	{

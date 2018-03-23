@@ -92,12 +92,9 @@ public class Diary {
 	/**
      * Method to find a possible meeting time for all the members of the meeting
      * @param allMeetingMembers Array of every person in the meeting
-     * @param rangeStart start of the range of working time
-     * @param rangeEnd end of the range of working time
-     * @param startTime the earliest time the user has suggested
-     * @param endTime the last time the user has suggested
+     * @param date The date of the potential meeting
      */
-    public Set<Float> findAMeeting(Employee[] allMeetingMembers,Calendar date ,int rangeStart, int rangeEnd){
+    public Set<Float> findAMeetingTime(Employee[] allMeetingMembers,Calendar date){
     	//Create a set to hold the full working day
     	Set<Float> rangeOfTimesSet= new HashSet<Float>();
     	
@@ -113,8 +110,8 @@ public class Diary {
     	}
     	
     	//Find the latest time all the members are working
-            //Find minimum
-            float latestTime= allMeetingMembers[0].getDayEnd();
+        //Find minimum
+        float latestTime= allMeetingMembers[0].getDayEnd();
             
     	for(int counter=1; counter<allMeetingMembers.length; counter++){
     		if(allMeetingMembers[counter].getDayEnd()<latestTime){
