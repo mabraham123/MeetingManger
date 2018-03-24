@@ -1,0 +1,41 @@
+Daniel
+Scheitler
+CEO
+Dan
+pass1
+---
+Client meeting
+Test description
+900.0
+1000.0
+28 05 2018
+owkewe
+towtt
+1300.0
+1500.0
+12 10 2019
+---
+Ben
+Franklin
+CTO
+franku
+pass2
+---
+Tech meeting
+Test description
+1200.0
+1300.0
+14 12 2018
+---
+George
+Washington
+CIO
+Washlad
+pass3
+---
+Information meeting
+Test description
+1600.0
+1800.0
+14 09 2018
+---
