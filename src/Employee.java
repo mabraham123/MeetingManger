@@ -1,10 +1,6 @@
 /**
- * 
- */
-
-/**
  * @author DAN
- *
+ * 
  */
 public class Employee {
 	private String employeeForename;
@@ -23,6 +19,7 @@ public class Employee {
 		this.username = username;
 		//The username is ensured to be a non-duplicate value.
 		key = textToKey(username);
+
 	}
 	/**
 	 * Will convert the username to a key that acts like an ID.
@@ -197,6 +194,7 @@ public class Employee {
 		}
 		setKey(key);
 		return key;
+		
 	}
 	/**
 	 * @return the employeeName

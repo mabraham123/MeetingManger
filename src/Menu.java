@@ -2,24 +2,23 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 /**
- * 
- */
-
-/**
  * @author DAN
  *
  */
-public class Menu {
+public class Menu 
+{
 	private DiaryTree diaryTree;
 	private Diary loggedIn;
 	private String username;
 	
 	//A scanner object is created here to get user input.
 	Scanner input = new Scanner(System.in);
+
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		Menu menu = new Menu();
 		
 		menu.init();
@@ -44,6 +43,7 @@ public class Menu {
 		Diary DanielScheitlerDiary = new Diary(employee1, appointment1);
 		
 		getDiaryTree().addDiaryNode(DanielScheitlerDiary);
+
 		
 		year = 2018;
 		month = 11;
@@ -54,6 +54,7 @@ public class Menu {
 		Diary BenFranklinDiary = new Diary(employee2, appointment2);
 		
 		getDiaryTree().addDiaryNode(BenFranklinDiary);
+
 		
 		year = 2018;
 		month = 8;
@@ -66,6 +67,7 @@ public class Menu {
 		getDiaryTree().addDiaryNode(GeorgeWashingtonDiary);
 		*/
 	}
+
 	/**
 	 * Will authenticate if the login is valid or not.
 	 * @return authenticated This value determines if the login is successful or not.
@@ -92,6 +94,7 @@ public class Menu {
 		}
 		return authenticated;
 	}
+	
 	/**
 	 * Runs the menu
 	 */
@@ -244,6 +247,7 @@ public class Menu {
 		}
 		getDiaryTree().editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo, year, month, day);
 	}
+	
 	public void deleteAppointment()
 	{
 		int counter = 1;
@@ -263,7 +267,9 @@ public class Menu {
 		}
 		while (appointmentDelete < 0 || appointmentDelete > counter);
 		
-		getDiaryTree().deleteAppointment(appointmentDelete, loggedIn);
+
+
+		diaryTree.deleteAppointment(appointmentDelete, loggedIn);
 	}
 	/**
      * Uses Scanner to get a new String from the user
@@ -316,6 +322,7 @@ public class Menu {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
 	/**
 	 * @return the diaryTree
 	 */

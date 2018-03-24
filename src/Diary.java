@@ -1,17 +1,16 @@
-
 /**
  * @author DAN
  *
  */
-public class Diary {
+public class Diary 
+{
 	private Employee employee;
 	private Appointment appointment;
 	private Appointment[] sortedAppointments;
 	private Diary left;
 	private Diary right;
 	private Diary previous;
-	
-	
+
 	public Diary(Employee employeeInfo, Appointment appointmentInfo)
 	{
 		employee = employeeInfo;
@@ -146,6 +145,5 @@ public class Diary {
 	public void setPrevious(Diary previous) {
 		this.previous = previous;
 	}
-	
 }
 	

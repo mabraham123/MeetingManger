@@ -9,20 +9,42 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * 
- */
-
-/**
  * @author DAN
  *
  */
-public class DiaryTree {
+public class DiaryTree 
+{
 	private Diary root;
 	private Diary current;
+
 	/**
 	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
 	 * @param diaryToAdd The diary node to be added to the tree
 	 */
+	public void addDiaryNode(Diary diaryToAdd) 
+	{
+		//Will check to see if the tree is empty.
+		boolean	empty = isTreeEmpty();
+		
+		if (empty)
+		{
+			//If the tree is empty the new node becomes the root.
+			setRoot(diaryToAdd);
+		}
+		else
+		{
+			//The current node is set to point to the root reference.
+			current = root;
+			//This function will place the new node in a relevant position in the tree.
+			determineTreePosition(diaryToAdd);
+		}
+	}
+	
+	/**
+	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
+	 * @param diaryToAdd The diary node to be added to the tree
+	 */
+	/**
 	public void addDiaryNode(Diary diaryToAdd) 
 	{
 		//Will check to see if the tree is empty.
@@ -194,6 +216,7 @@ public class DiaryTree {
 		
 		return current;
 	}
+	
 	/**
 	 * Will inform the user that the username cannot be found.
 	 */
@@ -272,6 +295,7 @@ public class DiaryTree {
 			//loggedIn = current;
 		}
 	}
+	
 	public void addAppointment(Appointment appointmentToAdd, Diary diaryToAdd)
 	{
 		Appointment current = diaryToAdd.getAppointment();
@@ -290,6 +314,7 @@ public class DiaryTree {
 			//loggedIn = current;
 		}
 	}
+
 	/**
 	 * Deletes an appointment from the diary
 	 * @param appointmentDelete The appointment to be deleted
@@ -526,6 +551,7 @@ public class DiaryTree {
 			System.out.println("Diary loaded successfully!");
 		}
 	}
+	
 	/**
 	 * Gets the root of the tree
 	 * @return root The root of the tree
