@@ -1,11 +1,8 @@
+import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 
- */
-
-/**
- * @author DAN
+ * @author Melvin Abraham
  *
  */
 public class Employee {
@@ -15,121 +12,38 @@ public class Employee {
 	private String password;
 	private String username;
 	private int ID;
-	private String Key;
+	private String key;
 	private float dayStart;
     private float dayEnd;
     private Set<Float> busyTimes;
 	
-	public Employee(String forename, String surname, String pass, String position, int id,String key, float DayStart, float DayEnd,Set<Float> BusyTimes)
+    
+    public Employee() {
+    	employeeForename = "";
+		employeeSurname = "";
+		jobPosition = "";
+		setPassword("");
+		setID(0);
+		setDayStart(0.0f);
+		setDayEnd(0.0f);
+		setBusyTimes(new HashSet<Float>());
+    }
+	
+	public Employee(String forename, String surname, String username, String pass, String position)
 	{
 		employeeForename = forename;
 		employeeSurname = surname;
 		jobPosition = position;
 		setPassword(pass);
-		ID = id;
-		dayStart= DayStart;
-		dayEnd= DayEnd;
-		busyTimes= BusyTimes;
-	}
-	
-	/**
-	 * @return the username
-	 */
-	public String getUsername() 
-	{
-		return username;
-	}
-
-	/**
-	 * @param username the username to set
-	 */
-	public void setUsername(String username) 
-	{
 		this.username = username;
-		textToKey(username);
-	}
+		//The username is ensured to be a non-duplicate value.
+		key = textToKey(username);
 
-	/**
-	 * @return the employeeName
-	 */
-	public String getEmployeeForename() {
-		return employeeForename;
 	}
-	/**
-	 * @param employeeForename the employeeForename to set
-	 */
-	public void setEmployeeForename(String employeeForename) {
-		this.employeeForename = employeeForename;
-	}
-	/**
-	 * @return the jobPosition
-	 */
-	public String getJobPosition() {
-		return jobPosition;
-	}
-	/**
-	 * @param jobPosition the jobPosition to set
-	 */
-	public void setJobPosition(String jobPosition) {
-		this.jobPosition = jobPosition;
-	}
-	/**
-	 * @return the iD
-	 */
-	public int getID() {
-		return ID;
-	}
-	/**
-	 * @param iD the iD to set
-	 */
-	public void setID(int iD) {
-		ID = iD;
-	}
-	/**
-	 * @return the employeeSurname
-	 */
-	public String getEmployeeSurname() {
-		return employeeSurname;
-	}
-	/**
-	 * @param employeeSurname the employeeSurname to set
-	 */
-	public void setEmployeeSurname(String employeeSurname) {
-		this.employeeSurname = employeeSurname;
-	}
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * This is an identifier for the username.
-	 * @return the key
-	 */
-	public String getKey() 
-	{
-		return Key;
-	}
-
-	/**
-	 * @param key the key to set
-	 */
-	public void setKey(String key) 
-	{
-		Key = key;
-	}
-	
 	/**
 	 * Will convert the username to a key that acts like an ID.
 	 * @param username This is the user's username.
+	 * @return 
 	 */
 	public String textToKey(String username)
 	{
@@ -217,17 +131,176 @@ public class Employee {
 			case "z":
 				key = key + "26";
 				break;
+			case "A":
+				key = key + "27";
+				break;
+			case "B":
+				key = key + "28";
+				break;
+			case "C":
+				key = key + "29";
+				break;
+			case "D":
+				key = key + "30";
+				break;
+			case "E":
+				key = key + "31";
+				break;
+			case "F":
+				key = key + "32";
+				break;
+			case "G":
+				key = key + "33";
+				break;
+			case "H":
+				key = key + "34";
+				break;
+			case "I":
+				key = key + "35";
+				break;
+			case "J":
+				key = key + "36";
+				break;
+			case "K":
+				key = key + "37";
+				break;
+			case "L":
+				key = key + "38";
+				break;
+			case "M":
+				key = key + "39";
+				break;
+			case "N":
+				key = key + "40";
+				break;
+			case "O":
+				key = key + "41";
+				break;
+			case "P":
+				key = key + "42";
+				break;
+			case "Q":
+				key = key + "43";
+				break;
+			case "R":
+				key = key + "44";
+				break;
+			case "S":
+				key = key + "45";
+				break;
+			case "T":
+				key = key + "46";
+				break;
+			case "U":
+				key = key + "47";
+				break;
+			case "V":
+				key = key + "48";
+				break;
+			case "W":
+				key = key + "49";
+				break;
+			case "X":
+				key = key + "50";
+				break;
+			case "Y":
+				key = key + "51";
+				break;
+			case "Z":
+				key = key + "52";
+				break;
 			}
 		}
 		setKey(key);
 		return key;
+		
+	}
+	/**
+	 * @return the employeeName
+	 */
+	public String getEmployeeForename() {
+		return employeeForename;
+	}
+	/**
+	 * @param employeeForename the employeeForename to set
+	 */
+	public void setEmployeeForename(String employeeForename) {
+		this.employeeForename = employeeForename;
+	}
+	/**
+	 * @return the jobPosition
+	 */
+	public String getJobPosition() {
+		return jobPosition;
+	}
+	/**
+	 * @param jobPosition the jobPosition to set
+	 */
+	public void setJobPosition(String jobPosition) {
+		this.jobPosition = jobPosition;
+	}
+	/**
+	 * @return the employeeSurname
+	 */
+	public String getEmployeeSurname() {
+		return employeeSurname;
+	}
+	/**
+	 * @param employeeSurname the employeeSurname to set
+	 */
+	public void setEmployeeSurname(String employeeSurname) {
+		this.employeeSurname = employeeSurname;
+	}
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	/**
+	 * @return the key
+	 */
+	public String getKey() {
+		return key;
+	}
+	/**
+	 * @param key the key to set
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	public float getDayStart() {
 		return dayStart;
 	}
 
-	public void setDayStart(int dayStart) {
+	public void setDayStart(float dayStart) {
 		this.dayStart = dayStart;
 	}
 
@@ -235,7 +308,7 @@ public class Employee {
 		return dayEnd;
 	}
 
-	public void setDayEnd(int dayEnd) {
+	public void setDayEnd(float dayEnd) {
 		this.dayEnd = dayEnd;
 	}
 
