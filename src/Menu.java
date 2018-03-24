@@ -30,42 +30,44 @@ public class Menu
 	 */
 	public void init()
 	{
-		diaryTree = new DiaryTree();
+		setDiaryTree(new DiaryTree());
+		diaryTree.loadTree(0);
 		//SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
-		
+		/**
 		int year = 2018;
 		int month = 04;
 		int day = 28;
-
-		Employee employee1 = new Employee("Daniel", "Scheitler", "Dan" , "pass1", "CEO", 100);
+		
+		Employee employee1 = new Employee("Daniel", "Scheitler", "Dan" , "pass1", "CEO");
 		Appointment appointment1 = new Appointment("Client meeting", "Test description", 900, 1000, null, year, month, day);
 		Diary DanielScheitlerDiary = new Diary(employee1, appointment1);
-		diaryTree.addDiaryNode(DanielScheitlerDiary);
+		
+		getDiaryTree().addDiaryNode(DanielScheitlerDiary);
 
 		
 		year = 2018;
 		month = 11;
 		day = 14;
 		
-		Employee employee2 = new Employee("Ben", "Franklin", "franku", "pass2", "CTO", 120);
+		Employee employee2 = new Employee("Ben", "Franklin", "franku", "pass2", "CTO");
 		Appointment appointment2 = new Appointment("Tech meeting", "Test description", 1200, 1300, null, year, month, day);
 		Diary BenFranklinDiary = new Diary(employee2, appointment2);
 		
-		diaryTree.addDiaryNode(BenFranklinDiary);
+		getDiaryTree().addDiaryNode(BenFranklinDiary);
 
 		
 		year = 2018;
 		month = 8;
 		day = 14;
 		
-		Employee employee3 = new Employee("George", "Washington", "Washlad", "pass3", "CIO", 110);
+		Employee employee3 = new Employee("George", "Washington", "Washlad", "pass3", "CIO");
 		Appointment appointment3 = new Appointment("Information meeting", "Test description", 1600, 1800, null, year, month, day);
 		Diary GeorgeWashingtonDiary = new Diary(employee3, appointment3);
 		
-		diaryTree.addDiaryNode(GeorgeWashingtonDiary);
-
+		getDiaryTree().addDiaryNode(GeorgeWashingtonDiary);
+		*/
 	}
-		
+
 	/**
 	 * Will authenticate if the login is valid or not.
 	 * @return authenticated This value determines if the login is successful or not.
@@ -163,6 +165,7 @@ public class Menu
                case "S":
                case "s":
             	   //save
+            	   diaryTree.writeFile(diaryTree.getRoot());
                	break;
                case "L":
                case "l":    
@@ -179,7 +182,7 @@ public class Menu
        }while (!exit);
    }
 	public void addAppointment() 
-	{
+	{	
 		Scanner s = new Scanner(System.in);
 		String appointmentType = getString("Enter the appointment type");
 		String description = getString("Enter the description");
@@ -242,7 +245,7 @@ public class Menu
 			month = getInt("Enter the month in the form e.g. 03");
 			day = getInt("Enter the day in the form e.g. 26");
 		}
-		diaryTree.editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo, year, month, day);
+		getDiaryTree().editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo, year, month, day);
 	}
 	
 	public void deleteAppointment()
@@ -264,6 +267,7 @@ public class Menu
 		}
 		while (appointmentDelete < 0 || appointmentDelete > counter);
 		
+
 
 		diaryTree.deleteAppointment(appointmentDelete, loggedIn);
 	}
@@ -318,7 +322,7 @@ public class Menu
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 	/**
 	 * @return the diaryTree
 	 */

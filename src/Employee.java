@@ -9,9 +9,8 @@ public class Employee {
 	private String password;
 	private String username;
 	private String key;
-	private int ID;
 	
-	public Employee(String forename, String surname, String username, String pass, String position, int i)
+	public Employee(String forename, String surname, String username, String pass, String position)
 	{
 		employeeForename = forename;
 		employeeSurname = surname;
@@ -195,7 +194,7 @@ public class Employee {
 		}
 		setKey(key);
 		return key;
-
+		
 	}
 	/**
 	 * @return the employeeName
@@ -220,18 +219,6 @@ public class Employee {
 	 */
 	public void setJobPosition(String jobPosition) {
 		this.jobPosition = jobPosition;
-	}
-	/**
-	 * @return the iD
-	 */
-	public int getID() {
-		return ID;
-	}
-	/**
-	 * @param iD the iD to set
-	 */
-	public void setID(int iD) {
-		ID = iD;
 	}
 	/**
 	 * @return the employeeSurname
