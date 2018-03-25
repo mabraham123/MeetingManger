@@ -11,6 +11,15 @@ public class Diary
 	private Diary right;
 	private Diary previous;
 
+	/**
+	 * Default diary constructor.
+	 */
+	public Diary() 
+	{
+		employee = null;
+		appointment = null;
+	}
+	
 	public Diary(Employee employeeInfo, Appointment appointmentInfo)
 	{
 		employee = employeeInfo;
