@@ -9,8 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * @author DAN
- *
+ * @author Daniel Scheitler
+ * @author Aditya Kumar Menon
+ * Will manage the binary tree of diary objects.
  */
 public class DiaryTree 
 {
