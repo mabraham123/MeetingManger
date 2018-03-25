@@ -153,6 +153,7 @@ public class DiaryTree
 	{
 		//The current node pointer is set to reference to the root.
 		current = root;
+		
 		//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
 		BigInteger userID = new BigInteger(current.convertToKey(username));
 		//The found field will check if the diary node has been found.
@@ -265,37 +266,42 @@ public class DiaryTree
 			appointmentToEdit.setAppointmentDate(year, month, day);
 		}
 	}
-	/**
-	 * Adds an appointment to the diary of the logged in user
-	 * @param appointmentType Type of appointment
-	 * @param description Description of appointment
-	 * @param startTime Start time of appointment
-	 * @param endTime End time of appointment
-	 * @param year Year of appointment
-	 * @param month Month of appointment
-	 * @param day Day of appointment
-	 * @param loggedIn The diary to be added to
-	 */
-	public void addAppointment(String appointmentType, String description, float startTime, float endTime, int year, int month, int day, Diary loggedIn)
-	{
-		Appointment current = loggedIn.getAppointment();
-		Appointment appointmentToAdd = new Appointment(appointmentType, description, startTime, endTime, null, year, month, day);
-		
-		if (loggedIn.getAppointment() == null)
-		{
-			loggedIn.setAppointment(appointmentToAdd);
-		}
-		else
-		{
-			while (current.getNextAppointment() != null)
-			{
-				current = current.getNextAppointment();
-			}
-			current.setNextAppointment(appointmentToAdd);
-			//loggedIn = current;
-		}
-	}
+//	/**
+//	 * Adds an appointment to the diary of the logged in user
+//	 * @param appointmentType Type of appointment
+//	 * @param description Description of appointment
+//	 * @param startTime Start time of appointment
+//	 * @param endTime End time of appointment
+//	 * @param year Year of appointment
+//	 * @param month Month of appointment
+//	 * @param day Day of appointment
+//	 * @param loggedIn The diary to be added to
+//	 */
+//	public void addAppointment(String appointmentType, String description, float startTime, float endTime, int year, int month, int day, Diary loggedIn)
+//	{
+//		Appointment current = loggedIn.getAppointment();
+//		Appointment appointmentToAdd = new Appointment(appointmentType, description, startTime, endTime, null, year, month, day);
+//		
+//		if (loggedIn.getAppointment() == null)
+//		{
+//			loggedIn.setAppointment(appointmentToAdd);
+//		}
+//		else
+//		{
+//			while (current.getNextAppointment() != null)
+//			{
+//				current = current.getNextAppointment();
+//			}
+//			current.setNextAppointment(appointmentToAdd);
+//			//loggedIn = current;
+//		}
+//	}
 	
+	/**
+	 * Method to add an Appointment to the employee's diary
+	 * @param appointmentToAdd	The node that contains the appointment object
+	 * @param diaryToAdd	The employee's diary
+	 */
 	public void addAppointment(Appointment appointmentToAdd, Diary diaryToAdd)
 	{
 		Appointment current = diaryToAdd.getAppointment();
@@ -311,10 +317,18 @@ public class DiaryTree
 				current = current.getNextAppointment();
 			}
 			current.setNextAppointment(appointmentToAdd);
-			//loggedIn = current;
+		
 		}
 	}
+	
+	
+	//addAppToLinkedList
+	//find the nodes.getNext
 
+	
+	
+	
+	
 	/**
 	 * Deletes an appointment from the diary
 	 * @param appointmentDelete The appointment to be deleted
@@ -482,12 +496,16 @@ public class DiaryTree
 				String username = nextLine; //fourth line is username
 				nextLine = bufferedReader.readLine();
 				String password = nextLine; //fifth line is password
+				nextLine = bufferedReader.readLine();
+				float startDay = Float.parseFloat(nextLine); //sixth line is start of day
+				nextLine = bufferedReader.readLine();
+				float endDay = Float.parseFloat(nextLine); //seventh line is start of day
 				
-				employeeToAdd = new Employee(forename, surname, username, password, jobPosition);
+				employeeToAdd = new Employee(forename, surname, username, password, jobPosition, startDay, endDay);
 				nextLine = bufferedReader.readLine(); //required as there will be infinite loop otherwise
 			}
 			nextLine = bufferedReader.readLine();
-			counter = counter + 6;
+			counter = counter + 8;
 			while (nextLine.equals("---") == false)
 			{
 				int year, month, day;

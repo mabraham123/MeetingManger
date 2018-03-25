@@ -37,6 +37,7 @@ public class Appointment {
 		appointmentDate = new GregorianCalendar(i, j, k);
 		nextAppointment = (Appointment) next;
 	}
+	
 	/**
 	 * @return the appointmentType
 	 */

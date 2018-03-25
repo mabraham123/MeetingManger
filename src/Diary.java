@@ -5,6 +5,8 @@
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 
@@ -186,21 +188,21 @@ public class Diary
     		}
     	}
     	
-            float timeAdded=0.0f;
+            //float timeAdded=0.0f;
+            
+    	//Make timeAdded the first time to add
+            float timeAdded= earliestTime;
     	//Fill the set with the full working day
             do{
-                //Make timeAdded the first time to add
-                timeAdded= earliestTime;
-                
                 boolean rangeOfTimeAdded= rangeOfTimesSet.add(timeAdded);
 
-                timeAdded+= 0.5;
+                timeAdded+= 0.5;	//Add a half hour
             }while(timeAdded!=latestTime);
             
             //Set for all the busy times the members have
             Set<Float> busyTimesAll= new HashSet<Float>();
             
-            
+            //Add all the busy times for each member into one big set
             for(int i=0; i<allMeetingMembers.length; i++){
             	busyTimesAll.addAll(allMeetingMembers[i].getBusyTimes());
             }
@@ -208,10 +210,9 @@ public class Diary
             
             Set<Float> possibleTimes= rangeOfTimesSet;
             
-            //Remove the busy times from the set
+            //Remove the busy times from the set of possible times
             boolean possibleTimesAdded= possibleTimes.removeAll(busyTimesAll);
-           
-            
+
             return possibleTimes;
             
             

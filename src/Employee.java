@@ -29,7 +29,7 @@ public class Employee {
 		setBusyTimes(new HashSet<Float>());
     }
 	
-	public Employee(String forename, String surname, String username, String pass, String position)
+	public Employee(String forename, String surname, String username, String pass, String position, float start, float end)
 	{
 		employeeForename = forename;
 		employeeSurname = surname;
@@ -38,7 +38,9 @@ public class Employee {
 		this.username = username;
 		//The username is ensured to be a non-duplicate value.
 		key = textToKey(username);
-
+		dayStart = start;
+		dayEnd = end;
+		busyTimes = new HashSet<Float>();
 	}
 	/**
 	 * Will convert the username to a key that acts like an ID.
@@ -319,4 +321,12 @@ public class Employee {
 	public void setBusyTimes(Set<Float> busyTimes) {
 		this.busyTimes = busyTimes;
 	}
+	
+	public boolean addBusyTime(float time) {
+		boolean timeAdded= busyTimes.add(time);
+		
+		return timeAdded;
+	}
+	
+	
 }

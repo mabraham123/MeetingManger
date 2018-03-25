@@ -1,8 +1,9 @@
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.Calendar;
-import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.Date;
+
 
 /**
  * @author Melvin Abraham
@@ -110,194 +111,216 @@ public class Menu
 	 * The menu that runs and the user can input letters to run methods of the program
 	 */
 	public void runTestMenu()
-   {
-       String choice;
+	{
+		String choice;
 
-       boolean exit=false;
-       
-       do
-       {
-           System.out.println("Meeting Manager Test Menu");
-           System.out.println("A - add appointment to diary");
-           System.out.println("E - edit appointment in diary");
-           System.out.println("D - delete appointment from diary");
-           System.out.println("P - print appointments of employee");
-           System.out.println("F - find meeting times");
-           System.out.println("S - Save binary tree");
-           System.out.println("L - Load binary tree");
-           System.out.println("Q - quit");        
-           
-           choice=getString("Please make a choice, and press ENTER: ");
-       
-           switch (choice)
-           {
-               case "A":
-               case "a":
-            	   addAppointment();
-               	break;
-               case "E":
-               case "e":
-            	   if (loggedIn.getAppointment() != null)
-            	   {
-            		   editAppointment();
-            	   }
-            	   else
-            	   {
-            		   System.out.println("You must first add an appointment!");
-            	   }
-            	break;
-               case "P":
-               case "p":
-            	   viewDiary();
-               	break;
-               case "D":
-               case "d":
-            	   if (loggedIn.getAppointment() != null)
-            	   {
-            		   deleteAppointment();
-            	   }
-            	   else
-            	   {
-            		   System.out.println("You must first add an appointment!");
-            	   }
-               	break;
-               case "F":
-               case "f":
-            	   //find meeting times
-               	break;
-               case "S":
-               case "s":
-            	   //save
-            	   diaryTree.writeFile(diaryTree.getRoot());
-               	break;
-               case "L":
-               case "l":    
-            	   //load
-               	break;
-               case "Q":
-               case "q": 
-               	System.out.println("Goodbye\n");
-                     exit=true;
-                       break;
-               default: System.out.println("That is not a valid choice, please try again");
-                       break;         
-           }
-       }while (!exit);
+		boolean exit=false;
+
+		do
+		{
+			System.out.println("Meeting Manager Test Menu");
+			System.out.println("A - add appointment to diary");
+			System.out.println("E - edit appointment in diary");
+			System.out.println("D - delete appointment from diary");
+			System.out.println("P - print appointments of employee");
+			System.out.println("F - find meeting times");
+			System.out.println("S - Save binary tree");
+			System.out.println("L - Load binary tree");
+			System.out.println("Q - quit");        
+
+			choice=getString("Please make a choice, and press ENTER: ");
+
+			switch (choice)
+			{
+			case "A":
+			case "a":
+				addAppointment();
+				break;
+			case "E":
+			case "e":
+				if (loggedIn.getAppointment() != null)
+				{
+					editAppointment();
+				}
+				else
+				{
+					System.out.println("You must first add an appointment!");
+				}
+				break;
+			case "P":
+			case "p":
+				viewDiary();
+				break;
+			case "D":
+			case "d":
+				if (loggedIn.getAppointment() != null)
+				{
+					deleteAppointment();
+				}
+				else
+				{
+					System.out.println("You must first add an appointment!");
+				}
+				break;
+			case "F":
+			case "f":
+				//find meeting times
+				break;
+			case "S":
+			case "s":
+				//save
+				diaryTree.writeFile(diaryTree.getRoot());
+				break;
+			case "L":
+			case "l":    
+				//load
+				break;
+			case "Q":
+			case "q": 
+				System.out.println("Goodbye\n");
+				exit=true;
+				break;
+			default: System.out.println("That is not a valid choice, please try again");
+			break;         
+			}
+		}while (!exit);
    }
 	public void addAppointment() 
-	{	
-//		Scanner s = new Scanner(System.in);
-//		String appointmentType = getString("Enter the appointment type");
-//		String description = getString("Enter the description");
-//		System.out.println("Enter the start time in the form e.g. 0900");
-//		float startTime = s.nextFloat();
-//		System.out.println("Enter the end time in the form e.g. 1200");
-//		float endTime = s.nextFloat();
-//		int year = getInt("Enter the year in the form e.g. 2018");
-//		int month = getInt("Enter the month in the form e.g. 03");
-//		int day = getInt("Enter the day in the form e.g. 26");
-//		
-//		getDiaryTree().addAppointment(appointmentType, description, startTime, endTime, year, month, day, loggedIn);
-//		getDiaryTree().sortAppointments(loggedIn);
-		
-		
-		
+	{		
 		//Get the appointment type
-				Scanner appointmentTypeReader= new Scanner(System.in);
-				System.out.println("Appointment Type: ");
-				String appointmentType= appointmentTypeReader.nextLine();
-				
-				//Get the description
-				Scanner descriptionReader= new Scanner(System.in);
-				System.out.println("Description: ");
-				String description= descriptionReader.nextLine();
+		Scanner appointmentTypeReader= new Scanner(System.in);
+		System.out.println("Appointment Type: ");
+		String appointmentType= appointmentTypeReader.nextLine();
 
-				
-				//Get the duration
-				Scanner durationReader= new Scanner(System.in);
-				System.out.println("Duration: ");
-				float duration= durationReader.nextFloat();
-				
-				
-				
-				
-				//Get the members of the meeting
-					//Ask how many members for one meeting
-					Scanner numberOfMembersReader= new Scanner(System.in);
-					System.out.println("Number of members in the meeting: ");
-					int numberOfMembers= numberOfMembersReader.nextInt();
-					
-					Employee[] employeesInTheMeeting= new Employee[numberOfMembers];
-					
-					
-					for(int counter=0; counter<employeesInTheMeeting.length; counter++) {
-					//Find member
-						Scanner usernameReader= new Scanner(System.in);
-						System.out.println("Enter the username for who you want to add: ");
-						String user= usernameReader.nextLine();
-						
-					//Find the user name in the binary tree
-					Employee member= diaryTree.searchTree(user).getEmployee();
-	
-					//Add to array
-					employeesInTheMeeting[counter]= member;
-					}
-				
-					
-				//Get the date- day
-				Scanner dateDayReader= new Scanner(System.in);
-				System.out.println("Day: ");
-				int dateDay=dateDayReader.nextInt();
-				
-				//Get the date- day
-				Scanner dateMonthReader= new Scanner(System.in);
-				System.out.println("Day: ");
-				int dateMonth=dateDayReader.nextInt();
-				
-				//Get the date- day
-				Scanner dateYearReader= new Scanner(System.in);
-				System.out.println("Day: ");
-				int dateYear=dateDayReader.nextInt();
-				
-					
-				//Find the meeting times
-				Set<Float> possibleTimes=loggedIn.findAMeetingTime(employeesInTheMeeting, dateDay);
-				
-				//Select the time
-				if(possibleTimes.isEmpty() == false) {
-					//Print the free meeting times
-					System.out.println("Possible Meeting Times:" + possibleTimes);
-					
-					Scanner meetingReader= new Scanner(System.in);
-					System.out.println("Select a time: ");
-					float time= meetingReader.nextFloat();
-					
-					//Make a new appointment
-					Appointment newAppointment= new Appointment(appointmentType, description, time,(time+duration),next,dateYear,dateMonth,dateDay);
-					//set the busy time for all the employee's
-					
-					
-					
-					
-				}else {
-					//Let the user know there are not times available for a meeting
-					System.out.println("There are no free times to have a meeting");
+		//Get the description
+		Scanner descriptionReader= new Scanner(System.in);
+		System.out.println("Description: ");
+		String description= descriptionReader.nextLine();
+
+
+		//Get the duration
+		Scanner durationReader= new Scanner(System.in);
+		System.out.println("Duration: ");
+		float duration= durationReader.nextFloat();
+
+
+
+
+		//Get the members of the meeting
+		//Ask how many members for one meeting
+		Scanner numberOfMembersReader= new Scanner(System.in);
+		System.out.println("Number of members in the meeting: ");
+		int numberOfMembers= numberOfMembersReader.nextInt();
+
+		Employee[] employeesInTheMeeting= new Employee[numberOfMembers];
+
+
+		for(int counter=0; counter<employeesInTheMeeting.length; counter++) {
+			//Find member
+			Scanner usernameReader= new Scanner(System.in);
+			System.out.println("Enter the username for who you want to add: ");
+			String user= usernameReader.nextLine();
+
+			//Find the user name in the binary tree
+			Employee member= diaryTree.searchTree(user).getEmployee();
+
+			//Add to array
+			employeesInTheMeeting[counter]= member;
+		}
+
+
+		//Get the date- Day
+		Scanner dateDayReader= new Scanner(System.in);
+		System.out.println("Day: ");
+		int dateDay=dateDayReader.nextInt();
+
+		//Get the date- Month
+		Scanner dateMonthReader= new Scanner(System.in);
+		System.out.println("Month: ");
+		int dateMonth=dateMonthReader.nextInt();
+
+		//Get the date- Year
+		Scanner dateYearReader= new Scanner(System.in);
+		System.out.println("Year: ");
+		int dateYear=dateYearReader.nextInt();
+
+
+		//Find the meeting times
+
+		//Start timer
+		Date timeStarted = new Date();
+
+		Set<Float> possibleTimes=loggedIn.findAMeetingTime(employeesInTheMeeting, dateDay);
+		//End timer
+		long timeTaken= getElapsedTime(timeStarted);
+
+		//Display the time taken to find a time
+		System.out.println();
+		System.out.println(timeTaken);
+
+		//Select the time
+		if(possibleTimes.isEmpty() == false) {
+
+			//Converting the possible times set into an array
+			Float[] possibleTimesArray = possibleTimes.toArray(new Float[possibleTimes.size()]);
+			//Sorting the array
+			Arrays.sort(possibleTimesArray);
+
+			//Printing out the possible times
+			System.out.println("Possible Meeting Times: ");
+			for(int i = 0; i < possibleTimesArray.length; i++) {
+				System.out.print(possibleTimesArray[i]+"\t");
+			}
+
+			//Ask user for a time
+			Scanner meetingReader= new Scanner(System.in);
+			System.out.println();
+			System.out.println("Select a time: ");
+			float time= meetingReader.nextFloat();
+
+			float endTime= time+duration;
+
+
+			//Make a new appointment
+			Appointment newAppointment= new Appointment(appointmentType, description, time,endTime,null,dateYear,dateMonth,dateDay);
+
+			//set the busy time for all the employee's
+			for(int j=0; j<employeesInTheMeeting.length; j++) {
+
+				//Find the diary for each member
+				Diary diaryOfMember= diaryTree.searchTree(employeesInTheMeeting[j].getUsername());
+
+				//Add the appointment to each members diary
+				diaryTree.addAppointment(newAppointment, diaryOfMember);
+
+				//Add the 30 minute increments of the meeting into the busy times set for each member
+				while(time != endTime){
+					boolean isAdded=employeesInTheMeeting[j].addBusyTime(time);
+					time+= 0.5;	//Add a half hour
 				}
-				
-				
-				
+
+			}
+			System.out.println("Appointment made");
+		}else {
+			//Let the user know there are not times available for a meeting
+			System.out.println("There are no free times to have a meeting");
+		}
+
 	}
 	
 	public void viewDiary()
 	{
-		String username = getString("Enter the username of the employee to view their diary");
-		Diary employee = getDiaryTree().searchTree(username);
+		String username = getString("Enter the username of the employee to view their diary: ");
+		Diary employeeDiary = getDiaryTree().searchTree(username);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
-		System.out.println(employee.getEmployee().getEmployeeForename() + "" + employee.getEmployee().getEmployeeSurname() + ":");
-		diaryTree.sortAppointments(employee);
-		for (int i = 0; i < employee.getSortedAppointments().length; i++)
+		System.out.println(employeeDiary.getEmployee().getEmployeeForename() + " " + employeeDiary.getEmployee().getEmployeeSurname() + ":");
+		System.out.println();
+		diaryTree.sortAppointments(employeeDiary);
+		for (int i = 0; i < employeeDiary.getSortedAppointments().length; i++)
 		{
-			System.out.println(employee.getSortedAppointments()[i].getAppointmentType() + "\n" + employee.getSortedAppointments()[i].getDescription() + "\n" + employee.getSortedAppointments()[i].getStartTime() + "\n" + employee.getSortedAppointments()[i].getEndTime() + "\n" + sdf.format(employee.getSortedAppointments()[i].getAppointmentDate().getTime()));
+			System.out.println("Meeting "+ (i+1));
+			System.out.println(employeeDiary.getSortedAppointments()[i].getAppointmentType() + "\n" + employeeDiary.getSortedAppointments()[i].getDescription() + "\n" + employeeDiary.getSortedAppointments()[i].getStartTime() + "\n" + employeeDiary.getSortedAppointments()[i].getEndTime() + "\n" + sdf.format(employeeDiary.getSortedAppointments()[i].getAppointmentDate().getTime()));
+			System.out.println();
 		}
 	}
 	
@@ -427,4 +450,19 @@ public class Menu
 	{
 		this.diaryTree = diaryTree;
 	}
+	
+	/**
+     * Elapsed - calculate the time elapsed since this object was created
+     * 
+     * @param       The start time
+     * @return      time in milliseconds
+     */
+    public long getElapsedTime(Date timerStarted)
+    {
+        Date timerEnded = new Date();
+        long elapsed= timerEnded.compareTo(timerStarted);
+       
+        return elapsed;
+    }
+	
 }
