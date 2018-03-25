@@ -34,6 +34,275 @@ public class DiaryTree
 	}
 	
 	/**
+	 * Will pick a type of a node deletion method and delete a node.
+	 * @param username this is the employee's username.
+	 */
+	public void determineDeletionMethod(String username) 
+	{
+		//TreeNode is created here to edit the data in the node of the tree.
+		Diary pointer = new Diary();
+		//The current node is set to the node that needs to be deleted.
+		current = searchTree(username);
+		/* The if block will test if the current node has either no nodes to the left or right, 
+		 * one node to either the left or right, or two nodes connected to it.
+		 * 
+		 * If Both nodes connected to current node(node being deleted) are empty we know that the node is a leaf.
+		 */
+		if(current.isLeftEmpty(current) && current.isRightEmpty(current))
+		{
+			//This method deletes a leaf node.
+			deleteLeaf(pointer);
+		}
+		//If the node to the left of the node being deleted is empty and the right has a connected node the following block runs.
+		else if (current.isLeftEmpty(current) && !current.isRightEmpty(current)) 
+		{
+			deleteRightConnectedNode(pointer);
+		}
+		//If the node to the right of the node being deleted is empty and the left has a connected node the following block runs.
+		else if (!current.isLeftEmpty(current) && current.isRightEmpty(current)) 
+		{
+			deleteLeftConnectedNode(pointer);
+		}
+		//The only other option is for the node to have 2 nodes connected to it.
+		else 
+		{
+			deleteDoubleJointedBranch(pointer);
+		}
+	}
+	
+	/**
+	 * Will delete a leaf node in a tree.
+	 * @param pointer Is a pointer to the node above the leaf.
+	 */
+	public void deleteLeaf(Diary pointer) 
+	{
+		//The pointer is set to be the previous node.
+		pointer = current.getPrevious();
+		
+		//This if block will delete the reference to the node being deleted.
+		if(pointer.getLeft() == current) 
+		{
+			pointer.setLeft(null);
+		}
+		else 
+		{
+			pointer.setRight(null);
+		}
+		
+		//The node is deleted.
+		current = null;
+	}
+	
+	/**
+	 * Deletes a node which has an empty left reference and a node to it's right.
+	 * @param pointer This is a pointer to handle editing the contents of the nodes on the tree.
+	 */
+	public void deleteRightConnectedNode(Diary pointer) 
+	{
+		//The pointer is set to point to the node to the right of the node being deleted.
+		pointer = current.getRight();
+		
+		//The pointer will make it's node's previous reference point to the node being deleted's previous node reference.
+		pointer.setPrevious(current.getPrevious());
+		
+		//The pointer is set to the node before the current node.
+		pointer = current.getPrevious();
+		
+		if(pointer.getRight() == current)
+		{
+			//The node to the right of the pointer is set to be the node that is on the right of the node being deleted.
+			pointer.setRight(current.getRight());
+		}
+		else 
+		{
+			//The pointer will set the left reference to the node being deleted's right reference.
+			pointer.setLeft(current.getRight());
+		}
+	}
+	
+	/**
+	 * Deletes a node which has an empty right reference and a node to it's left.
+	 * @param pointer This is a pointer to handle editing the contents of the nodes on the tree.
+	 */
+	public void deleteLeftConnectedNode(Diary pointer) 
+	{
+		//The pointer is set to point to the node to the left of the node being deleted.
+		pointer = current.getLeft();
+		
+		//The pointer will make it's node's previous reference point to the node being deleted's previous node reference.
+		pointer.setPrevious(current.getPrevious());
+		
+		//The pointer is set to the node before the node being deleted.
+		pointer = current.getPrevious();
+		
+		//The node to the left of the pointer is set to be the node that is on the left of the node being deleted.
+		pointer.setLeft(current.getLeft());
+		
+		//The node is deleted.
+		current = null;
+	}
+	
+	/**
+	 * Will delete a node with a connection to each the left and the right and will clean the tree up to connect it all together once split.
+	 * @param pointer This is the node that needs to be moved to fill in the gaps in the tree.
+	 */
+	public void deleteDoubleJointedBranch(Diary pointer) 
+	{
+		//A secondary pointer is made to facilitate editing the information stored on the nodes on the tree.
+		Diary pointer2 = new Diary();
+		
+		//The pointer points to the subtree to the left.
+		pointer = current.getLeft();
+		
+		//As long as there is a node to the right of the pointer the pointer will point further right.
+		while(!pointer.isRightEmpty(pointer)) 
+		{
+			pointer = pointer.getRight();
+		}
+		//A second pointer is introduced here to make the deleting process easier.
+		pointer2 = pointer;
+		
+		//The largest node will be moved to the top and replace the deleted node.
+		moveLargestNode(pointer, pointer2);
+		
+		//Will move the node at the rightmost position on the left subtree to the position occupied by the node being deleted.
+		pointer.setPrevious(current.getPrevious());
+		
+		//Will connect the left and right nodes to the appropriate places.
+		connectLeftAndRightToTop(pointer, pointer2);
+		
+		//Will place the pointer in the node being deleted's location.
+		connectToTop(pointer, pointer2);
+				
+		//The node is deleted here.
+		current = null;
+	}
+	
+	/**
+	 * This will move the largest node to replace the node being deleted.
+	 * @param pointer This is the node that needs to be moved.
+	 * @param pointer2 This node is used to edit the information stored on each node.
+	 */
+	public void moveLargestNode(Diary pointer, Diary pointer2) 
+	{
+		pointer2 = pointer.getLeft();
+		//This code only runs if there is a node to the left of the pointer and the .
+		if(pointer.getLeft() != null && pointer2.getRight() != null) 
+		{
+			//The pointer points to the node on the left and then makes its previous the previous of the node that is being moved.
+			pointer2 = pointer2.getLeft();
+			pointer2.setPrevious(pointer.getPrevious());
+				
+			//The pointer points to the node above the node being moved.
+			pointer2 = pointer.getPrevious();
+			
+			//The pointer points to the node to the left of the node being moved.
+			pointer2.setRight(pointer.getLeft());
+		}
+		
+		//This code runs only if the node before the pointer is not the "current" node.
+		if(pointer.getPrevious() != current)
+		{
+			//Pointer 2 is set to be the node before the pointer.
+			pointer2 = pointer.getPrevious();
+			
+			//pointer 2's right reference is emptied.
+			pointer2.setRight(null);
+		}
+		//If the node to the right of the node being deleted is not empty this if block will activate.
+		else if(current.getRight() != null) 
+		{
+			//The pointer makes its right reference point to the right reference of the node being deleted.
+			pointer.setRight(current.getRight());
+			
+			//The second pointer becomes the node to the right of the pointer.
+			pointer2 = pointer.getRight();
+			
+			//Pointer 2 has it's previous reference point to the pointer1.
+			pointer2.setPrevious(pointer);
+		}
+	}
+	
+	/**
+	 * Will place the pointer in the node being deleted's location.
+	 * @param pointer Node being moved.
+	 * @param pointer2 Used to edit information stored in the nodes of the tree.
+	 */
+	public void connectToTop(Diary pointer, Diary pointer2) 
+	{
+		//This code runs as long as the node before the current node is not a null value.
+		if(current.getPrevious() != null) 
+		{
+			//Pointer 2 is set to be the node before the current node.
+			pointer2 = current.getPrevious();
+			
+			//The if statement "searches" for the current node and changes the direction reference to point to another node.
+			if(pointer2.getRight() == current) 
+			{
+				pointer2.setRight(pointer);
+			}
+			else
+			{
+				pointer2.setLeft(pointer);
+			}
+		}
+		//If the node before the node being deleted is null the root will be changed to the correct node.
+		else 
+		{
+			root = pointer;
+		}
+	}
+	
+	/**
+	 * Will connect the left and right nodes to the appropriate places.
+	 * @param pointer This is the node where links are being made to.
+	 * @param pointer2 This will allow data in the nodes in the tree to be edited.
+	 */
+	public void connectLeftAndRightToTop(Diary pointer, Diary pointer2) 
+	{
+		//If the pointer is the same node as the node to the left of the node being deleted this branch will run.
+		if(pointer == current.getLeft()) 
+		{
+			//Pointer 2 is set to be the node before the pointer.
+			pointer2 = pointer.getPrevious();
+			
+			//The if block activates only if the ID's of the pointer 2 and node being deleted's ID's are equal.
+			if(pointer2.getEmployee().getKey().equals(current.getEmployee().getKey())) 
+			{
+				//The node to the right of the node being moved is set to point to the node to the right of the node being deleted.
+				pointer.setRight(current.getRight());
+			}
+			
+				
+			//Pointer 2 will be set to the node to the right of the node being deleted.
+			pointer2 = current.getRight();
+					
+			//Pointer 2 will make the node to the right of the node being deleted's previous reference point to the node being moved to the top.
+			pointer2.setPrevious(pointer);
+		}
+		else 
+		{
+			//The node to the right of the node being moved is set to point to the node to the right of the node being deleted.
+			pointer.setRight(current.getRight());
+			
+			//The node to the left of the node being moved is set to point to the node to the left of the node being deleted.
+			pointer.setLeft(current.getLeft());
+					
+			//Pointer 2 will be set to the node to the left of the node being deleted.
+			pointer2 = current.getLeft();
+					
+			//Pointer 2 will make the node to the left of the node being deleted's previous reference point to the node being moved to the top.
+			pointer2.setPrevious(pointer);
+					
+			//Pointer 2 will be set to the node to the right of the node being deleted.
+			pointer2 = current.getRight();
+					
+			//Pointer 2 will make the node to the right of the node being deleted's previous reference point to the node being moved to the top.
+			pointer2.setPrevious(pointer);
+		}
+	}
+	
+	/**
 	 * This function will decide where in the tree a new node will be placed and place the node.
 	 * @param newNode This is node that is being placed in the tree.
 	 */
