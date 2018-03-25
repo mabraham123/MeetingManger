@@ -3,7 +3,8 @@
  * @author Aditya Kumar Menon
  * Will store details about the employee.
  */
-public class Employee {
+public class Employee 
+{
 	private String employeeForename;
 	private String employeeSurname;
 	private String jobPosition;
@@ -11,6 +12,9 @@ public class Employee {
 	private String username;
 	private String key;
 	
+	/**
+	 * Is the constructor for the employee object.
+	 */
 	public Employee(String forename, String surname, String username, String pass, String position)
 	{
 		employeeForename = forename;
@@ -22,6 +26,7 @@ public class Employee {
 		key = textToKey(username);
 
 	}
+	
 	/**
 	 * Will convert the username to a key that acts like an ID.
 	 * @param username This is the user's username.
