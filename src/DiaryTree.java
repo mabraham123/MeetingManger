@@ -42,30 +42,6 @@ public class DiaryTree
 	}
 	
 	/**
-	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
-	 * @param diaryToAdd The diary node to be added to the tree
-	 */
-	/**
-	public void addDiaryNode(Diary diaryToAdd) 
-	{
-		//Will check to see if the tree is empty.
-		boolean	empty = isTreeEmpty();
-		
-		if (empty)
-		{
-			//If the tree is empty the new node becomes the root.
-			setRoot(diaryToAdd);
-		}
-		else
-		{
-			//The current node is set to point to the root reference.
-			current = root;
-			//This function will place the new node in a relevant position in the tree.
-			determineTreePosition(diaryToAdd);
-		}
-	}
-	
-	/**
 	 * Will pick a type of a node deletion method and delete a node.
 	 * @param username this is the employee's username.
 	 */
@@ -373,23 +349,20 @@ public class DiaryTree
 			else if(greaterOrLess == 0)
 			{
 				//This will prevent entries with the same ID from existing in the tree.
-				System.out.println("ID already in use! Please use a different ID.");
+				System.out.println("Username already in use! Please use a different username.");
 				System.out.println("Returning to menu...");
 				notAdded = false;
 			}
-			else
+			//The only other option for the new node to be entered into will be the right and this will do the same task as when the node is being placed in the left branch.
+			else if(current.isRightEmpty(current))
 			{
-				//The only other option for the new node to be entered into will be the right and this will do the same task as when the node is being placed in the left branch.
-				if(current.isRightEmpty(current))
-				{
-					current.setRight(newNode);
-					newNode.setPrevious(current);
-					notAdded = false;
-				}
-				else 
-				{
-					current = current.getRight();
-				}
+				current.setRight(newNode);
+				newNode.setPrevious(current);
+				notAdded = false;
+			}
+			else 
+			{
+				current = current.getRight();
 			}
 		}
 	}
@@ -439,9 +412,9 @@ public class DiaryTree
 				String key = current.getEmployee().getKey();
 				//The key is stored as a biginteger.
 				BigInteger currentKey = new BigInteger(key);
-				//will test if the current key is greater or less than the userID.
+				//will test if the current key is greater or less than the user's key.
 				int greaterOrLess = currentKey.compareTo(userID);
-				//If the userID is less than the current ID-the current reference will point to the node on the left.
+				//If the user's key is less than the current key-the current reference will point to the node on the left.
 				if(greaterOrLess == 1) 
 				{
 					if(current.isLeftEmpty(current)) 
@@ -455,7 +428,7 @@ public class DiaryTree
 						current = current.getLeft();
 					}
 				}
-				//If the UserID is more than the current key the current reference will point to the node on the right.
+				//If the User's key is more than the current key the current reference will point to the node on the right.
 				else if (greaterOrLess == -1) 
 				{
 					if(current.isRightEmpty(current))
