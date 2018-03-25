@@ -1,6 +1,7 @@
 /**
- * @author DAN
- * 
+ * @author Daniel Scheitler
+ * @author Aditya Kumar Menon
+ * Will store details about the employee.
  */
 public class Employee {
 	private String employeeForename;
