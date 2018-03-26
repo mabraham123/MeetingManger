@@ -9,7 +9,7 @@ pass1
 Client meeting
 Test description
 11.0
-11.5
+12.5
 28 06 2018
 owkewe
 towtt
@@ -46,7 +46,7 @@ Test description
 14 09 2018
 Information meeting
 Test description
-16.0
-18.0
+11.0
+11.5
 28 06 2018
 ---
