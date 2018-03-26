@@ -3,16 +3,18 @@ Scheitler
 CEO
 Dan
 pass1
+9.0
+16.0
 ---
 Client meeting
 Test description
-900.0
-1000.0
-28 05 2018
+11.0
+12.5
+28 06 2018
 owkewe
 towtt
-1300.0
-1500.0
+13.0
+15.0
 12 10 2019
 ---
 Ben
@@ -20,11 +22,13 @@ Franklin
 CTO
 franku
 pass2
+10.0
+16.0
 ---
 Tech meeting
 Test description
-1200.0
-1300.0
+12.0
+13.0
 14 12 2018
 ---
 George
@@ -32,10 +36,17 @@ Washington
 CIO
 Washlad
 pass3
+10.0
+16.0
 ---
 Information meeting
 Test description
-1600.0
-1800.0
+16.0
+18.0
 14 09 2018
+Information meeting
+Test description
+11.0
+11.5
+28 06 2018
 ---
