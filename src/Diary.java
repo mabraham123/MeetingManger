@@ -1,31 +1,32 @@
-/**
- * @author Melvin Abraham
- *
- */
-
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-
+/**
+ * @author Melvin Abraham
+ * @author Daniel Scheitler
+ * @author Aditya Kumar Menon
+ *
+ * The diary stores the employee's details and appointments.
+ */
 public class Diary 
 {
+	//These are the fields stored within the Diary class
 	private Employee employee;
 	private Appointment appointment;
 	private Appointment[] sortedAppointments;
+	//These fields store the location to other diaries in the binary tree.
 	private Diary left;
 	private Diary right;
 	private Diary previous;
 
-	public Diary(Employee employeeInfo, Appointment appointmentInfo)
+	/**
+	* Default Diary constructor
+	*/
+	public Diary() 
 	{
-		employee = employeeInfo;
-		appointment = appointmentInfo;
-	}
-	
-	public Diary() {
 		// TODO Auto-generated constructor stub
 		employee= new Employee();
 		//appointment= new Appointment();
@@ -33,6 +34,12 @@ public class Diary
 		right= null;
 		previous= null;
 		
+	}
+	
+	public Diary(Employee employeeInfo, Appointment appointmentInfo)
+	{
+		employee = employeeInfo;
+		appointment = appointmentInfo;
 	}
 
 	public String convertToKey(String username) 
