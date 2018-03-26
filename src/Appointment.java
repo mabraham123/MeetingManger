@@ -8,18 +8,37 @@ import java.util.GregorianCalendar;
 
 /**
  * @author Melvin Abraham
+ * @author Daniel Scheitler
+ * @author Aditya Kumar Menon
+ * @author Elliot Kinkhead
+ *
+ * The appointment class stores details about an appointment.
+ */
+
+public class Appointment 
+{
+  
+//The fields which store information about an appointment are stored here.
  *
  */
 public class Appointment {
+
 	private String appointmentType;
 	private String description;
 	private float startTime;
 	private float endTime;
 	private GregorianCalendar appointmentDate;
+
+	
+	//The appointments operate as a linked list and have a reference to the next appointment.
 	private Appointment nextAppointment;
 	
-	
-	public Appointment() {
+	/**
+	 * The default appointment constructor.
+	 */
+	public Appointment() 
+	{
+
 		appointmentType = "";
 		description = "";
 		startTime = 0.0f;
@@ -28,6 +47,17 @@ public class Appointment {
 		nextAppointment = null;
 	}
 	
+
+	/**
+	 * Alternative appointment constructor.
+	 * @param type This is the appointment type.
+	 * @param desc This is a description of the appointment
+	 * @param start This is the time at which the appointment starts.
+	 * @param end This is the time at which the appointment ends.
+	 * @param i This is the input year to set.
+	 * @param j This is the input month to set.
+	 * @param k This is the input day to set.
+	 */
 	public Appointment(String type, String desc, float start, float end, int i, int j, int k)
 	{
 		appointmentType = type;
@@ -41,6 +71,7 @@ public class Appointment {
 	/**
 	 * @return the appointmentType
 	 */
+
 	public String getAppointmentType() {
 		return appointmentType;
 	}
@@ -50,6 +81,7 @@ public class Appointment {
 	public void setAppointmentType(String appointmentType) {
 		this.appointmentType = appointmentType;
 	}
+  
 	/**
 	 * @return the startTime
 	 */

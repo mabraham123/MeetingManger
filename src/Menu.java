@@ -8,7 +8,11 @@ import java.util.InputMismatchException;
 
 /**
  * @author Melvin Abraham
+ * @author Daniel Scheitler
+ * @author Aditya Kumar Menon
+ * @author Elliot Kinkhead
  *
+ *Class that runs the front end
  */
 public class Menu 
 {
@@ -432,17 +436,20 @@ public class Menu
 			month = getInt("Enter the month in the form e.g. 03");
 			day = getInt("Enter the day in the form e.g. 26");
 		}
+
 		getDiaryTree().editDiaryNode(loggedIn, fieldChoice, appointmentEdit, fieldInfo, year, month, day);
 	}
 	
 	/**
 	 * Method that lets the user delete an appointment
 	 */
+
 	public void deleteAppointment()
 	{
 		int counter = 1;
 		int appointmentDelete;
 		Appointment current = loggedIn.getAppointment();
+
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
 		while (current != null)
 		{	
@@ -459,7 +466,6 @@ public class Menu
 		}
 		while (appointmentDelete < 0 || appointmentDelete > counter);
 		
-
 
 		diaryTree.deleteAppointment(appointmentDelete, loggedIn);
 		System.out.println("Appointment removed");
@@ -505,6 +511,7 @@ public class Menu
 			int num = s.nextInt();
 			return num;
 		}
+
 	 
 	/**
 	 * Method that gets the username
@@ -521,6 +528,7 @@ public class Menu
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	
 	/**
 	 * Method that gets the diary tree
@@ -530,6 +538,7 @@ public class Menu
 	{
 		return diaryTree;
 	}
+
 	
 	/**
 	 * Method that sets the diary tree
@@ -539,6 +548,7 @@ public class Menu
 	{
 		this.diaryTree = diaryTree;
 	}
+
 	
 	/**
      * Elapsed - calculate the time elapsed since this object was created

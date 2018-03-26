@@ -1,9 +1,14 @@
+
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Melvin Abraham
+ * @author Daniel Scheitler
+ * @author Aditya Kumar Menon
+ * @author Elliot Kinkhead
  *
+ *Class that is the Employee node
  */
 public class Employee {
 	private String employeeForename;
@@ -14,12 +19,12 @@ public class Employee {
 	private int ID;
 	private String key;
 	private float dayStart;
-    private float dayEnd;
-    private Set<Float> busyTimes;
+  private float dayEnd;
+  private Set<Float> busyTimes;
 	
     
     public Employee() {
-    	employeeForename = "";
+    employeeForename = "";
 		employeeSurname = "";
 		jobPosition = "";
 		setPassword("");
@@ -38,9 +43,11 @@ public class Employee {
 		this.username = username;
 		//The username is ensured to be a non-duplicate value.
 		key = textToKey(username);
+
 		dayStart = start;
 		dayEnd = end;
 		busyTimes = new HashSet<Float>();
+
 	}
 	/**
 	 * Will convert the username to a key that acts like an ID.
@@ -215,7 +222,7 @@ public class Employee {
 		}
 		setKey(key);
 		return key;
-		
+
 	}
 	/**
 	 * @return the employeeName
@@ -242,6 +249,19 @@ public class Employee {
 		this.jobPosition = jobPosition;
 	}
 	/**
+	 * @return the iD
+	 */
+	public int getID() {
+		return ID;
+	}
+	/**
+	 * @param iD the iD to set
+	 */
+	public void setID(int iD) {
+		ID = iD;
+	}
+	/**
+
 	 * @return the employeeSurname
 	 */
 	public String getEmployeeSurname() {
@@ -289,6 +309,7 @@ public class Employee {
 	public void setKey(String key) {
 		this.key = key;
 	}
+
 
 	public int getID() {
 		return ID;
