@@ -10,10 +10,14 @@ import java.util.ArrayList;
 
 /**
  * @author Melvin Abraham
- *
+ * @author Aditya Kumar Menon
+ * @author Daniel Scheitler
+ * 
+ * The diary tree is a binary tree which holds each of the diary nodes.
  */
 public class DiaryTree 
 {
+	//The root and current nodes are defined here.
 	private Diary root;
 	private Diary current;
 
@@ -21,30 +25,6 @@ public class DiaryTree
 	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
 	 * @param diaryToAdd The diary node to be added to the tree
 	 */
-	public void addDiaryNode(Diary diaryToAdd) 
-	{
-		//Will check to see if the tree is empty.
-		boolean	empty = isTreeEmpty();
-		
-		if (empty)
-		{
-			//If the tree is empty the new node becomes the root.
-			setRoot(diaryToAdd);
-		}
-		else
-		{
-			//The current node is set to point to the root reference.
-			current = root;
-			//This function will place the new node in a relevant position in the tree.
-			determineTreePosition(diaryToAdd);
-		}
-	}
-	
-	/**
-	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
-	 * @param diaryToAdd The diary node to be added to the tree
-	 */
-	/**
 	public void addDiaryNode(Diary diaryToAdd) 
 	{
 		//Will check to see if the tree is empty.
@@ -143,91 +123,14 @@ public class DiaryTree
 		}
 		return empty;
 	}
-
-//	/**
-//	 * Will search the binary tree for a specific node and return it.
-//	 * @param username This is the username being searched for within the tree.
-//	 * @return current This will be the diary node with the same username as the initial parameter.
-//	 */
-//	public Diary searchTree(String username) 
-//	{
-//		
-//		
-//		//The current node pointer is set to reference to the root.
-//		current = root;
-//		//The found field will check if the diary node has been found.
-//		boolean found = false;
-//		
-//		//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
-//		BigInteger userID = new BigInteger(current.convertToKey(username));
-//		
-//		
-//		
-//		//The loop continues as long as exitloop is false.
-//		boolean exitLoop = false;
-//		while (exitLoop == false) 
-//		{
-//			//If the current node is not a null value
-//			if(current != null) 
-//			{	
-//				//The key is retrieved from the current node's employee. 
-//				String key = current.getEmployee().getKey();
-//				//The key is stored as a biginteger.
-//				BigInteger currentKey = new BigInteger(key);
-//				//will test if the current key is greater or less than the userID.
-//				int greaterOrLess = currentKey.compareTo(userID);
-//				//If the userID is less than the current ID-the current reference will point to the node on the left.
-//				if(greaterOrLess == 1) 
-//				{
-//					if(current.isLeftEmpty(current)) 
-//					{
-//						//Since there is no more nodes to the left therefore the user does not exist.
-//						noUserFoundMessage();
-//						exitLoop = true; 
-//					}
-//					else 
-//					{
-//						current = current.getLeft();
-//					}
-//				}
-//				//If the UserID is more than the current key the current reference will point to the node on the right.
-//				else if (greaterOrLess == -1) 
-//				{
-//					if(current.isRightEmpty(current))
-//					{
-//						//Since there is no more nodes to the right therefore the user does not exist.
-//						noUserFoundMessage();
-//						exitLoop = true;
-//					}
-//					else
-//					{
-//						current = current.getRight();
-//					}
-//				}
-//				else
-//				{
-//					//The diary node has been found so found is set to true.
-//					found = true;
-//					exitLoop = true;
-//				}
-//			}
-//		}
-//		
-//		//If the diary node has not been found the current node will be set to null.
-//		if(found == false) 
-//		{
-//			current = null;
-//		}
-//		
-//		return current;
-//	}
 	
 	/**
      * Method to find a node with the id in the tree
      * @param idNumber	The id you want to find
      * @return	The node with that id number
      */
-    public Diary searchTree(String username){
+    public Diary searchTree(String username)
+    {
     	//Start of the tree
     	Diary current=root;
     	Diary toFind = new Diary();
@@ -239,45 +142,49 @@ public class DiaryTree
     	BigInteger userID = new BigInteger(toFind.convertToKey(username));
     	
     	
-    	
-    	while(current != null && found !=true) {
+    	//while the current node is not null and the node being searched for has not been found.
+    	while(current != null && found !=true) 
+    	{
     		//The key is retrieved from the current node's employee. 
 			String key = current.getEmployee().getKey();
 			//The key is stored as a biginteger.
 			BigInteger currentKey = new BigInteger(key);
 			//will test if the current key is greater or less than the userID.
 			int greaterOrLess = userID.compareTo(currentKey);
-			//If the userID is less than the current ID-the current reference will point to the node on the left.
-
 			
     		//Travel down the binary tree till the employee is found
-    		if(greaterOrLess == 0) {
+    		if(greaterOrLess == 0) 
+    		{
     			found=true;
-    		}else {
+    		}
+    		else 
+    		{
     			//if the id is smaller than the current nodes id
-    			if(greaterOrLess< 0) {
+    			if(greaterOrLess< 0) 
+    			{
     				//set current to the left node
     				current= current.getLeft();
-    			}else if(greaterOrLess > 0) {
+    			}
+    			else if(greaterOrLess > 0) 
+    			{
     				//set current to the right node
     				current= current.getRight();
     			}
     		}
-    		
-    		
-    		
     	}
     	
     	//If the id was found in the tree send the node
-    	if(found==true) {
+    	if(found==true) 
+    	{
     		return current;
-    	}else {
+    	}
+    	else 
+    	{
     		noUserFoundMessage();
     		//return null if the node was not found
     		return null;
     	}
     }
-	
 	
 	/**
 	 * Will inform the user that the username cannot be found.
@@ -288,75 +195,53 @@ public class DiaryTree
 	}
 	
 	/**
-	 * Edits a field of the chosen appointment in the diary of the logged on user 
-	 * @param loggedIn The user who is current logged in and the diary to be edited
+	 * Edits a field of the chosen appointment in the diary of the logged on user
+	 * @param loggedIn The user who is currently logged in and the diary to be edited
 	 * @param fieldChoice The info to be changed
 	 * @param appointmentEdit Which appointment to edit
 	 * @param fieldInfo The new info to replace old
-	 * @param day 
-	 * @param month 
-	 * @param year 
+	 * @param day The day the meeting will be held.
+	 * @param month The month the meeting will be held.
+	 * @param year The year the meeting will be held.
 	 */
 	public void editDiaryNode(Diary loggedIn, int fieldChoice, int appointmentEdit, String fieldInfo, int year, int month, int day) 
 	{
+		//TODO: Add comment
 		Appointment appointmentToEdit = loggedIn.getAppointment();
 		
+		//TODO: Add comment
 		for (int i = 0; i < appointmentEdit-1; i++)
 		{
+			//TODO: Add comment?
 			appointmentToEdit = appointmentToEdit.getNextAppointment();
 		}
 		
+		//if the field chosen is the appointment type, the input field will be set as the appointment type.
 		if (fieldChoice == 1)
 		{
 			appointmentToEdit.setAppointmentType(fieldInfo);
 		}
+		//if the field chosen is the description, the input field will be set as the description.
 		else if (fieldChoice == 2)
 		{
 			appointmentToEdit.setDescription(fieldInfo);
 		}
+		//if the field chosen is the start time, the input field will be set as the start time.
 		else if (fieldChoice == 3)
 		{
 			appointmentToEdit.setStartTime(Float.parseFloat(fieldInfo));
 		}
+		//if the field chosen is the end time, the input field will be set as the end time.
 		else if (fieldChoice == 4)
 		{
 			appointmentToEdit.setEndTime(Float.parseFloat(fieldInfo));
 		}
+		//if the field chosen is the date, the input field will be set as the date.
 		else if (fieldChoice == 5)
 		{
 			appointmentToEdit.setAppointmentDate(year, month, day);
 		}
 	}
-//	/**
-//	 * Adds an appointment to the diary of the logged in user
-//	 * @param appointmentType Type of appointment
-//	 * @param description Description of appointment
-//	 * @param startTime Start time of appointment
-//	 * @param endTime End time of appointment
-//	 * @param year Year of appointment
-//	 * @param month Month of appointment
-//	 * @param day Day of appointment
-//	 * @param loggedIn The diary to be added to
-//	 */
-//	public void addAppointment(String appointmentType, String description, float startTime, float endTime, int year, int month, int day, Diary loggedIn)
-//	{
-//		Appointment current = loggedIn.getAppointment();
-//		Appointment appointmentToAdd = new Appointment(appointmentType, description, startTime, endTime, null, year, month, day);
-//		
-//		if (loggedIn.getAppointment() == null)
-//		{
-//			loggedIn.setAppointment(appointmentToAdd);
-//		}
-//		else
-//		{
-//			while (current.getNextAppointment() != null)
-//			{
-//				current = current.getNextAppointment();
-//			}
-//			current.setNextAppointment(appointmentToAdd);
-//			//loggedIn = current;
-//		}
-//	}
 	
 	/**
 	 * Method to add an Appointment to the employee's diary
@@ -365,27 +250,28 @@ public class DiaryTree
 	 */
 	public void addAppointment(Appointment appointmentToAdd, Diary diaryToAdd)
 	{
+		//The current appointment is set to the first appointment in the diary
 		Appointment current = diaryToAdd.getAppointment();
 		
+		//If there are no appointments in the diary.
 		if (diaryToAdd.getAppointment() == null)
 		{
+			//Add the appointment to the diary.
 			diaryToAdd.setAppointment(appointmentToAdd);
 		}
 		else
 		{
+			//While there is an appointment in the diary.
 			while (current.getNextAppointment() != null)
 			{
+				//The current appointment is switched to the next appointment.
 				current = current.getNextAppointment();
 			}
+			
+			//The next appointment is set to be the input appointment.
 			current.setNextAppointment(appointmentToAdd);
-		
 		}
 	}
-	
-
-	
-	
-	
 	
 	/**
 	 * Deletes an appointment from the diary
@@ -394,78 +280,106 @@ public class DiaryTree
 	 */
 	public void deleteAppointment(int appointmentDelete, Diary loggedIn)
 	{
+		//The appointment to delete is set to the appointment in the logged in user's diary.
 		Appointment appointmentToDelete = loggedIn.getAppointment();
+		//The previous appointment is set to the same appointment as appointmentToDelete.
 		Appointment previous = appointmentToDelete;
 		
+		//TODO: Add comment
 		for (int i = 0; i < appointmentDelete-1; i++)
 		{
+			//TODO: Add comment
 			previous = appointmentToDelete;
 			appointmentToDelete = appointmentToDelete.getNextAppointment();
 		}
-		
-		//appointmentToDelete = appointmentToDelete.getNextAppointment();
+
+		//TODO: Add comment
 		if (previous != appointmentToDelete.getNextAppointment())
 		{
 			previous.setNextAppointment(appointmentToDelete.getNextAppointment());
 		}
+		//TODO: Add comment
 		else
 		{
 			loggedIn.setAppointment(null);
 		}
 	}
-
+	
+	/**
+	 * Will sort the appointments in order from the earliest to the latest.
+	 * @param loggedIn
+	 */
 	public void sortAppointments(Diary loggedIn)
 	{
+		//An arraylist of appoinments is initialised.
 		ArrayList<Appointment> arrayList = new ArrayList<Appointment>();
+		//The current appointment is set to the first appoinment in the logged in user's diary.
 		Appointment current = loggedIn.getAppointment();
+		//A temporary appointment is defined as null.
 		Appointment temp = null;
 		
+		//While the current appointment is not empty.
 		while (current != null)
 		{
+			//add the current appointment to the array list.
 			arrayList.add(current);
+			//set current to be the next appointment.
 			current = current.getNextAppointment();
 		}
+		//An array of appointments is made and made as large as the arrayList.
 		Appointment[] sortedArray = new Appointment[arrayList.size()];
 		
+		//The current appointment is set to be the first appointment of the logged in user's.
 		current = loggedIn.getAppointment();
+		//TODO: Add comment
 		for (int p = 0; p < sortedArray.length; p++)
 		{
+			//TODO: Add comment
 			sortedArray[p] = current;
 			current = current.getNextAppointment();
 		}
-		
+		//TODO: Add comment
 		for (int i = 0; i < sortedArray.length - 1; i++)
 		{
+			//TODO: Add comment
 			for (int j = 0; j < (sortedArray.length - i - 1); j++)
 			{
+				//TODO: Add comment
 				if (sortedArray[j].getAppointmentDate().after(sortedArray[j+1].getAppointmentDate()))
 				{
+					//TODO: Add comment
 					temp = sortedArray[j];  
 					sortedArray[j] = sortedArray[j+1];  
 					sortedArray[j+1] = temp; 
 				}
 			}
 		}
+		//TODO: Add comment
 		loggedIn.setSortedAppointments(sortedArray);
 	}
+	
 	/**
 	 * This method handles the file operations of the save feature and calls the second part of the method so that no data is lost
 	 * @param nodeToTraverse The node currently being explored
 	 */
 	public void writeFile(Diary nodeToTraverse)
 	{
-	    FileOutputStream outputStream = null;
+	    //The file output stream and the print writer are defined here.
+		FileOutputStream outputStream = null;
 	    PrintWriter printWriter = null;
 
 	    try
 	    {
-	        outputStream = new FileOutputStream("save.txt");
-	        printWriter = new PrintWriter(outputStream); 
-
-	        write(nodeToTraverse, printWriter);
-
-	        printWriter.flush();
-
+	    	//The outputstream will save output to save.txt
+	    	outputStream = new FileOutputStream("save.txt");
+	    	//The print writer is set as the output stream.
+	    	printWriter = new PrintWriter(outputStream); 
+	    	
+	    	//TODO: Add comment
+	    	write(nodeToTraverse, printWriter);
+	    	
+	    	//TODO: Add comment
+	    	printWriter.flush();
 	    }
 	    catch(IOException e)
 	    {
@@ -473,11 +387,12 @@ public class DiaryTree
 	    }
 	    finally
 	    {
+	    	//The print writer is closed to prevent memory leaks.
 	    	printWriter.close();
 	    	System.out.println("Binary tree has been saved successfully!");
-	    }
-	   
+	    }   
 	}
+	
 	/**
 	 * Does the traversal aspect of the save feature by PREORDER means
 	 * @param nodeToTraverse The node currently being explored
@@ -485,11 +400,15 @@ public class DiaryTree
 	 */
 	public void write(Diary nodeToTraverse, PrintWriter printWriter)
 	{
+		//TODO: Add comment
+		//A simple date format object is created.
 		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy");
+		//if the input diary node is not empty
 		if (nodeToTraverse != null)
 		{
+			//TODO: Add comment
 			Appointment AppointmentToTraverse = nodeToTraverse.getAppointment();
-			
+			//TODO: Add comment
 			printWriter.println(nodeToTraverse.getEmployee().getEmployeeForename());
 			printWriter.println(nodeToTraverse.getEmployee().getEmployeeSurname());
 			printWriter.println(nodeToTraverse.getEmployee().getJobPosition());
@@ -502,10 +421,13 @@ public class DiaryTree
 			printWriter.println(AppointmentToTraverse.getEndTime());
 			printWriter.println(sdf.format(AppointmentToTraverse.getAppointmentDate().getTime()));
 			
+			//TODO: Add comment
 			AppointmentToTraverse = AppointmentToTraverse.getNextAppointment();
 			
+			//while the appointment to traverse is not empty.
 			while (AppointmentToTraverse != null)
 			{
+				//TODO: Add comment
 				printWriter.println(AppointmentToTraverse.getAppointmentType());
 				printWriter.println(AppointmentToTraverse.getDescription());
 				printWriter.println(AppointmentToTraverse.getStartTime());
@@ -513,36 +435,54 @@ public class DiaryTree
 				printWriter.println(sdf.format(AppointmentToTraverse.getAppointmentDate().getTime()));
 				AppointmentToTraverse = AppointmentToTraverse.getNextAppointment();
 			}
+			//TODO: Add comment
 			printWriter.println("---");
+			//TODO: Add comment
 			write(nodeToTraverse.getLeft(), printWriter);
 			write(nodeToTraverse.getRight(), printWriter); 
-
 		}
 	}
+	
+	//TODO: Add comment
+	/**
+	 * 
+	 * @param readCounter
+	 */
 	public void loadTree(int readCounter)
 	{
+		//TODO: Add comment
 		int counter = readCounter;
+		//TODO: Add comment
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
 		String nextLine = null;
 		Employee employeeToAdd = null;
 		Appointment appointmentToAdd = null;
+		//An empty arraylist of appointments is initialized here
 		ArrayList<Appointment> listOfAppointments = new ArrayList<Appointment>();
 		try
 		{
+			//The file reader will read text from save.txt
 			fileReader = new FileReader("save.txt");
+			//The buffered reader will read from the file reader.
 			bufferedReader = new BufferedReader(fileReader);
+			//TODO: Add comment
 			if (counter > 0)
 			{
+				//TODO: Add comment
 				for (int j = 0; j < counter+1; j++)
 				{
+					//TODO: Add comment
 					nextLine = bufferedReader.readLine();
 				}
 			}
+			//TODO: Add comment
 			else
 			{
 				nextLine = bufferedReader.readLine();
 			}
+			
+			//while the next line is not "---" 
 			while (nextLine.equals("---") == false) 
 			{
 				String forename = nextLine; //first line is forename

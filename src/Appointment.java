@@ -8,18 +8,27 @@ import java.util.GregorianCalendar;
 
 /**
  * @author Melvin Abraham
- *
+ * @author Daniel Scheitler
+ * 
+ * The appointment class stores details about an appointment.
  */
-public class Appointment {
+public class Appointment 
+{
+	//The fields which store information about an appointment are stored here.
 	private String appointmentType;
 	private String description;
 	private float startTime;
 	private float endTime;
 	private GregorianCalendar appointmentDate;
+	
+	//The appointments operate as a linked list and have a reference to the next appointment.
 	private Appointment nextAppointment;
 	
-	
-	public Appointment() {
+	/**
+	 * The default appointment constructor.
+	 */
+	public Appointment() 
+	{
 		appointmentType = "";
 		description = "";
 		startTime = 0.0f;
@@ -28,6 +37,16 @@ public class Appointment {
 		nextAppointment = null;
 	}
 	
+	/**
+	 * Alternative appointment constructor.
+	 * @param type This is the appointment type.
+	 * @param desc This is a description of the appointment
+	 * @param start This is the time at which the appointment starts.
+	 * @param end This is the time at which the appointment ends.
+	 * @param i This is the input year to set.
+	 * @param j This is the input month to set.
+	 * @param k This is the input day to set.
+	 */
 	public Appointment(String type, String desc, float start, float end, int i, int j, int k)
 	{
 		appointmentType = type;
@@ -41,15 +60,19 @@ public class Appointment {
 	/**
 	 * @return the appointmentType
 	 */
-	public String getAppointmentType() {
+	public String getAppointmentType() 
+	{
 		return appointmentType;
 	}
+	
 	/**
 	 * @param appointmentType the appointmentType to set
 	 */
-	public void setAppointmentType(String appointmentType) {
+	public void setAppointmentType(String appointmentType) 
+	{
 		this.appointmentType = appointmentType;
 	}
+	
 	/**
 	 * @return the startTime
 	 */
@@ -77,39 +100,51 @@ public class Appointment {
 	/**
 	 * @param endTime the endTime to set
 	 */
-	public void setEndTime(float endTime) {
+	public void setEndTime(float endTime) 
+	{
 		this.endTime = endTime;
 	}
+	
 	/**
 	 * @return the description
 	 */
-	public String getDescription() {
+	public String getDescription() 
+	{
 		return description;
 	}
+	
 	/**
 	 * @param description the description to set
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) 
+	{
 		this.description = description;
 	}
+	
 	/**
 	 * @return the nextAppointment
 	 */
-	public Appointment getNextAppointment() {
+	public Appointment getNextAppointment() 
+	{
 		return nextAppointment;
 	}
+	
 	/**
 	 * @param nextAppointment the nextAppointment to set
 	 */
-	public void setNextAppointment(Appointment nextAppointment) {
+	public void setNextAppointment(Appointment nextAppointment) 
+	{
 		this.nextAppointment = nextAppointment;
 	}
+	
 	/**
 	 * @return the appointmentDate
 	 */
-	public Calendar getAppointmentDate() {
+	public Calendar getAppointmentDate() 
+	{
 		return appointmentDate;
 	}
+	
 	/**
 	 * Sets the appointment date 
 	 * @param year The year of appointment
@@ -119,81 +154,5 @@ public class Appointment {
 	public void setAppointmentDate(int year, int month, int day) 
 	{
 		this.appointmentDate = new GregorianCalendar(year, month, day);
-	}
-	
-	/**
-	 * Will save appointment details to a text file.
-	 * @param appointment This is the appointment object to be saved.
-	 * @param diary This is the diary object the appointment will be saved to.
-	 */
-	public void saveAppointment(Appointment appointment, Diary diary) 
-	{
-		try
-		{
-			//A filewriter object is created with the append parameter set to true and the filename to be the unique employer's key.
-			FileWriter file = new FileWriter(diary.getEmployee().getKey(), true);
-			//The bufferedwriter takes the filewriter object as input.
-			BufferedWriter writer = new BufferedWriter(file);
-			
-			//The fields in this appointment are recorded in the file.
-			writer.write(appointment.getAppointmentType() + ";");
-			writer.write(appointment.getDescription());
-			writer.newLine();
-
-			writer.write(appointment.getStartTime() + ",");
-			writer.write(String.valueOf(appointment.getEndTime()));
-			//writer.write(appointment.getAppointmentDate());
-			writer.newLine();
-			//The writer is closed to avoid memory leaks.
-			writer.close();
-		}
-		catch(IOException e) 
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * Will load the employee's schedule and print it to console.
-	 * @param diary This is the employee's diary.
-	 */
-	public void loadSchedule(Diary diary) 
-	{
-		try 
-		{ 
-			//File is found based on the employee's key.
-			FileReader file = new FileReader(diary.getEmployee().getKey());
-			//Buffered Reader will begin reading the file.
-			BufferedReader reader = new BufferedReader(file);
-			
-			//The current line is set to be the first line in the file.
-			String currentLine = reader.readLine();
-			//Loop continues until the file is empty.
-			while (currentLine != null) 
-			{
-				//The line is split into the appointment type and the description and then printed individually.
-				String[] details = currentLine.split(";");
-				System.out.println("Appointment Type: " + details[0]);
-				System.out.println("Description: " + details[1]);
-				//The next line is read and split into the start and end times and printed individually.
-				currentLine = reader.readLine();
-				details = currentLine.split(",");
-				System.out.println("Start Time: " + details[0]);
-				System.out.println("End Time: " + details[1]);
-				//The current line is read twice.
-				currentLine = reader.readLine();
-				currentLine = reader.readLine();
-			}
-			//The reader is closer to avoid memory leaks.
-			reader.close();
-		}
-		catch(java.io.FileNotFoundException e) 
-		{
-			System.out.println("File not found.");
-		}
-		catch(IOException e) 
-		{
-			e.printStackTrace();
-		}
 	}
 }
