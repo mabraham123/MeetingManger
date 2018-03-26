@@ -8,6 +8,7 @@ import java.util.Set;
  * @author Melvin Abraham
  * @author Daniel Scheitler
  * @author Aditya Kumar Menon
+ * @author Elliot Kinkhead
  *
  * The diary stores the employee's details and appointments.
  */
@@ -18,6 +19,7 @@ public class Diary
 	private Appointment appointment;
 	private Appointment[] sortedAppointments;
 	//These fields store the location to other diaries in the binary tree.
+
 	private Diary left;
 	private Diary right;
 	private Diary previous;
@@ -28,12 +30,12 @@ public class Diary
 	public Diary() 
 	{
 		// TODO Auto-generated constructor stub
-		employee= new Employee();
+    employee= new Employee();
 		left= null;
 		right= null;
 		previous= null;
-	}
-	
+  }
+		
 	/**
 	 * Alternative diary constructor.
 	 * @param employeeInfo This is an employee object that will be assigned to the diary.
@@ -96,7 +98,7 @@ public class Diary
 		}
 		return empty;
 	}
-	
+  
 	/**
 	 * @return the employee
 	 */
@@ -105,7 +107,6 @@ public class Diary
 		return employee;
 	}
 
-	
 	/**
 	 * @param employee the employee to set
 	 */
@@ -137,7 +138,7 @@ public class Diary
 	{
 		return left;
 	}
-	
+
 	/**
 	 * @param left the left to set
 	 * @return 
@@ -154,7 +155,7 @@ public class Diary
 	{
 		return right;
 	}
-	
+
 	/**
 	 * @param right the right to set
 	 * @return 
@@ -195,76 +196,65 @@ public class Diary
 	{
 		this.previous = previous;
 	}
-	
-	
-	
-	
-	
+  
 	/**
      * Method to find a possible meeting time for all the members of the meeting
      * @param allMeetingMembers Array of every person in the meeting
      * @param date The date of the potential meeting
      */
+  
     public Set<Float> findAMeetingTime(Employee[] allMeetingMembers,int date)
     {
     	//Create a set to hold the full working day
     	Set<Float> rangeOfTimesSet= new HashSet<Float>();
     	
     	//Setting the earliest time to the first time in the array
+      //Find minimum
     	float earliestTime= allMeetingMembers[0].getDayStart();
     	//Find the earliest time all the members are working
     	for(int index=1; index<allMeetingMembers.length; index++) 
-    	{
-    		//TODO: Add comment
+      {
+    		//If the meeting time
     		if(allMeetingMembers[index].getDayStart()<earliestTime)
-    		{
+        {
     			earliestTime= allMeetingMembers[index].getDayStart();
     		}
     	}
     	
     	//Find the latest time all the members are working
+     //Find minimum
         float latestTime= allMeetingMembers[0].getDayEnd();
-        
-        //TODO: Add comment
-    	for(int counter=1; counter<allMeetingMembers.length; counter++)
-    	{
-    		//TODO: Add comment
-    		if(allMeetingMembers[counter].getDayEnd()<latestTime)
-    		{
+            
+    	for(int counter=1; counter<allMeetingMembers.length; counter++){
+    		if(allMeetingMembers[counter].getDayEnd()<latestTime){
     			latestTime= allMeetingMembers[counter].getDayEnd();
     		}
     	}
-    	
+                
     	//Make timeAdded the first time to add
-    	float timeAdded= earliestTime;
+            float timeAdded= earliestTime;
     	//Fill the set with the full working day
-    	do
-    	{
-    		//TODO: Add comment
-    		boolean rangeOfTimeAdded= rangeOfTimesSet.add(timeAdded);
+            do{
+                boolean rangeOfTimeAdded= rangeOfTimesSet.add(timeAdded);
 
-            timeAdded+= 0.5;	//Add a half hour
-        }
-    	while(timeAdded!=latestTime);
+                timeAdded+= 0.5;	//Add a half hour
+            }while(timeAdded!=latestTime);
             
-        //Set for all the busy times the members have
-        Set<Float> busyTimesAll= new HashSet<Float>();
+            //Set for all the busy times the members have
+            Set<Float> busyTimesAll= new HashSet<Float>();
             
-        //Add all the busy times for each member into one big set
-        for(int i=0; i<allMeetingMembers.length; i++)
-        {
-        	busyTimesAll.addAll(allMeetingMembers[i].getBusyTimes());
-        }
+            //Add all the busy times for each member into one big set
+            for(int i=0; i<allMeetingMembers.length; i++){
+            	busyTimesAll.addAll(allMeetingMembers[i].getBusyTimes());
+            }
             
-        //TODO: Add comment
-        Set<Float> possibleTimes= rangeOfTimesSet;
             
-        //Remove the busy times from the set of possible times
-        boolean possibleTimesAdded= possibleTimes.removeAll(busyTimesAll);
+            Set<Float> possibleTimes= rangeOfTimesSet;
+            
+            //Remove the busy times from the set of possible times
+            boolean possibleTimesAdded= possibleTimes.removeAll(busyTimesAll);
 
-        return possibleTimes;
+            return possibleTimes;       
     }
 }
 
-
-	

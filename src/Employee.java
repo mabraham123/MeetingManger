@@ -1,6 +1,14 @@
+
+import java.util.HashSet;
+import java.util.Set;
+
 /**
- * @author DAN
- * 
+ * @author Melvin Abraham
+ * @author Daniel Scheitler
+ * @author Aditya Kumar Menon
+ * @author Elliot Kinkhead
+ *
+ *Class that is the Employee node
  */
 public class Employee {
 	private String employeeForename;
@@ -8,10 +16,25 @@ public class Employee {
 	private String jobPosition;
 	private String password;
 	private String username;
-	private String key;
 	private int ID;
+	private String key;
+	private float dayStart;
+  private float dayEnd;
+  private Set<Float> busyTimes;
 	
-	public Employee(String forename, String surname, String username, String pass, String position, int i)
+    
+    public Employee() {
+    employeeForename = "";
+		employeeSurname = "";
+		jobPosition = "";
+		setPassword("");
+		setID(0);
+		setDayStart(0.0f);
+		setDayEnd(0.0f);
+		setBusyTimes(new HashSet<Float>());
+    }
+	
+	public Employee(String forename, String surname, String username, String pass, String position, float start, float end)
 	{
 		employeeForename = forename;
 		employeeSurname = surname;
@@ -20,6 +43,10 @@ public class Employee {
 		this.username = username;
 		//The username is ensured to be a non-duplicate value.
 		key = textToKey(username);
+
+		dayStart = start;
+		dayEnd = end;
+		busyTimes = new HashSet<Float>();
 
 	}
 	/**
@@ -234,6 +261,7 @@ public class Employee {
 		ID = iD;
 	}
 	/**
+
 	 * @return the employeeSurname
 	 */
 	public String getEmployeeSurname() {
@@ -281,4 +309,50 @@ public class Employee {
 	public void setKey(String key) {
 		this.key = key;
 	}
+
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public float getDayStart() {
+		return dayStart;
+	}
+
+	public void setDayStart(float dayStart) {
+		this.dayStart = dayStart;
+	}
+
+	public float getDayEnd() {
+		return dayEnd;
+	}
+
+	public void setDayEnd(float dayEnd) {
+		this.dayEnd = dayEnd;
+	}
+
+	public Set<Float> getBusyTimes() {
+		return busyTimes;
+	}
+
+	public void setBusyTimes(Set<Float> busyTimes) {
+		this.busyTimes = busyTimes;
+	}
+	
+	public boolean addBusyTime(float time) {
+		boolean timeAdded= busyTimes.add(time);
+		
+		return timeAdded;
+	}
+	
+	public boolean removeBusyTime(float time) {
+		boolean timeRemoved= busyTimes.remove(time);
+		
+		return timeRemoved;
+	}
+	
 }
