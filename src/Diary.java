@@ -5,8 +5,6 @@
 
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 
@@ -23,6 +21,14 @@ public class Diary
 	{
 		employee = employeeInfo;
 		appointment = appointmentInfo;
+	}
+	
+	public Diary() {
+		employee= new Employee();
+		left= null;
+		right= null;
+		previous= null;
+		
 	}
 	
 	public String convertToKey(String username) 

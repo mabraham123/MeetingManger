@@ -40,29 +40,6 @@ public class DiaryTree
 		}
 	}
 	
-	/**
-	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
-	 * @param diaryToAdd The diary node to be added to the tree
-	 */
-	/**
-	public void addDiaryNode(Diary diaryToAdd) 
-	{
-		//Will check to see if the tree is empty.
-		boolean	empty = isTreeEmpty();
-		
-		if (empty)
-		{
-			//If the tree is empty the new node becomes the root.
-			setRoot(diaryToAdd);
-		}
-		else
-		{
-			//The current node is set to point to the root reference.
-			current = root;
-			//This function will place the new node in a relevant position in the tree.
-			determineTreePosition(diaryToAdd);
-		}
-	}
 	
 	/**
 	 * This function will decide where in the tree a new node will be placed and place the node.
@@ -144,79 +121,63 @@ public class DiaryTree
 		return empty;
 	}
 
+	
 	/**
-	 * Will search the binary tree for a specific node and return it.
-	 * @param username This is the username being searched for within the tree.
-	 * @return current This will be the diary node with the same username as the initial parameter.
-	 */
-	public Diary searchTree(String username) 
-	{
-		//The current node pointer is set to reference to the root.
-		current = root;
-		
-		//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
-		BigInteger userID = new BigInteger(current.convertToKey(username));
-		//The found field will check if the diary node has been found.
-		boolean found = false;
-		
-		//The loop continues as long as exitloop is false.
-		boolean exitLoop = false;
-		while (exitLoop == false) 
-		{
-			//If the current node is not a null value
-			if(current != null) 
-			{	
-				//The key is retrieved from the current node's employee. 
-				String key = current.getEmployee().getKey();
-				//The key is stored as a biginteger.
-				BigInteger currentKey = new BigInteger(key);
-				//will test if the current key is greater or less than the userID.
-				int greaterOrLess = currentKey.compareTo(userID);
-				//If the userID is less than the current ID-the current reference will point to the node on the left.
-				if(greaterOrLess == 1) 
-				{
-					if(current.isLeftEmpty(current)) 
-					{
-						//Since there is no more nodes to the left therefore the user does not exist.
-						noUserFoundMessage();
-						exitLoop = true; 
-					}
-					else 
-					{
-						current = current.getLeft();
-					}
-				}
-				//If the UserID is more than the current key the current reference will point to the node on the right.
-				else if (greaterOrLess == -1) 
-				{
-					if(current.isRightEmpty(current))
-					{
-						//Since there is no more nodes to the right therefore the user does not exist.
-						noUserFoundMessage();
-						exitLoop = true;
-					}
-					else
-					{
-						current = current.getRight();
-					}
-				}
-				else
-				{
-					//The diary node has been found so found is set to true.
-					found = true;
-					exitLoop = true;
-				}
-			}
-		}
-		
-		//If the diary node has not been found the current node will be set to null.
-		if(found == false) 
-		{
-			current = null;
-		}
-		
-		return current;
-	}
+     * Method to find a node with the id in the tree
+     * @param idNumber	The id you want to find
+     * @return	The node with that id number
+     */
+    public Diary searchTree(String username){
+    	//Start of the tree
+    	Diary current=root;
+    	Diary toFind = new Diary();
+    	
+    	//Variable will check if the diary node has been found.
+    	boolean found=false;
+    	
+    	//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
+    	BigInteger userID = new BigInteger(toFind.convertToKey(username));
+    	
+    	
+    	
+    	while(current != null && found !=true) {
+    		//The key is retrieved from the current node's employee. 
+			String key = current.getEmployee().getKey();
+			//The key is stored as a biginteger.
+			BigInteger currentKey = new BigInteger(key);
+			//will test if the current key is greater or less than the userID.
+			int greaterOrLess = userID.compareTo(currentKey);
+			//If the userID is less than the current ID-the current reference will point to the node on the left.
+
+			
+    		//Travel down the binary tree till the employee is found
+    		if(greaterOrLess == 0) {
+    			found=true;
+    		}else {
+    			//if the id is smaller than the current nodes id
+    			if(greaterOrLess< 0) {
+    				//set current to the left node
+    				current= current.getLeft();
+    			}else if(greaterOrLess > 0) {
+    				//set current to the right node
+    				current= current.getRight();
+    			}
+    		}
+    		
+    		
+    		
+    	}
+    	
+    	//If the id was found in the tree send the node
+    	if(found==true) {
+    		return current;
+    	}else {
+    		noUserFoundMessage();
+    		//return null if the node was not found
+    		return null;
+    	}
+    }
+	
 	
 	/**
 	 * Will inform the user that the username cannot be found.
@@ -321,9 +282,6 @@ public class DiaryTree
 		}
 	}
 	
-	
-	//addAppToLinkedList
-	//find the nodes.getNext
 
 	
 	
@@ -353,6 +311,19 @@ public class DiaryTree
 		else
 		{
 			loggedIn.setAppointment(null);
+		}
+		
+		//Removing the time from the busy time set
+		Employee targetEmployee= loggedIn.getEmployee();
+		
+		//remove the 30 minute increments of the meeting into the busy times set for the employee
+		float currentTime = appointmentToDelete.getStartTime();
+		float endTime=appointmentToDelete.getEndTime();
+		
+		while(currentTime != endTime){
+			//remove the busy time into the set of busy times
+			boolean isRemoved=targetEmployee.removeBusyTime(currentTime);
+			currentTime+= 0.5;	//Add a half hour
 		}
 	}
 
@@ -522,11 +493,28 @@ public class DiaryTree
 				month = Integer.parseInt(time[1]); //second part is day
 				year = Integer.parseInt(time[2]); //third part is day
 				
-				appointmentToAdd = new Appointment(type, desc, start, end, null, year, month, day);
+				//Creating a new appointment object
+				appointmentToAdd = new Appointment(type, desc, start, end, year, month, day);
+
+
+				
 				listOfAppointments.add(appointmentToAdd);
+				
+				
+				//Add the 30 minute increments of the meeting into the busy times set for the employee
+				float currentTime = start;
+				
+				while(currentTime != end){
+					//Add the busy time into the set of busy times
+					boolean isAdded=employeeToAdd.addBusyTime(currentTime);
+					currentTime+= 0.5;	//Add a half hour
+				}
+				
 				
 				nextLine = bufferedReader.readLine(); //required as there will be infinite loop otherwise
 				counter = counter + 5;
+				
+				
 			}
 			Diary diaryToAdd = new Diary(employeeToAdd, null);
 			addDiaryNode(diaryToAdd); //add diary to tree

@@ -328,5 +328,10 @@ public class Employee {
 		return timeAdded;
 	}
 	
+	public boolean removeBusyTime(float time) {
+		boolean timeRemoved= busyTimes.remove(time);
+		
+		return timeRemoved;
+	}
 	
 }
