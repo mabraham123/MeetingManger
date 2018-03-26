@@ -307,7 +307,12 @@ public class Menu
 	}
 	public void deleteAppointmentfromStack()
 	{
-		int counter = 1;
+		/**
+		 *  The following method is a modified version of the delete appointment method however it allows
+		 *  appointments from the Stack class to be deleted without having to manually deleting the appointment via the delete 
+		 *  appointment from stack.
+		 *  @Parm loggedIn
+		 */
 		Appointment current = loggedIn.getAppointment();
 		Appointment previous = loggedIn.getAppointment();
 		
@@ -315,7 +320,6 @@ public class Menu
 		{
 			previous = current;
 			current = current.getNextAppointment();
-			counter += 1;
 		}
 		if (previous.getNextAppointment() != null)
 		{
@@ -331,18 +335,6 @@ public class Menu
 	 public void Undo(Object appointment)
 	    {
 	    	Appointment = appointment;
-	    	/**
-	        myList.push(appointment);
-	    	if (myList != null)
-	    	{
-	    		myList = new Undo(appointment);
-	            myList.printList();
-	    	}
-	    	else
-	    	{
-	    		System.out.println("Error");
-	    	}
-	    	*/
 	    }
 
 	    public StackNode getHead()
@@ -358,8 +350,8 @@ public class Menu
 	    public void push(Object appointment)
 	    {
 	    	/**
-	    	 * This method allows the user to add (Push)
-	    	 * 
+	    	 * This method adds the appointment that were either added or deleted or changed to the stack.
+	    	 *  	    	 * 
 	    	 */
 	    	StackNode  newNode;
 	    	newNode = new StackNode(appointment);
@@ -370,7 +362,7 @@ public class Menu
 	    public void printList()
 	    {
 	    /**
-	     * This method allows the user to print the stack.
+	     * This method can be used to check if the appointments are being stored in the stack.
 	     */
 	    	StackNode marker = null;
 	    	marker = head;
@@ -398,51 +390,25 @@ public class Menu
 	    	}
 	    }
 	    
-	  /**  public boolean isStackAdd() 
-	    {
-	    	if (UndoNode.Object == )
-	    	{
-	    		System.out.println("Yes this is add");
-	        	return true;
-	    	}
-	    	else 
-	    	{
-	    		return false;
-	    	}
-	 
-	    	System.out.println("Yes this is add");
-	    	return true;
-	    }
-	    
-	    public boolean isStackEdit ()
-	    {
-	        	System.out.println("Yes this is add");
-	    		return true;
-	    }
-	   **/
+	
 	 	public StackNode pop()
 	    {
 	 		/**
-	    	 * This method allows the user to delete the head
+	    	 * This method removes the appointments from the stack if the Undo button is used.
+	    	 * @Parm Undo
 	    	 * 
 	    	 */
-	 		// Set the Current List node to Null
 	 		if (this.edit != null)
 	 		{
 	 			/**
-		    	 * This method allows the user to delete the head
-		    	 * 
-		    	 */
-		 		// Set the Current List node to Null
-	 			
-	 			//deleteAppointmentfromStack();
-	 			
-	 			
+		    	 * This method removes the appointment if undo was invoked and the last change to the appointment was
+		    	 * was am edited appointment.
+		    	 */	 			
 	 			
 		 		StackNode temp = null;
 		 		Appointment tempoff = null;
-		 		Appointment del = null;
 		 		
+		 		// Stores the modified appointment.
 		 		tempoff = this.edit;
 		 		
 		 		StackNode nodeToPop = null;
@@ -450,168 +416,110 @@ public class Menu
 				
 			
 				if (isStackEmpty()== true) 
-				//Check if the Stack is empty
+				//This check if the Stack is empty
 				{
 					return null;
-				// Only if the stack is empty then it will just return null. aka there's nothing there.
+				// Only if the stack is empty then it will just return null. And will throw an error.
 				}
 				else
-				//If stack not empty
+				//If the stack isn't empty then the undo method will proceed.
 				{
 					
 					if (isStackEmpty() == false)
 					{
-						// Add Parameter for if this object comes from the add method
-						// Delete Meeting
+					
 						nodeToPop = head;
-						
 						temp = nodeToPop;
-						//loggedIn.;
 						loggedIn.sortAppointments(loggedIn);
 						loggedIn.appointment = tempoff;
 						edit = null;
 						// Remove the current node
 						head = head.getNext();
 						// Set the previous node to top of the list aka Head
+						System.out.println("Removed modified appointment");
 						return nodeToPop;
-						
-						
 					}
-						
-					/** else if isStackEdit() == true)
+					else  
 					{
-						// Add Parameter for if this object comes from the edit methodd.
-						// Restore parameter stored.
-						// Delete Meeting
-						nodeToPop = head;
-						// Remove the current node
-						head = head.getNext();
-						// Set the previous node to top of the list aka Head
-						return nodeToPop;
+						return null;
 					}
-				*/
-					else 
-					// Delete Meeting
-					System.out.println("Deletos");
-					nodeToPop = head;
-					// Remove the current node
-					head = head.getNext();
-					// Set the previous node to top of the list aka Head
-					return nodeToPop;
 				}
 	 		}
+	 		
 	 		else
 	 		{
-	 		if(this.save != null)
-	 		{
-	 			StackNode temp = null;
-
-		 		
-		 		
-		 		StackNode nodeToPop = null;
-		 		
-				
+	 			
+	 			if(this.save != null)
+	 			{
+		 			/**
+			    	 * This method removes the appointment if undo was invoked and the last action was
+			    	 * an appointment being removed.
+			    	 */		
+	 				
+	 				StackNode temp = null;
+	 				StackNode nodeToPop = null;
 			
-				if (isStackEmpty()== true) 
-				//Check if the Stack is empty
-				{
-					return null;
-				// Only if the stack is empty then it will just return null. aka there's nothing there.
-				}
-				else
-				//If stack not empty
-				{
-					
-					if (isStackEmpty() == false)
-					{
-						// Add Parameter for if this object comes from the add method
-						// Delete Meeting
-						nodeToPop = head;
-						
-						//nodeToPop = this.loggedIn.setAppointment(save);
-						temp = nodeToPop;
-						loggedIn.sortAppointments(loggedIn);
-						// Remove the current node
-						head = head.getNext();
-						// Set the previous node to top of the list aka Head
-						return nodeToPop;
-						
+	 				if (isStackEmpty()== true) 
+	                //Check if the Stack is empty
+	 				{
+	 					System.out.println("Error Stack has been Empty @Save" );
+	 					return null;
+	 				// Only if the stack is empty then it will just return null. And will throw an error.
 					}
+	 				
+	 				else
+	 				//If the stack isn't empty then the undo method will proceed.
+	 				{			
+	 					nodeToPop = head;
 						
-					/** else if isStackEdit() == true)
-					{
-						// Add Parameter for if this object comes from the edit methodd.
-						// Restore parameter stored.
-						// Delete Meeting
-						nodeToPop = head;
-						// Remove the current node
-						head = head.getNext();
-						// Set the previous node to top of the list aka Head
-						return nodeToPop;
-					}
-				*/
-					else 
-					// Delete Meeting
-					System.out.println("Deletos");
-					nodeToPop = head;
-					// Remove the current node
-					head = head.getNext();
-					// Set the previous node to top of the list aka Head
-					return nodeToPop;
-				}
-			}
+	 					temp = nodeToPop;
+	 					loggedIn.sortAppointments(loggedIn);
+	 					// Remove the current node
+	 					head = head.getNext();
+	 					// Set the previous node to top of the list aka Head
+	 					System.out.println("Readded appointment that was deleted");
+	 					save = null;
+	 					return nodeToPop;
+	 			    } 	
+	 			}
 	 			
 	 		else
 	 		{
-	 		StackNode nodeToPop = null;
+	 		/**
+	 		 *  This final option is used if the previous appointment was recently added and wasn't modified or was an appointment that
+	 		 *  was deleted.
+	 		 */
+	 			StackNode nodeToPop = null;
 		
-			if (isStackEmpty()== true) 
-			//Check if the Stack is empty
-			{
-				return null;
-			// Only if the stack is empty then it will just return null. aka there's nothing there.
-			}
-			else
-			//If stack not empty
-			{
-				if (isStackEmpty() == false)
-				{
-					// Add Parameter for if this object comes from the add method
-					// Delete Meeting
-					nodeToPop = head;
-					
-					deleteAppointmentfromStack();
-					// Remove the current node
-					head = head.getNext();
-					// Set the previous node to top of the list aka Head
-					return nodeToPop;
-					
+	 			if (isStackEmpty()== true) 
+	 				//Check if the Stack is empty
+	 			{
+	 				return null;
+	 				// Only if the stack is empty then it will just return null. And will throw an error.
 				}
+	 				
+	 			else
+	 			//If the stack isn't empty then the undo method will proceed.
+	 			{
+	 				if (isStackEmpty() == false)
+	 				{
+	 			
+	 					nodeToPop = head;
 					
-				/** else if isStackEdit() == true)
-				{
-					// Add Parameter for if this object comes from the edit methodd.
-					// Restore parameter stored.
-					// Delete Meeting
-					nodeToPop = head;
-					// Remove the current node
-					head = head.getNext();
-					// Set the previous node to top of the list aka Head
-					return nodeToPop;
-				}
-			*/
-				else 
-				// Delete Meeting
-				System.out.println("Deletos");
-				nodeToPop = head;
-				// Remove the current node
-				head = head.getNext();
-				// Set the previous node to top of the list aka Head
-				return nodeToPop;
-			}
+	 					deleteAppointmentfromStack();
+	 					head = head.getNext();
+	 					return nodeToPop;
+	 				}
+					
+	 				else 
+	 				{
+					System.out.println("An error has occured");
+					return null;
+	 				}
+	 			}
 	 		}
-	 		}
-		}
+	 	}
+	}
 	 	
 	 /**
      * Uses Scanner to get a new String from the user
@@ -679,7 +587,10 @@ public class Menu
 	{
 		this.diaryTree = diaryTree;
 	}
-	
+	/**
+	 * 
+	 * @return loggedin details.
+	 */
 	public Diary getLoggedIn() {
 		return loggedIn;
 	}
