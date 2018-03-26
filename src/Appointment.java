@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * @author DAN
+ * @author Melvin Abraham
  *
  */
 public class Appointment {
@@ -15,18 +15,29 @@ public class Appointment {
 	private String description;
 	private float startTime;
 	private float endTime;
-	private Calendar appointmentDate;
+	private GregorianCalendar appointmentDate;
 	private Appointment nextAppointment;
 	
-	public Appointment(String type, String desc, float start, float end, Object next, int i, int j, int k)
+	
+	public Appointment() {
+		appointmentType = "";
+		description = "";
+		startTime = 0.0f;
+		endTime = 0.0f;
+		appointmentDate = new GregorianCalendar(0, 0, 0);
+		nextAppointment = null;
+	}
+	
+	public Appointment(String type, String desc, float start, float end, int i, int j, int k)
 	{
 		appointmentType = type;
 		description = desc;
 		startTime = start;
 		endTime = end;
 		appointmentDate = new GregorianCalendar(i, j, k);
-		nextAppointment = (Appointment) next;
+		nextAppointment = null;
 	}
+	
 	/**
 	 * @return the appointmentType
 	 */

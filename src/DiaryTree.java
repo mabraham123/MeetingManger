@@ -9,9 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- * @author Daniel Scheitler
- * @author Aditya Kumar Menon
- * Will manage the binary tree of diary objects.
+ * @author Melvin Abraham
+ *
  */
 public class DiaryTree 
 {
@@ -42,271 +41,26 @@ public class DiaryTree
 	}
 	
 	/**
-	 * Will pick a type of a node deletion method and delete a node.
-	 * @param username this is the employee's username.
+	 * Adds an employee's diary to the tree which stores their employee info and info about all their appointments
+	 * @param diaryToAdd The diary node to be added to the tree
 	 */
-	public void determineDeletionMethod(String username) 
-	{
-		//TreeNode is created here to edit the data in the node of the tree.
-		Diary pointer = new Diary();
-		//The current node is set to the node that needs to be deleted.
-		current = searchTree(username);
-		/* The if block will test if the current node has either no nodes to the left or right, 
-		 * one node to either the left or right, or two nodes connected to it.
-		 * 
-		 * If Both nodes connected to current node(node being deleted) are empty we know that the node is a leaf.
-		 */
-		if(current.isLeftEmpty(current) && current.isRightEmpty(current))
-		{
-			//This method deletes a leaf node.
-			deleteLeaf(pointer);
-		}
-		//If the node to the left of the node being deleted is empty and the right has a connected node the following block runs.
-		else if (current.isLeftEmpty(current) && !current.isRightEmpty(current)) 
-		{
-			deleteRightConnectedNode(pointer);
-		}
-		//If the node to the right of the node being deleted is empty and the left has a connected node the following block runs.
-		else if (!current.isLeftEmpty(current) && current.isRightEmpty(current)) 
-		{
-			deleteLeftConnectedNode(pointer);
-		}
-		//The only other option is for the node to have 2 nodes connected to it.
-		else 
-		{
-			deleteDoubleJointedBranch(pointer);
-		}
-	}
-	
 	/**
-	 * Will delete a leaf node in a tree.
-	 * @param pointer Is a pointer to the node above the leaf.
-	 */
-	public void deleteLeaf(Diary pointer) 
+	public void addDiaryNode(Diary diaryToAdd) 
 	{
-		//The pointer is set to be the previous node.
-		pointer = current.getPrevious();
+		//Will check to see if the tree is empty.
+		boolean	empty = isTreeEmpty();
 		
-		//This if block will delete the reference to the node being deleted.
-		if(pointer.getLeft() == current) 
+		if (empty)
 		{
-			pointer.setLeft(null);
+			//If the tree is empty the new node becomes the root.
+			setRoot(diaryToAdd);
 		}
-		else 
+		else
 		{
-			pointer.setRight(null);
-		}
-		
-		//The node is deleted.
-		current = null;
-	}
-	
-	/**
-	 * Deletes a node which has an empty left reference and a node to it's right.
-	 * @param pointer This is a pointer to handle editing the contents of the nodes on the tree.
-	 */
-	public void deleteRightConnectedNode(Diary pointer) 
-	{
-		//The pointer is set to point to the node to the right of the node being deleted.
-		pointer = current.getRight();
-		
-		//The pointer will make it's node's previous reference point to the node being deleted's previous node reference.
-		pointer.setPrevious(current.getPrevious());
-		
-		//The pointer is set to the node before the current node.
-		pointer = current.getPrevious();
-		
-		if(pointer.getRight() == current)
-		{
-			//The node to the right of the pointer is set to be the node that is on the right of the node being deleted.
-			pointer.setRight(current.getRight());
-		}
-		else 
-		{
-			//The pointer will set the left reference to the node being deleted's right reference.
-			pointer.setLeft(current.getRight());
-		}
-	}
-	
-	/**
-	 * Deletes a node which has an empty right reference and a node to it's left.
-	 * @param pointer This is a pointer to handle editing the contents of the nodes on the tree.
-	 */
-	public void deleteLeftConnectedNode(Diary pointer) 
-	{
-		//The pointer is set to point to the node to the left of the node being deleted.
-		pointer = current.getLeft();
-		
-		//The pointer will make it's node's previous reference point to the node being deleted's previous node reference.
-		pointer.setPrevious(current.getPrevious());
-		
-		//The pointer is set to the node before the node being deleted.
-		pointer = current.getPrevious();
-		
-		//The node to the left of the pointer is set to be the node that is on the left of the node being deleted.
-		pointer.setLeft(current.getLeft());
-		
-		//The node is deleted.
-		current = null;
-	}
-	
-	/**
-	 * Will delete a node with a connection to each the left and the right and will clean the tree up to connect it all together once split.
-	 * @param pointer This is the node that needs to be moved to fill in the gaps in the tree.
-	 */
-	public void deleteDoubleJointedBranch(Diary pointer) 
-	{
-		//A secondary pointer is made to facilitate editing the information stored on the nodes on the tree.
-		Diary pointer2 = new Diary();
-		
-		//The pointer points to the subtree to the left.
-		pointer = current.getLeft();
-		
-		//As long as there is a node to the right of the pointer the pointer will point further right.
-		while(!pointer.isRightEmpty(pointer)) 
-		{
-			pointer = pointer.getRight();
-		}
-		//A second pointer is introduced here to make the deleting process easier.
-		pointer2 = pointer;
-		
-		//The largest node will be moved to the top and replace the deleted node.
-		moveLargestNode(pointer, pointer2);
-		
-		//Will move the node at the rightmost position on the left subtree to the position occupied by the node being deleted.
-		pointer.setPrevious(current.getPrevious());
-		
-		//Will connect the left and right nodes to the appropriate places.
-		connectLeftAndRightToTop(pointer, pointer2);
-		
-		//Will place the pointer in the node being deleted's location.
-		connectToTop(pointer, pointer2);
-				
-		//The node is deleted here.
-		current = null;
-	}
-	
-	/**
-	 * This will move the largest node to replace the node being deleted.
-	 * @param pointer This is the node that needs to be moved.
-	 * @param pointer2 This node is used to edit the information stored on each node.
-	 */
-	public void moveLargestNode(Diary pointer, Diary pointer2) 
-	{
-		pointer2 = pointer.getLeft();
-		//This code only runs if there is a node to the left of the pointer and the .
-		if(pointer.getLeft() != null && pointer2.getRight() != null) 
-		{
-			//The pointer points to the node on the left and then makes its previous the previous of the node that is being moved.
-			pointer2 = pointer2.getLeft();
-			pointer2.setPrevious(pointer.getPrevious());
-				
-			//The pointer points to the node above the node being moved.
-			pointer2 = pointer.getPrevious();
-			
-			//The pointer points to the node to the left of the node being moved.
-			pointer2.setRight(pointer.getLeft());
-		}
-		
-		//This code runs only if the node before the pointer is not the "current" node.
-		if(pointer.getPrevious() != current)
-		{
-			//Pointer 2 is set to be the node before the pointer.
-			pointer2 = pointer.getPrevious();
-			
-			//pointer 2's right reference is emptied.
-			pointer2.setRight(null);
-		}
-		//If the node to the right of the node being deleted is not empty this if block will activate.
-		else if(current.getRight() != null) 
-		{
-			//The pointer makes its right reference point to the right reference of the node being deleted.
-			pointer.setRight(current.getRight());
-			
-			//The second pointer becomes the node to the right of the pointer.
-			pointer2 = pointer.getRight();
-			
-			//Pointer 2 has it's previous reference point to the pointer1.
-			pointer2.setPrevious(pointer);
-		}
-	}
-	
-	/**
-	 * Will place the pointer in the node being deleted's location.
-	 * @param pointer Node being moved.
-	 * @param pointer2 Used to edit information stored in the nodes of the tree.
-	 */
-	public void connectToTop(Diary pointer, Diary pointer2) 
-	{
-		//This code runs as long as the node before the current node is not a null value.
-		if(current.getPrevious() != null) 
-		{
-			//Pointer 2 is set to be the node before the current node.
-			pointer2 = current.getPrevious();
-			
-			//The if statement "searches" for the current node and changes the direction reference to point to another node.
-			if(pointer2.getRight() == current) 
-			{
-				pointer2.setRight(pointer);
-			}
-			else
-			{
-				pointer2.setLeft(pointer);
-			}
-		}
-		//If the node before the node being deleted is null the root will be changed to the correct node.
-		else 
-		{
-			root = pointer;
-		}
-	}
-	
-	/**
-	 * Will connect the left and right nodes to the appropriate places.
-	 * @param pointer This is the node where links are being made to.
-	 * @param pointer2 This will allow data in the nodes in the tree to be edited.
-	 */
-	public void connectLeftAndRightToTop(Diary pointer, Diary pointer2) 
-	{
-		//If the pointer is the same node as the node to the left of the node being deleted this branch will run.
-		if(pointer == current.getLeft()) 
-		{
-			//Pointer 2 is set to be the node before the pointer.
-			pointer2 = pointer.getPrevious();
-			
-			//The if block activates only if the ID's of the pointer 2 and node being deleted's ID's are equal.
-			if(pointer2.getEmployee().getKey().equals(current.getEmployee().getKey())) 
-			{
-				//The node to the right of the node being moved is set to point to the node to the right of the node being deleted.
-				pointer.setRight(current.getRight());
-			}
-			
-				
-			//Pointer 2 will be set to the node to the right of the node being deleted.
-			pointer2 = current.getRight();
-					
-			//Pointer 2 will make the node to the right of the node being deleted's previous reference point to the node being moved to the top.
-			pointer2.setPrevious(pointer);
-		}
-		else 
-		{
-			//The node to the right of the node being moved is set to point to the node to the right of the node being deleted.
-			pointer.setRight(current.getRight());
-			
-			//The node to the left of the node being moved is set to point to the node to the left of the node being deleted.
-			pointer.setLeft(current.getLeft());
-					
-			//Pointer 2 will be set to the node to the left of the node being deleted.
-			pointer2 = current.getLeft();
-					
-			//Pointer 2 will make the node to the left of the node being deleted's previous reference point to the node being moved to the top.
-			pointer2.setPrevious(pointer);
-					
-			//Pointer 2 will be set to the node to the right of the node being deleted.
-			pointer2 = current.getRight();
-					
-			//Pointer 2 will make the node to the right of the node being deleted's previous reference point to the node being moved to the top.
-			pointer2.setPrevious(pointer);
+			//The current node is set to point to the root reference.
+			current = root;
+			//This function will place the new node in a relevant position in the tree.
+			determineTreePosition(diaryToAdd);
 		}
 	}
 	
@@ -349,20 +103,23 @@ public class DiaryTree
 			else if(greaterOrLess == 0)
 			{
 				//This will prevent entries with the same ID from existing in the tree.
-				System.out.println("Username already in use! Please use a different username.");
+				System.out.println("ID already in use! Please use a different ID.");
 				System.out.println("Returning to menu...");
 				notAdded = false;
 			}
-			//The only other option for the new node to be entered into will be the right and this will do the same task as when the node is being placed in the left branch.
-			else if(current.isRightEmpty(current))
+			else
 			{
-				current.setRight(newNode);
-				newNode.setPrevious(current);
-				notAdded = false;
-			}
-			else 
-			{
-				current = current.getRight();
+				//The only other option for the new node to be entered into will be the right and this will do the same task as when the node is being placed in the left branch.
+				if(current.isRightEmpty(current))
+				{
+					current.setRight(newNode);
+					newNode.setPrevious(current);
+					notAdded = false;
+				}
+				else 
+				{
+					current = current.getRight();
+				}
 			}
 		}
 	}
@@ -387,78 +144,140 @@ public class DiaryTree
 		return empty;
 	}
 
+//	/**
+//	 * Will search the binary tree for a specific node and return it.
+//	 * @param username This is the username being searched for within the tree.
+//	 * @return current This will be the diary node with the same username as the initial parameter.
+//	 */
+//	public Diary searchTree(String username) 
+//	{
+//		
+//		
+//		//The current node pointer is set to reference to the root.
+//		current = root;
+//		//The found field will check if the diary node has been found.
+//		boolean found = false;
+//		
+//		//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
+//		BigInteger userID = new BigInteger(current.convertToKey(username));
+//		
+//		
+//		
+//		//The loop continues as long as exitloop is false.
+//		boolean exitLoop = false;
+//		while (exitLoop == false) 
+//		{
+//			//If the current node is not a null value
+//			if(current != null) 
+//			{	
+//				//The key is retrieved from the current node's employee. 
+//				String key = current.getEmployee().getKey();
+//				//The key is stored as a biginteger.
+//				BigInteger currentKey = new BigInteger(key);
+//				//will test if the current key is greater or less than the userID.
+//				int greaterOrLess = currentKey.compareTo(userID);
+//				//If the userID is less than the current ID-the current reference will point to the node on the left.
+//				if(greaterOrLess == 1) 
+//				{
+//					if(current.isLeftEmpty(current)) 
+//					{
+//						//Since there is no more nodes to the left therefore the user does not exist.
+//						noUserFoundMessage();
+//						exitLoop = true; 
+//					}
+//					else 
+//					{
+//						current = current.getLeft();
+//					}
+//				}
+//				//If the UserID is more than the current key the current reference will point to the node on the right.
+//				else if (greaterOrLess == -1) 
+//				{
+//					if(current.isRightEmpty(current))
+//					{
+//						//Since there is no more nodes to the right therefore the user does not exist.
+//						noUserFoundMessage();
+//						exitLoop = true;
+//					}
+//					else
+//					{
+//						current = current.getRight();
+//					}
+//				}
+//				else
+//				{
+//					//The diary node has been found so found is set to true.
+//					found = true;
+//					exitLoop = true;
+//				}
+//			}
+//		}
+//		
+//		//If the diary node has not been found the current node will be set to null.
+//		if(found == false) 
+//		{
+//			current = null;
+//		}
+//		
+//		return current;
+//	}
+	
 	/**
-	 * Will search the binary tree for a specific node and return it.
-	 * @param username This is the username being searched for within the tree.
-	 * @return current This will be the diary node with the same username as the initial parameter.
-	 */
-	public Diary searchTree(String username) 
-	{
-		//The current node pointer is set to reference to the root.
-		current = root;
-		//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
-		BigInteger userID = new BigInteger(current.convertToKey(username));
-		//The found field will check if the diary node has been found.
-		boolean found = false;
-		
-		//The loop continues as long as exitloop is false.
-		boolean exitLoop = false;
-		while (exitLoop == false) 
-		{
-			//If the current node is not a null value
-			if(current != null) 
-			{	
-				//The key is retrieved from the current node's employee. 
-				String key = current.getEmployee().getKey();
-				//The key is stored as a biginteger.
-				BigInteger currentKey = new BigInteger(key);
-				//will test if the current key is greater or less than the user's key.
-				int greaterOrLess = currentKey.compareTo(userID);
-				//If the user's key is less than the current key-the current reference will point to the node on the left.
-				if(greaterOrLess == 1) 
-				{
-					if(current.isLeftEmpty(current)) 
-					{
-						//Since there is no more nodes to the left therefore the user does not exist.
-						noUserFoundMessage();
-						exitLoop = true; 
-					}
-					else 
-					{
-						current = current.getLeft();
-					}
-				}
-				//If the User's key is more than the current key the current reference will point to the node on the right.
-				else if (greaterOrLess == -1) 
-				{
-					if(current.isRightEmpty(current))
-					{
-						//Since there is no more nodes to the right therefore the user does not exist.
-						noUserFoundMessage();
-						exitLoop = true;
-					}
-					else
-					{
-						current = current.getRight();
-					}
-				}
-				else
-				{
-					//The diary node has been found so found is set to true.
-					found = true;
-					exitLoop = true;
-				}
-			}
-		}
-		
-		//If the diary node has not been found the current node will be set to null.
-		if(found == false) 
-		{
-			current = null;
-		}
-		
-		return current;
-	}
+     * Method to find a node with the id in the tree
+     * @param idNumber	The id you want to find
+     * @return	The node with that id number
+     */
+    public Diary searchTree(String username){
+    	//Start of the tree
+    	Diary current=root;
+    	Diary toFind = new Diary();
+    	
+    	//Variable will check if the diary node has been found.
+    	boolean found=false;
+    	
+    	//The username is converted into a key and then stored in a big integer to allow comparisons to be made.
+    	BigInteger userID = new BigInteger(toFind.convertToKey(username));
+    	
+    	
+    	
+    	while(current != null && found !=true) {
+    		//The key is retrieved from the current node's employee. 
+			String key = current.getEmployee().getKey();
+			//The key is stored as a biginteger.
+			BigInteger currentKey = new BigInteger(key);
+			//will test if the current key is greater or less than the userID.
+			int greaterOrLess = userID.compareTo(currentKey);
+			//If the userID is less than the current ID-the current reference will point to the node on the left.
+
+			
+    		//Travel down the binary tree till the employee is found
+    		if(greaterOrLess == 0) {
+    			found=true;
+    		}else {
+    			//if the id is smaller than the current nodes id
+    			if(greaterOrLess< 0) {
+    				//set current to the left node
+    				current= current.getLeft();
+    			}else if(greaterOrLess > 0) {
+    				//set current to the right node
+    				current= current.getRight();
+    			}
+    		}
+    		
+    		
+    		
+    	}
+    	
+    	//If the id was found in the tree send the node
+    	if(found==true) {
+    		return current;
+    	}else {
+    		noUserFoundMessage();
+    		//return null if the node was not found
+    		return null;
+    	}
+    }
+	
 	
 	/**
 	 * Will inform the user that the username cannot be found.
@@ -508,37 +327,42 @@ public class DiaryTree
 			appointmentToEdit.setAppointmentDate(year, month, day);
 		}
 	}
-	/**
-	 * Adds an appointment to the diary of the logged in user
-	 * @param appointmentType Type of appointment
-	 * @param description Description of appointment
-	 * @param startTime Start time of appointment
-	 * @param endTime End time of appointment
-	 * @param year Year of appointment
-	 * @param month Month of appointment
-	 * @param day Day of appointment
-	 * @param loggedIn The diary to be added to
-	 */
-	public void addAppointment(String appointmentType, String description, float startTime, float endTime, int year, int month, int day, Diary loggedIn)
-	{
-		Appointment current = loggedIn.getAppointment();
-		Appointment appointmentToAdd = new Appointment(appointmentType, description, startTime, endTime, null, year, month, day);
-		
-		if (loggedIn.getAppointment() == null)
-		{
-			loggedIn.setAppointment(appointmentToAdd);
-		}
-		else
-		{
-			while (current.getNextAppointment() != null)
-			{
-				current = current.getNextAppointment();
-			}
-			current.setNextAppointment(appointmentToAdd);
-			//loggedIn = current;
-		}
-	}
+//	/**
+//	 * Adds an appointment to the diary of the logged in user
+//	 * @param appointmentType Type of appointment
+//	 * @param description Description of appointment
+//	 * @param startTime Start time of appointment
+//	 * @param endTime End time of appointment
+//	 * @param year Year of appointment
+//	 * @param month Month of appointment
+//	 * @param day Day of appointment
+//	 * @param loggedIn The diary to be added to
+//	 */
+//	public void addAppointment(String appointmentType, String description, float startTime, float endTime, int year, int month, int day, Diary loggedIn)
+//	{
+//		Appointment current = loggedIn.getAppointment();
+//		Appointment appointmentToAdd = new Appointment(appointmentType, description, startTime, endTime, null, year, month, day);
+//		
+//		if (loggedIn.getAppointment() == null)
+//		{
+//			loggedIn.setAppointment(appointmentToAdd);
+//		}
+//		else
+//		{
+//			while (current.getNextAppointment() != null)
+//			{
+//				current = current.getNextAppointment();
+//			}
+//			current.setNextAppointment(appointmentToAdd);
+//			//loggedIn = current;
+//		}
+//	}
 	
+	/**
+	 * Method to add an Appointment to the employee's diary
+	 * @param appointmentToAdd	The node that contains the appointment object
+	 * @param diaryToAdd	The employee's diary
+	 */
 	public void addAppointment(Appointment appointmentToAdd, Diary diaryToAdd)
 	{
 		Appointment current = diaryToAdd.getAppointment();
@@ -554,10 +378,15 @@ public class DiaryTree
 				current = current.getNextAppointment();
 			}
 			current.setNextAppointment(appointmentToAdd);
-			//loggedIn = current;
+		
 		}
 	}
+	
 
+	
+	
+	
+	
 	/**
 	 * Deletes an appointment from the diary
 	 * @param appointmentDelete The appointment to be deleted
@@ -725,12 +554,16 @@ public class DiaryTree
 				String username = nextLine; //fourth line is username
 				nextLine = bufferedReader.readLine();
 				String password = nextLine; //fifth line is password
+				nextLine = bufferedReader.readLine();
+				float startDay = Float.parseFloat(nextLine); //sixth line is start of day
+				nextLine = bufferedReader.readLine();
+				float endDay = Float.parseFloat(nextLine); //seventh line is start of day
 				
-				employeeToAdd = new Employee(forename, surname, username, password, jobPosition);
+				employeeToAdd = new Employee(forename, surname, username, password, jobPosition, startDay, endDay);
 				nextLine = bufferedReader.readLine(); //required as there will be infinite loop otherwise
 			}
 			nextLine = bufferedReader.readLine();
-			counter = counter + 6;
+			counter = counter + 8;
 			while (nextLine.equals("---") == false)
 			{
 				int year, month, day;
@@ -747,11 +580,27 @@ public class DiaryTree
 				month = Integer.parseInt(time[1]); //second part is day
 				year = Integer.parseInt(time[2]); //third part is day
 				
-				appointmentToAdd = new Appointment(type, desc, start, end, null, year, month, day);
+				appointmentToAdd = new Appointment(type, desc, start, end, year, month, day);
+
+
+				
 				listOfAppointments.add(appointmentToAdd);
+				//add the busy times to the busy set
+				
+				//Add the 30 minute increments of the meeting into the busy times set for each member
+				float currentTime = start;
+				
+				while(currentTime != end){
+					boolean isAdded=employeeToAdd.addBusyTime(currentTime);
+					currentTime+= 0.5;	//Add a half hour
+				}
+				
+				
 				
 				nextLine = bufferedReader.readLine(); //required as there will be infinite loop otherwise
 				counter = counter + 5;
+				
+				
 			}
 			Diary diaryToAdd = new Diary(employeeToAdd, null);
 			addDiaryNode(diaryToAdd); //add diary to tree

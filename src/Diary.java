@@ -1,8 +1,15 @@
 /**
- * @author Daniel Scheitler
- * @author Aditya Kumar Menon
+ * @author Melvin Abraham
  *
  */
+
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+
 public class Diary 
 {
 	private Employee employee;
@@ -12,25 +19,22 @@ public class Diary
 	private Diary right;
 	private Diary previous;
 
-	/**
-	 * Default diary constructor.
-	 */
-	public Diary() 
-	{
-		employee = null;
-		appointment = null;
-	}
-	
 	public Diary(Employee employeeInfo, Appointment appointmentInfo)
 	{
 		employee = employeeInfo;
 		appointment = appointmentInfo;
 	}
 	
-	/**
-	 * Will convert the username to a key.
-	 * @param username this is the username to be converted.
-	 */
+	public Diary() {
+		// TODO Auto-generated constructor stub
+		employee= new Employee();
+		//appointment= new Appointment();
+		left= null;
+		right= null;
+		previous= null;
+		
+	}
+
 	public String convertToKey(String username) 
 	{
 		return employee.textToKey(username);
@@ -77,84 +81,62 @@ public class Diary
 		}
 		return empty;
 	}
-	
 	/**
-	 * Will get the employee stored in the diary.
 	 * @return the employee
 	 */
-	public Employee getEmployee() 
-	{
+	public Employee getEmployee() {
 		return employee;
 	}
 
 	
 	/**
-	 * Will set the employee to the input employee.
 	 * @param employee the employee to set
 	 */
-	public void setEmployee(Employee employee) 
-	{
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 
 	/**
-	 * Will get the appointment stored in the diary.
 	 * @return the appointment
 	 */
-	public Appointment getAppointment() 
-	{
+	public Appointment getAppointment() {
 		return appointment;
 	}
 
 	/**
-	 * Will set the appointment.
 	 * @param appointment the appointment to set
 	 */
-	public void setAppointment(Appointment appointment) 
-	{
+	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
-	
 	/**
-	 * Will get the diary node to the left of the current diary node.
 	 * @return the left
 	 */
-	public Diary getLeft() 
-	{
+	public Diary getLeft() {
 		return left;
 	}
-	
 	/**
-	 * Will set the diary on the left of the current diary to the input diary.
 	 * @param left the left to set
-	 * @return The diary node to the left of the current node.
+	 * @return 
 	 */
-	public Diary setLeft(Diary left) 
-	{
+	public Diary setLeft(Diary left) {
 		return this.left = left;
 	}
-	
 	/**
-	 * Will get the diary on the right of the current diary.
-	 * @return the right node.
+	 * @return the right
 	 */
-	public Diary getRight() 
-	{
+	public Diary getRight() {
 		return right;
 	}
-	
 	/**
-	 * Will set the diary node on the right to be the input diary node.
 	 * @param right the right to set
 	 * @return 
 	 */
-	public Diary setRight(Diary right)
-	{
+	public Diary setRight(Diary right) {
 		return this.right = right;
 	}
 
 	/**
-	 * Will get the appointment in a sorted order.
 	 * @return the sortedAppointments
 	 */
 	public Appointment[] getSortedAppointments() {
@@ -162,30 +144,93 @@ public class Diary
 	}
 
 	/**
-	 * Will set the sorted appointment to be the input array.
 	 * @param sortedAppointments the sortedAppointments to set
 	 */
-	public void setSortedAppointments(Appointment[] sortedAppointments) 
-	{
+	public void setSortedAppointments(Appointment[] sortedAppointments) {
 		this.sortedAppointments = sortedAppointments;
 	}
 
 	/**
-	 * Will get the previous diary.
 	 * @return the previous
 	 */
-	public Diary getPrevious()
-	{
+	public Diary getPrevious() {
 		return previous;
 	}
 
 	/**
-	 * Will set the previous Diary.
 	 * @param previous the previous to set
 	 */
-	public void setPrevious(Diary previous) 
-	{
+	public void setPrevious(Diary previous) {
 		this.previous = previous;
 	}
+	
+	
+	
+	
+	
+	/**
+     * Method to find a possible meeting time for all the members of the meeting
+     * @param allMeetingMembers Array of every person in the meeting
+     * @param date The date of the potential meeting
+     */
+    public Set<Float> findAMeetingTime(Employee[] allMeetingMembers,int date){
+    	//Create a set to hold the full working day
+    	Set<Float> rangeOfTimesSet= new HashSet<Float>();
+    	
+    	//Setting the earliest time to the first time in the array
+            //Find minimum
+    	float earliestTime= allMeetingMembers[0].getDayStart();
+    	//Find the earliest time all the members are working
+    	for(int index=1; index<allMeetingMembers.length; index++) {
+    		//If the meeting time
+    		if(allMeetingMembers[index].getDayStart()<earliestTime){
+    			earliestTime= allMeetingMembers[index].getDayStart();
+    		}
+    	}
+    	
+    	//Find the latest time all the members are working
+        //Find minimum
+        float latestTime= allMeetingMembers[0].getDayEnd();
+            
+    	for(int counter=1; counter<allMeetingMembers.length; counter++){
+    		if(allMeetingMembers[counter].getDayEnd()<latestTime){
+    			latestTime= allMeetingMembers[counter].getDayEnd();
+    		}
+    	}
+    	
+            //float timeAdded=0.0f;
+            
+    	//Make timeAdded the first time to add
+            float timeAdded= earliestTime;
+    	//Fill the set with the full working day
+            do{
+                boolean rangeOfTimeAdded= rangeOfTimesSet.add(timeAdded);
+
+                timeAdded+= 0.5;	//Add a half hour
+            }while(timeAdded!=latestTime);
+            
+            //Set for all the busy times the members have
+            Set<Float> busyTimesAll= new HashSet<Float>();
+            
+            //Add all the busy times for each member into one big set
+            for(int i=0; i<allMeetingMembers.length; i++){
+            	busyTimesAll.addAll(allMeetingMembers[i].getBusyTimes());
+            }
+            
+            
+            Set<Float> possibleTimes= rangeOfTimesSet;
+            
+            //Remove the busy times from the set of possible times
+            boolean possibleTimesAdded= possibleTimes.removeAll(busyTimesAll);
+
+            return possibleTimes;
+            
+            
+            
+    }
+	
+	
 }
+
+
 	
